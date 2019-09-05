@@ -26,47 +26,49 @@
     </script>
     </head>
     <body>
-      <div id="app-tester" class="container">
-        <div class="row">
-          <div class="col-md-offset-3 col-md-6">
-            <div class="lead">
-              <h2>Sample Ratio Mismatch (SRM) Checker</h2>
-            </div>
-
-            <p>Running online controlled experiments--also known as A/B tests--can be difficult. A simple test can be used to detect a <a href="https://dl.acm.org/citation.cfm?id=3292500.3330722">wide variety of data quality issues</a>. Only sample counts are required as input, so this test can be used even when experimenters only have access to summary statistics; such as when using third-party tools, or reading academic research reports.</p>
-
-            <p>Everyone running A/B tests <a href="https://twitter.com/ronnyk/status/932798952679776256?lang=en">should be doing this important SRM test</a>. This simple website can be used to do so.</p>
-
-            <form>
-              <div class="form-group">
-                <label for="atraffic">Control sample size</label>
-                <input v-model="input.b.traffic" type="number" pattern="\d*" min="0" class="form-control" id="atraffic" placeholder="Control sample size"/> 
+      <div class="content-wrapper" id="app-tester">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+              <div class="lead">
+                <h2>Sample Ratio Mismatch (SRM) Checker</h2>
               </div>
-              <div class="form-group">
-                <label for="btraffic">Treatment sample size</label>
-                <input v-model="input.v.traffic" type="number" pattern="\d*" min="0"  class="form-control" id="btraffic" placeholder="Treatment sample size"/> 
+
+              <p>Running online controlled experiments--also known as A/B tests--can be difficult. A simple test can be used to detect a <a href="https://dl.acm.org/citation.cfm?id=3292500.3330722">wide variety of data quality issues</a>. Only sample counts are required as input, so this test can be used even when experimenters only have access to summary statistics; such as when using third-party tools, or reading academic research reports.</p>
+
+              <p>Everyone running A/B tests <a href="https://twitter.com/ronnyk/status/932798952679776256?lang=en">should be doing this important SRM test</a>. This simple website can be used to do so.</p>
+
+              <form>
+                <div class="form-group">
+                  <label for="atraffic">Control sample size</label>
+                  <input v-model="input.b.traffic" type="number" pattern="\d*" min="0" class="form-control" id="atraffic" placeholder="Control sample size"/> 
+                </div>
+                <div class="form-group">
+                  <label for="btraffic">Treatment sample size</label>
+                  <input v-model="input.v.traffic" type="number" pattern="\d*" min="0"  class="form-control" id="btraffic" placeholder="Treatment sample size"/> 
+                </div>
+                <div class="form-group">
+                  <label for="expectedprop">Expected proportion in treatment</label>
+                  <input v-model="input.expectedprop" type="number" step="any" min="0" max="1" pattern="\d*" class="form-control" id="expectedprop" placeholder="Expected proportion in treatment"/> 
+                </div>
+              </form>
+              <br />
+
+              <div class="alert alert-warning" v-if="experiment.get_srm_p(1) < 0.005">
+                <em>Warning.</em> Possible sample ratio mismatch detected with <var>{{ display_srm_p }}</var>.
+                The observed sample size in treatment does not match the expected proportion of the total sample size.
+                This is an indicator for randomisation failure or missing data issues.
+                <strong>Comparative statistics may be invalid as a result.</strong>
               </div>
-              <div class="form-group">
-                <label for="expectedprop">Expected proportion in treatment</label>
-                <input v-model="input.expectedprop" type="number" step="any" min="0" max="1" pattern="\d*" class="form-control" id="expectedprop" placeholder="Expected proportion in treatment"/> 
+
+              <div class="alert alert-success text-center" v-if="experiment.get_srm_p(1) >= 0.005">
+                No indication of sample ratio mismatch with <var>{{ display_srm_p }}</var>.
               </div>
-            </form>
-            <br />
 
-            <div class="alert alert-warning" v-if="experiment.get_srm_p(1) < 0.005">
-              <em>Warning.</em> Possible sample ratio mismatch detected with <var>{{ display_srm_p }}</var>.
-              The observed sample size in treatment does not match the expected proportion of the total sample size.
-              This is an indicator for randomisation failure or missing data issues.
-              <strong>Comparative statistics may be invalid as a result.</strong>
+              <footer class="text-center">
+                <small>Designed with <i class="glyphicon glyphicon-heart"></i> by <a href="www.lukasvermeer.nl" target="_blank">Lukas Vermeer</a> for experimenters everywhere</small>
+              </footer>
             </div>
-
-            <div class="alert alert-success text-center" v-if="experiment.get_srm_p(1) >= 0.005">
-              No indication of sample ratio mismatch with <var>{{ display_srm_p }}</var>.
-            </div>
-
-            <footer class="text-center">
-              <small>Designed with <i class="glyphicon glyphicon-heart"></i> by <a href="www.lukasvermeer.nl" target="_blank">Lukas Vermeer</a> for experimenters everywhere</small>
-            </footer>
           </div>
         </div>
       </div>
