@@ -40,15 +40,15 @@
             <form>
               <div class="form-group">
                 <label for="atraffic">Control sample size</label>
-                <input v-model="input.b.traffic" type="number" pattern="\d*" min="0" class="form-control" id="atraffic" placeholder="Number of visitors in A"/> 
+                <input v-model="input.b.traffic" type="number" pattern="\d*" min="0" class="form-control" id="atraffic" placeholder="Control sample size"/> 
               </div>
               <div class="form-group">
                 <label for="btraffic">Treatment sample size</label>
-                <input v-model="input.v.traffic" type="number" pattern="\d*" min="0"  class="form-control" id="btraffic" placeholder="Number of visitors in B"/> 
+                <input v-model="input.v.traffic" type="number" pattern="\d*" min="0"  class="form-control" id="btraffic" placeholder="Treatment sample size"/> 
               </div>
               <div class="form-group">
                 <label for="expectedprop">Expected proportion in treatment</label>
-                <input v-model="input.expectedprop" type="number" step="any" min="0" max="1" pattern="\d*" class="form-control" id="expectedprop" placeholder="Expected proportion in A"/> 
+                <input v-model="input.expectedprop" type="number" step="any" min="0" max="1" pattern="\d*" class="form-control" id="expectedprop" placeholder="Expected proportion in treatment"/> 
               </div>
             </form>
             <br />
@@ -76,8 +76,8 @@
         el: '#app-tester',
         data: {
           input: {
-            b: { traffic: 10000 },
-            v: { traffic: 10000 },
+            b: { traffic: "" },
+            v: { traffic: "" },
             expectedprop: 0.5,
           },
           e: new Experiment(0)
