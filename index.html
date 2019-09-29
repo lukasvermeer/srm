@@ -13,7 +13,6 @@
 
     <script type="text/javascript" src="vue/vue.js"></script>
     <script type="text/javascript" src="jstat/jstat.min.js"></script>
-    <script type="text/javascript" src="experiment.js"></script>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -54,14 +53,14 @@
               </form>
               <br />
 
-              <div class="alert alert-warning" v-if="experiment.get_srm_p(1) < 0.005">
+              <div class="alert alert-warning" v-if="srm_p < 0.005">
                 <em>Warning.</em> Possible sample ratio mismatch detected with <var>{{ display_srm_p }}</var>.
                 The observed sample size in treatment does not match the expected proportion of the total sample size.
                 This is an indicator for randomisation failure or missing data issues.
                 <strong>Comparative statistics may be invalid as a result.</strong>
               </div>
 
-              <div class="alert alert-success text-center" v-if="experiment.get_srm_p(1) >= 0.005">
+              <div class="alert alert-success text-center" v-if="srm_p >= 0.005">
                 No indication of sample ratio mismatch with <var>{{ display_srm_p }}</var>.
               </div>
 
@@ -82,19 +81,19 @@
             v: { traffic: "" },
             expectedprop: 0.5,
           },
-          e: new Experiment(0)
         },
         computed: {
-          experiment: function(val) {
-            this.e.set_expectedprop(parseFloat(this.input.expectedprop));
-            this.e.visits = [parseInt(this.input.b.traffic), parseInt(this.input.v.traffic)];
-            return this.e;
+          srm_p: function(v) {
+            var n = parseInt(this.input.b.traffic) + parseInt(this.input.v.traffic);
+            var p = parseInt(this.input.v.traffic) / n;
+            var e = parseFloat(this.input.expectedprop);
+            return jStat.ztest(p, e, Math.sqrt(p*(1-p)/n));
           },
           display_srm_p: function() {
-            if (this.e.get_srm_p(1) < 0.0001) {
+            if (this.srm_p < 0.0001) {
               return "p < 0.0001";
             } else {
-              return "p = " + this.e.get_srm_p(1).toFixed(4);
+              return "p = " + this.srm_p.toFixed(4);
             }
           }
         }
