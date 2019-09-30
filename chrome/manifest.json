@@ -1,0 +1,12 @@
+{
+  "name": "Sample Ratio Mismatch Checker",
+  "version": "1.0",
+  "description": "Automatically performs SRM test and flags potential issues on supported experimentation platforms.",
+  "content_scripts": [
+   {
+     "matches": ["https://lukasvermeer.github.io/srm/*"],
+     "js": ["lib/jstat.min.js", "content.js"]
+   }
+ ],
+  "manifest_version": 2
+}
