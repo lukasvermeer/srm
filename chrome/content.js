@@ -12,8 +12,8 @@ switch(window.location.origin) { // TODO switch is bad; find alternative
     setInterval(function() { // TODO find way to detect document changes instead of using polling
       var d = document.getElementsByClassName("opt-variant-sessions-subtitle");
       if (d.length > 1) {
-        var a = parseInt(d[0].innerText.split(" ")[0]);
-        var b = parseInt(d[1].innerText.split(" ")[0]);
+        var a = parseInt(d[0].innerText.replace(/,/g, '').split(" ")[0]); // TODO proper number parsing
+        var b = parseInt(d[1].innerText.replace(/,/g, '').split(" ")[0]);
         var e = 0.5; // TODO extract intended split from GO
 
         checkSRM(a, b, e);
