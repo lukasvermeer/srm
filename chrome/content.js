@@ -10,7 +10,7 @@ switch(window.location.origin) { // TODO switch is bad; find alternative
     break;
   case "https://optimize.google.com":
     setInterval(function() { // TODO find way to detect document changes instead of using polling
-      var d = document.getElementsByClassName("opt-variant-sessions-subtitle");
+      var d = document.querySelectorAll('opt-multi-objective .opt-variant-sessions-subtitle');
       if (d.length > 1) {
         var a = parseInt(d[0].innerText.replace(/,/g, '').split(" ")[0]); // TODO proper number parsing
         var b = parseInt(d[1].innerText.replace(/,/g, '').split(" ")[0]);
