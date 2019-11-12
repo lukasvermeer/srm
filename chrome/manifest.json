@@ -4,7 +4,8 @@
   "description": "Automatically performs SRM test and flags potential issues on supported experimentation platforms.",
   "content_scripts": [
    {
-     "matches": ["https://lukasvermeer.github.io/srm/*"],
+     "matches": ["https://lukasvermeer.github.io/srm/*",
+                 "https://optimize.google.com/*"],
      "js": ["lib/jstat.min.js", "content.js"]
    }
  ],
