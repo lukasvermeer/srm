@@ -40,10 +40,7 @@ function checkSRM(a, b, e) {
       document.body.style.backgroundColor = c;
       break;
     case "https://optimize.google.com":
-      document.querySelectorAll(".opt-variant-sessions-subtitle").forEach(i => i.style.backgroundColor = c);
-      document.querySelectorAll(".opt-variant-sessions-subtitle").forEach(i => i.style.color = x);
-      document.querySelectorAll(".opt-variant-sessions-subtitle").forEach(i => i.style.padding = y);
-      document.querySelectorAll(".opt-variant-sessions-subtitle").forEach(i => i.style.borderRadius = z);
+      document.querySelectorAll(".opt-variant-sessions-subtitle").forEach(i => i.style.cssText = "background-color: " + c + "; color: " + x + "; padding: " + y + "; border-radius: " + z + ";");
       break;
   }
 };
