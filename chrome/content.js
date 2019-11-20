@@ -29,7 +29,10 @@ function checkSRM(a, b, e) {
 
   var c = "white";
   if (r < 0.0001) {
-    c = "red"
+    c = "red";
+    x = "white";
+    y = "1px 3px";
+    z = "3px";
   }
 
   switch(window.location.origin) {
@@ -37,7 +40,7 @@ function checkSRM(a, b, e) {
       document.body.style.backgroundColor = c;
       break;
     case "https://optimize.google.com":
-      document.querySelectorAll(".opt-variant-sessions-subtitle").forEach(i => i.style.backgroundColor = c)
+      document.querySelectorAll(".opt-variant-sessions-subtitle").forEach(i => i.style.cssText = "background-color: " + c + "; color: " + x + "; padding: " + y + "; border-radius: " + z + ";");
       break;
   }
 };
