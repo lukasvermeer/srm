@@ -9,5 +9,8 @@
      "js": ["lib/jstat.min.js", "content.js"]
    }
  ],
+  "icons": {
+    "128": "icon128.png"
+  },
   "manifest_version": 2
 }
