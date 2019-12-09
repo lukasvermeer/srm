@@ -3,6 +3,9 @@
   "short_name": "SRM Check",
   "version": "0.0.0.1",
   "description": "Automatically performs SRM test and flags potential issues on supported experimentation platforms.",
+  "permissions": [
+    "tabs"
+  ],
   "content_scripts": [
    {
      "matches": ["https://lukasvermeer.github.io/srm/*",
@@ -10,6 +13,9 @@
      "js": ["lib/jstat.min.js", "content.js"]
    }
  ],
+  "background": {
+    "scripts": [ "background.js" ]
+  },
   "icons": {
     "128": "icon128.png"
   },
