@@ -1,6 +1,6 @@
 {
   "name": "Sample Ratio Mismatch Checker",
-  "version": "1.0",
+  "version": "0.0.0.1",
   "description": "Automatically performs SRM test and flags potential issues on supported experimentation platforms.",
   "content_scripts": [
    {
