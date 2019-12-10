@@ -32,9 +32,7 @@
                 <h2>Sample Ratio Mismatch (SRM) Checker</h2>
               </div>
 
-              <p>Running online controlled experiments--also known as A/B tests--can be difficult. A simple test can be used to detect a <a href="https://dl.acm.org/citation.cfm?id=3292500.3330722">wide variety of data quality issues</a>. Only sample counts are required as input, so this test can be used even when experimenters only have access to summary statistics; such as when using third-party tools, or reading academic research reports.</p>
-
-              <p>Everyone running A/B tests <a href="https://twitter.com/ronnyk/status/932798952679776256?lang=en">should be doing this important SRM test</a>. This simple website can be used to do so.</p>
+              <p>The Sample Ratio Mismatch (SRM) test can be used to detect <a href="https://dl.acm.org/citation.cfm?id=3292500.3330722">a wide variety of data quality issues</a> that may affect online experiments (aka A/B tests). Only expected proportions and observed sample counts are required as input for this procedure, so this test can be used even in cases where experimenters only have access to summary statistics; such as when using third-party tools.</p>
 
               <form>
                 <div class="form-group">
@@ -62,6 +60,10 @@
               <div class="alert alert-success text-center" v-if="srm_p >= 0.005">
                 No indication of sample ratio mismatch with <var>{{ display_srm_p }}</var>.
               </div>
+
+              <p class="text-center lead">Tired of testing for SRM manually?</p>
+              <p class="text-center"><a href="https://chrome.google.com/webstore/detail/sample-ratio-mismatch-che/ikielffdbameifemkibfheolelbohipn" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Install the Chrome Extension</a></p>
+              <p class="text-center">This extension automatically performs the Sample Ratio Mismatch test and flags potential issues on supported experimentation platforms.</p>
 
               <footer class="text-center">
                 <small>Designed with <i class="glyphicon glyphicon-heart"></i> by <a href="www.lukasvermeer.nl" target="_blank">Lukas Vermeer</a> for experimenters everywhere</small>
