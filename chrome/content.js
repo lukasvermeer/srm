@@ -95,20 +95,17 @@ function checkSRM(a, b, e, identa, identb, checksperformed) {
   var r = jStat.ztest(p, e, Math.sqrt(p*(1-p)/n));
 
   backgrounds = ['#FFA07A', '#FA8072', '#CD5C5C', '#DC143C', '#B22222', '#FF0000', '#800000', '#FF4500', '#DB7093']
-  var c = "white";
-  if (r < 0.0001) {
-    checksperformed++;
-    c = "red";
-  }
+
   switch(window.location.origin) {
     case "https://lukasvermeer.github.io":
-      document.body.style.backgroundColor = c;
+      document.body.style.backgroundColor = r < 0.0001 ? "red" : "white";
       break;
     case "https://optimize.google.com":
-      if (c == "red") {
+      if (r < 0.0001) {
+        checksperformed++;
         function createidentspan(identifier) {
           var identspan = document.createElement("span");
-          identspan.style.cssText = "background-color: " + backgrounds[checksperformed] + "; padding: 1px 2.5px; color: white; border-radius: 3px;";
+          identspan.style.cssText = "background-color: " + backgrounds[checksperformed] + "; padding: 1px 2.5px; margin-right: 1px; color: white; border-radius: 3px;";
           var identtext = document.createTextNode("SRM #" + checksperformed);
           identspan.appendChild(identtext);
           document.querySelectorAll('opt-multi-objective .opt-variant-sessions-subtitle')[identifier].appendChild(identspan);
