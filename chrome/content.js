@@ -12,6 +12,11 @@ switch (window.location.origin) { // TODO switch is bad; find alternative
     // Load the Details Tab in the background to get expected proportion of variants.
     function new_iframe() {
       if (location.href.slice(-6) == "report") {
+        var old_iframe = document.getElementById('iframeforweight');
+        if (old_iframe != null) {
+          old_iframe.parentNode.removeChild(old_iframe);
+        }
+
         var ifrm = document.createElement("iframe");
         ifrm.id = "iframeforweight"
         ifrm.src = location.href.slice(0,-7);
@@ -21,14 +26,10 @@ switch (window.location.origin) { // TODO switch is bad; find alternative
     }
     new_iframe();
 
-    // Listen for changing URL to load a new iframe
+    // Listen for changing URL to reload iframe for proportions
     chrome.runtime.onMessage.addListener(
       function (request, sender, sendResponse) {
         if (request.message === 'URL has changed') {
-          var old_iframe = document.getElementById('iframeforweight');
-          if (old_iframe != null) {
-            old_iframe.parentNode.removeChild(old_iframe);
-          }
           new_iframe();
           srm_checked = false;
         }
