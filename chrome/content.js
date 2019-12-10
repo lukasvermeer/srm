@@ -106,7 +106,7 @@ function checkSRM(a, b, e, identa, identb, checksperformed) {
         function createidentspan(identifier) {
           var identspan = document.createElement("span");
           identspan.style.cssText = "background-color: " + backgrounds[checksperformed] + "; padding: 1px 2.5px; margin-right: 1px; color: white; border-radius: 3px;";
-          var identtext = document.createTextNode("SRM #" + checksperformed);
+          var identtext = document.createTextNode("SRM#" + checksperformed);
           identspan.appendChild(identtext);
           document.querySelectorAll('opt-multi-objective .opt-variant-sessions-subtitle')[identifier].appendChild(identspan);
         }
