@@ -20,18 +20,18 @@ switch (window.location.origin) { // TODO switch is bad; find alternative
       }
     }
     new_iframe();
-    
+
     // Listen for changing URL to load a new iframe
     chrome.runtime.onMessage.addListener(
-        function (request, sender, sendResponse) {
-           if (request.message === 'URL has changed') {
-              var old_iframe = document.getElementById('iframeforweight');
-              if (old_iframe != null) {
-                old_iframe.parentNode.removeChild(old_iframe);
-              }
-              new_iframe();
-              srm_checked = false;
+      function (request, sender, sendResponse) {
+        if (request.message === 'URL has changed') {
+          var old_iframe = document.getElementById('iframeforweight');
+          if (old_iframe != null) {
+            old_iframe.parentNode.removeChild(old_iframe);
           }
+          new_iframe();
+          srm_checked = false;
+        }
       });
 
     var srm_checked = false; // TODO: Listen for changes to do check when content loads.
