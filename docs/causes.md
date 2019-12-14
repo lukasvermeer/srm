@@ -8,7 +8,6 @@ nav_order: 3
 {: .no_toc }
 
 While a simple statistical check is used to detect an SRM, correctly identifying the root cause and preventing it from happening in the future is often extremely challenging and time consuming. The goal of this section is to make diagnosing, fixing, and preventing SRMs easier.
-
 {: .fs-6 .fw-300 }
 
 ## Table of contents
