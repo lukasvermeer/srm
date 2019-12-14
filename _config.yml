@@ -1,1 +1,47 @@
-theme: jekyll-theme-cayman
+title: Sample Ratio Mismatch Checker
+description: This Chrome Extension automatically performs Sample Ratio Mismatch (SRM) tests and flags potential issues on supported experimentation platforms.
+baseurl: "/srm"
+url: "https://lukasvermeer.github.io"
+
+remote_theme: pmarsceill/just-the-docs
+
+permalink: pretty
+exclude: ["chrome-extension/", "microsite/"]
+
+# Set a path/url to a logo that will be displayed instead of the title
+logo: "chrome-extension/src/icon128red.png"
+
+# Enable or disable the site search
+search_enabled: true
+
+# Set the search token separator for hyphenated-word search:
+search_tokenizer_separator: /[\s/]+/
+
+# Enable or disable heading anchors
+heading_anchors: true
+
+# Aux links for the upper right navigation
+aux_links:
+  "SRM Checker on the Chrome Web Store":
+    - "https://chrome.google.com/webstore/detail/sample-ratio-mismatch-srm/ikielffdbameifemkibfheolelbohipn"
+
+# Footer content appears at the bottom of every page's main content
+footer_content: "This project is hosted on <a href=\"https://github.com/lukasvermeer/srm\">GitHub</a>."
+
+# Color scheme currently only supports "dark" or nil (default)
+color_scheme: nil
+
+# Google Analytics Tracking (optional)
+# e.g, UA-1234567-89
+ga_tracking: UA-105998856-2
+
+plugins:
+  - jekyll-seo-tag
+
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  startings: []
+  blanklines: false
+  profile: false
