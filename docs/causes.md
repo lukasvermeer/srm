@@ -7,7 +7,11 @@ nav_order: 3
 # Taxonomy Of Causes
 {: .no_toc }
 
-While a simple statistical check is used to detect an SRM, correctly identifying the root cause and preventing it from happening in the future is often extremely challenging and time consuming. The goal of this section is to make diagnosing, fixing, and preventing SRMs easier.
+> While a simple statistical check is used to detect an SRM, correctly identifying the root cause and preventing it from happening in the future is often extremely challenging and time consuming.
+> 
+> &mdash; <cite>[Diagnosing Sample Ratio Mismatch in Online Controlled Experiments: A Taxonomy and Rules of Thumb for Practitioners](https://dl.acm.org/citation.cfm?id=3330722)</cite>
+
+The goal of this section is to make diagnosing, fixing, and preventing SRMs easier.
 
 {: .fs-6 .fw-300 }
 
