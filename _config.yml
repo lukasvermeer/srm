@@ -1,5 +1,5 @@
-title: Sample Ratio Mismatch Checker
-description: This Chrome Extension automatically performs Sample Ratio Mismatch (SRM) tests and flags potential issues on supported experimentation platforms.
+title: SRM Checker
+description: This Chrome Extension automatically performs Sample Ratio Mismatch (SRM) checks and flags potential issues on supported experimentation platforms.
 baseurl: "/srm"
 url: "https://lukasvermeer.github.io"
 
@@ -7,9 +7,6 @@ remote_theme: pmarsceill/just-the-docs
 
 permalink: pretty
 exclude: ["chrome-extension/", "microsite/"]
-
-# Set a path/url to a logo that will be displayed instead of the title
-logo: "chrome-extension/src/icon128red.png"
 
 # Enable or disable the site search
 search_enabled: true
