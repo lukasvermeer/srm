@@ -26,7 +26,7 @@ For more information about Sample Ratio Mismatch please read the [Frequently Ask
 
 ## About the project
 
-Sample Ratio Mismatch Checker was created by [Lukas Vermeer](http://lukasvermeer.nl) and Heinrich Mahr.
+Sample Ratio Mismatch Checker was created by [Lukas Vermeer](http://lukasvermeer.nl) and [Heinrich Mahr](https://heinrich333.github.io).
 
 ### License
 
