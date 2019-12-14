@@ -19,7 +19,7 @@ While a simple statistical check is used to detect an SRM, correctly identifying
 
 ---
 
-This section is based on the KDD paper [Diagnosing Sample Ratio Mismatch in Online Controlled Experiments: A Taxonomy and Rules of Thumb for Practitioners](https://dl.acm.org/citation.cfm?id=3330722).
+This section is based on the KDD paper "Diagnosing Sample Ratio Mismatch in Online Controlled Experiments: A Taxonomy and Rules of Thumb for Practitioners" ([link](https://dl.acm.org/citation.cfm?id=3330722)).
 
 ## Experiment Assignment
 
