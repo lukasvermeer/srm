@@ -14,11 +14,6 @@ This Chrome Extension automatically performs SRM checks and flags potential data
 
 [Install the Chrome Extension](https://chrome.google.com/webstore/detail/sample-ratio-mismatch-srm/ikielffdbameifemkibfheolelbohipn){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [Manually check for SRM](https://lukasvermeer.github.io/srm/microsite/){: .btn .fs-5 .mb-4 .mb-md-0 }
 
-![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ikielffdbameifemkibfheolelbohipn?label=Store%20Release)
-![Chrome Web Store](https://img.shields.io/chrome-web-store/stars/ikielffdbameifemkibfheolelbohipn?label=Store%20Rating)
-![Chrome Web Store](https://img.shields.io/chrome-web-store/users/ikielffdbameifemkibfheolelbohipn?label=Extension%20Users)
-![GitHub last commit](https://img.shields.io/github/last-commit/lukasvermeer/srm?label=Last%20Repo%20Commit)
-
 ---
 
 ## What is Sample Ratio Mismatch? Why should we care?!
@@ -44,3 +39,8 @@ You want to contribute to this project? That's amazing! We'd love that! <3
 Feel free to fork the [repository on on GitHub](http://github.com/lukasvermeer/srm), make the changes you want to see, and issues a [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests). If you are not sure what to work on, we maintain [a list of outstanding issues on the GitHub project](https://github.com/lukasvermeer/srm/issues). (If you don't want to code, adding to that list of issues is also a great way to contribute.)
 
 Thank you for making this project more awesome.
+
+![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ikielffdbameifemkibfheolelbohipn?label=Store%20Release)
+![Chrome Web Store](https://img.shields.io/chrome-web-store/stars/ikielffdbameifemkibfheolelbohipn?label=Store%20Rating)
+![Chrome Web Store](https://img.shields.io/chrome-web-store/users/ikielffdbameifemkibfheolelbohipn?label=Extension%20Users)
+![GitHub last commit](https://img.shields.io/github/last-commit/lukasvermeer/srm?label=Last%20Repo%20Commit)
