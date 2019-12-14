@@ -14,10 +14,10 @@ This Chrome Extension automatically performs SRM checks and flags potential data
 
 [Install the Chrome Extension](https://chrome.google.com/webstore/detail/sample-ratio-mismatch-srm/ikielffdbameifemkibfheolelbohipn){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [Manually check for SRM](https://lukasvermeer.github.io/srm/microsite/){: .btn .fs-5 .mb-4 .mb-md-0 }
 
-![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ikielffdbameifemkibfheolelbohipn?label=Store%20Release&color=$link-color)
-![Chrome Web Store](https://img.shields.io/chrome-web-store/stars/ikielffdbameifemkibfheolelbohipn?label=Store%20Rating&color=$link-color)
-![Chrome Web Store](https://img.shields.io/chrome-web-store/users/ikielffdbameifemkibfheolelbohipn?color=$link-color&label=Extension%20Users)
-![GitHub last commit](https://img.shields.io/github/last-commit/lukasvermeer/srm?label=Last%20Repo%20Commit&color=$link-color)
+![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ikielffdbameifemkibfheolelbohipn?label=Store%20Release)
+![Chrome Web Store](https://img.shields.io/chrome-web-store/stars/ikielffdbameifemkibfheolelbohipn?label=Store%20Rating)
+![Chrome Web Store](https://img.shields.io/chrome-web-store/users/ikielffdbameifemkibfheolelbohipn?label=Extension%20Users)
+![GitHub last commit](https://img.shields.io/github/last-commit/lukasvermeer/srm?label=Last%20Repo%20Commit)
 
 ---
 
