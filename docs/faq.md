@@ -8,7 +8,7 @@ nav_order: 2
 {: .no_toc }
 
 
-Questions Which Should Probably Be Frequently Asked By People Who Care About Making Sound Decisions Based On Experimentation.
+Questions which should probably be frequently asked by people who care about making sound decisions based on experimentation.
 {: .fs-6 .fw-300 }
 
 ## Table of contents
