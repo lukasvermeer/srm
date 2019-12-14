@@ -6,7 +6,7 @@ url: "https://lukasvermeer.github.io"
 remote_theme: pmarsceill/just-the-docs
 
 permalink: pretty
-exclude: ["chrome-extension/", "microsite/"]
+exclude: ["README.md", "chrome-extension/", "microsite/"]
 
 # Enable or disable the site search
 search_enabled: true
