@@ -70,3 +70,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 ## Do we need to check for SRM if we use Bayesian statistics?
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+---
+
+Still have questions?
+{: .fs-6 .fw-300 }
+
+[Ask us on GitHub](https://github.com/lukasvermeer/srm/issues){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }[Send Lukas an email](https://lukasvermeer.github.io/#contact){: .btn .fs-5 .mb-4 .mb-md-0 }
