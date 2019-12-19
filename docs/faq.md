@@ -61,7 +61,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 ## Can we check for SRM if we don't expect to split traffic equally?
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Yes. The checker compares the expected split against the observed split. That split does not need to be equal.
+
+For example, if a test was configured to split traffic 80/20, there would be no SRM if a 80/20 split is indeed observed (while there _would_ be an SRM if the observed split was 50/50, since that would be unexpected given the configuration).
 
 ## Can we check for SRM if we use bandits (or other kinds of Machine Learning)?
 
