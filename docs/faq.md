@@ -86,7 +86,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 The SRM Checker Chrome Extension runs in the background of pages which show experiment results on suported platforms. It extracts summary statistics from the page and checks for Sample Ratio Mismatch. If an SRM is found, the page is modified on-the-fly to alert the user that the SRM Checker has found a potential data quality issue.
 
-![](/srm/assets/images/screenshot_optimize_1.png)
+![]({{ site.baseurl }}{% link assets/images/screenshot_optimize_1.png %})
 
 ## Can we check for SRM if we don't expect to split traffic equally?
 
@@ -100,7 +100,7 @@ In theory this is possible. In practice much more than just basic summary statis
 
 ## Do we need to check for SRM if we use Bayesian statistics?
 
-Yes. Most (if not all) of the [causes](/srm/docs/causes) of Sample Ratio Mismatch equally affect the validity of the results an experiment when using Bayesian approaches to analysing the experiment data. The SRM Checker Chrome Extension can therefore also be used to check for SRM on platforms which use Bayesian statistics.
+Yes. Most (if not all) of the [causes]({{ site.baseurl }}{% link docs/causes.md %}) of Sample Ratio Mismatch equally affect the validity of the results an experiment when using Bayesian approaches to analysing the experiment data. The SRM Checker Chrome Extension can therefore also be used to check for SRM on platforms which use Bayesian statistics.
 
 ---
 
