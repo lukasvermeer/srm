@@ -71,7 +71,7 @@ In theory this is possible. In practice much more than just basic summary statis
 
 ## Do we need to check for SRM if we use Bayesian statistics?
 
-Yes. Most (if not all) of the [causes](causes) of Sample Ratio Mismatch equally affect the validity of the results an experiment when using Bayesian approaches to analysing the experiment data. The SRM Checker Chrome Extension can therefore also be used to check for SRM on platforms which use Bayesian statistics.
+Yes. Most (if not all) of the [causes](/causes) of Sample Ratio Mismatch equally affect the validity of the results an experiment when using Bayesian approaches to analysing the experiment data. The SRM Checker Chrome Extension can therefore also be used to check for SRM on platforms which use Bayesian statistics.
 
 ---
 
