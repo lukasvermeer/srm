@@ -45,7 +45,23 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 ## How can we detect Sample Ratio Mismatch?
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+To reliably and objectively detect Sample Ratio Mismatch, we need a statistical method to expres how "surprising" the observed split is, given the expected split. To do this, we can use a [goodness of fit](https://en.wikipedia.org/wiki/Goodness_of_fit) test to compute a p-value. When this value is very small, we reject the idea that the data are indeed a good fit, and conclude that a Sample Ratio Mismatch has occurred. (The approach used here is very similar to the standard hypothesis testing approach used to compare different variations in a standard A/B test.)
+
+For example (using Python's [scipy.stats.binom_test](https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.stats.binom_test.html)), the first scenario describe earlier is indeed not surprising, as suggested by the computed p-value close to 1:
+
+```
+>>> from scipy import stats
+>>> stats.binom_test(498, 1000, 0.5)
+0.9244256441413834
+```
+
+
+Conversely, the second scenario is very surprising. Here we get a p-value of approximately 0.00000000027.
+
+```
+>>> stats.binom_test(600, 1000, 0.5)
+2.7284641560678061e-10
+```
 
 ## How common is Sample Ratio Mismatch?
 
