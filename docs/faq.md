@@ -55,7 +55,6 @@ For example (using Python's [scipy.stats.binom_test](https://docs.scipy.org/doc/
 0.9244256441413834
 ```
 
-
 Conversely, the second scenario is very surprising. Here we get a p-value of approximately 0.00000000027.
 
 ```
@@ -65,7 +64,19 @@ Conversely, the second scenario is very surprising. Here we get a p-value of app
 
 ## How common is Sample Ratio Mismatch?
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Publically available information about the incidence of Sample Ratio Mismatch in experimentation platforms is limited. We are aware of only two companies which have publically released figures around this topic.
+
+In "Automatic Detection and Diagnosis of Biased Online Experiments" ([link](https://arxiv.org/abs/1808.00114)), the authors briefly mention: 
+
+> At LinkedIn, **about 10%** of our triggered experiments used to suffer from \[sample ratio mismatch\]."
+
+In "Diagnosing Sample Ratio Mismatch in Online Controlled Experiments: A Taxonomy and Rules of Thumb for Practitioners" ([link](https://dl.acm.org/citation.cfm?id=3330722)), the authors provide some more detail and insight:
+
+> During this study, and through quantitative analysis of experiments conducted within the last year we identified that **approximately 6%** of experiments at Microsoft exhibit an SRM. We illustrate this in Figure 2 where we show the variation of the SRM ratio among five products that run experiments at a large scale (ordered in descending order based on the number of experiments per product). Figure 2 reveals that this is an important problem to address as it happens frequently – for example, a product running ten thousand experiments in a year can expect to see at least one SRM per day.
+
+Both LinkedIn and Microsoft have been actively addressing root causes of Sample Ratio Mismatch in their respective experimentation platforms for several years. These 6% and 10% figures should be considered in light of this fact.
+
+It is obviously impossible to say what these numbers can tell us about the incidence of Sample Ratio Mismatch in general. However, it seems that SRM is quite prevalent, even in companies which are widely considered industry leaders in online experimentation.
 
 ## What can we do about Sample Ratio Mismatch?
 
