@@ -2,17 +2,19 @@
 layout: default
 title: Home
 nav_order: 1
-description: "This Chrome Extension automatically performs SRM checks and flags potential data quality issues on supported experimentation platforms."
+description: "This Chrome Extension automatically flags potential data quality issues on supported experimentation platforms."
 permalink: /
 ---
 
 # One neat trick to run better experiments
 {: .fs-9 }
 
-This Chrome Extension automatically performs SRM checks and flags potential data quality issues on supported experimentation platforms.
+This Chrome Extension automatically flags potential data quality issues on supported experimentation platforms.
 {: .fs-6 .fw-300 }
 
 [Install the Chrome Extension](https://chrome.google.com/webstore/detail/sample-ratio-mismatch-srm/ikielffdbameifemkibfheolelbohipn){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [Manually check for SRM](https://lukasvermeer.github.io/srm/microsite/){: .btn .fs-5 .mb-4 .mb-md-0 }
+
+![](/srm/assets/images/screenshot_optimize_1.png)
 
 ---
 
