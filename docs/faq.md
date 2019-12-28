@@ -57,7 +57,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 ## How does the SRM Checker Chrome Extension work?
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+The SRM Checker Chrome Extension runs in the background of pages which show experiment results on suported platforms. It extracts summary statistics from the page and checks for Sample Ratio Mismatch. If an SRM is found, the page is modified on-the-fly to alert the user that the SRM Checker has found a potential data quality issue.
 
 ## Can we check for SRM if we don't expect to split traffic equally?
 
