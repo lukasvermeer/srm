@@ -63,15 +63,15 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 Yes. The checker compares the expected split against the observed split. That split does not need to be equal.
 
-For example, if a test was configured to split traffic 80/20, there would be no SRM if a 80/20 split is indeed observed (while there _would_ be an SRM if the observed split was 50/50, since that would be unexpected given the configuration).
+For example, if a test was configured to split traffic 80/20, there would be no Sample Ratio Mismatch detected if a 80/20 split is indeed observed. Conversely, there _would_ be a Sample Ratio Mismatch detected if the observed split was exactly 50/50, since this would be very unexpected given the 80/20 configuration.
 
 ## Can we check for SRM if we use bandits (or other kinds of Machine Learning)?
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+In theory this is possible. In practice much more than just basic summary statistics alone are required to determine what split is to be _expected_ when using adaptive sampling strategies, since this expectation will depend on the strategy as well as the observed data over time. For this practical reason, the SRM Checker Chrome Extension does not support these use cases (and likely never will).
 
 ## Do we need to check for SRM if we use Bayesian statistics?
 
-Yes.
+Yes. Most (if not all) of the [causes](causes) of Sample Ratio Mismatch equally affect the validity of the results an experiment when using Bayesian approaches to analysing the experiment data. The SRM Checker Chrome Extension can therefore also be used to check for SRM on platforms which use Bayesian statistics.
 
 ---
 
