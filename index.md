@@ -14,7 +14,7 @@ This Chrome Extension automatically flags potential data quality issues on suppo
 
 [Install the Chrome Extension](https://chrome.google.com/webstore/detail/sample-ratio-mismatch-srm/ikielffdbameifemkibfheolelbohipn){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [Manually check for SRM](https://lukasvermeer.github.io/srm/microsite/){: .btn .fs-5 .mb-4 .mb-md-0 }
 
-![](/srm/assets/images/screenshot_optimize_1.png)
+![]({{ site.baseurl }}{% link assets/images/screenshot_optimize_1.png %})
 
 ---
 
