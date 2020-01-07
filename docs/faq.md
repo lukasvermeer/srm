@@ -62,9 +62,9 @@ Conversely, the second scenario is very surprising. Here we get a p-value of app
 2.7284641560678061e-10
 ```
 
-## What p-value threshold does the SRM Checker Chrome Extension use?
+## What p-value threshold does the SRM Checker use?
 
-It currently uses a threshold value of 0.0001. If the computed p-value is lower than that, an SRM is flagged.
+The SRM Checker Chrome Extension currently uses a threshold value of 0.0001. If the computed p-value is lower than that, an SRM is flagged.
 
 ## How common is Sample Ratio Mismatch?
 
