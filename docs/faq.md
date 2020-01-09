@@ -41,7 +41,24 @@ This distribution of visitors is very unexpected. A sample ratio mismatch has oc
 
 ## Why should we care about Sample Ratio Mismatch?
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Consider the results from a real, seemingly neutral, 50-50 split test.
+
+Group | Subjects | Conversions | % Conversion rate | % Lift
+--- | --- | --- | --- | ---
+Control | 9463 | 235 | 2.48% | -
+Treatment | 7681 | 193 | 2.51% | +1.18%
+
+With an SRM p-value of 2.2e-16, it failed the SRM test spectacularly. And a post mortem showed there were fewer IE & Mobile users recorded in the treatment group. The cause: The treatment page loaded ~5 seonds slower and affected tracking.
+
+If you ignored the SRM test, you may be mistaken to think the Treatment's change was neutral and therefore harmless to implement. In reality (assuming it deterred ~2,000 subjects), it could be hurting conversion by as much as -18%.
+
+Group | Subjects | Conversions | % Conversion rate | % Lift
+--- | --- | --- | --- | ---
+Control | 9463 | 235 | 2.48% | -
+Treatment* | *9463* | 193 | 2.04% | -17.87%
+
+SRM tests help you detect and avoid selection bias.
+
 
 ## How can we detect Sample Ratio Mismatch?
 
