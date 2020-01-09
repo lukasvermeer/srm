@@ -48,7 +48,7 @@ Group | Subjects | Conversions | % Conversion rate | % Lift
 Control | 9463 | 235 | 2.48% | -
 Treatment | 7681 | 193 | 2.51% | +1.18%
 
-With an SRM p-value of 2.2e-16, it failed the SRM test spectacularly. And a post mortem showed there were fewer IE & Mobile users recorded in the treatment group. The cause: The treatment page loaded ~5 seonds slower and affected tracking.
+Spot the difference in traffic? With an SRM p-value of 2.2e-16, this experiment failed the SRM test spectacularly. And a post mortem revealed there were fewer IE & Mobile users recorded in the treatment group. The cause: The treatment page loaded ~5 seonds slower and affected tracking.
 
 If you ignored the SRM test, you may be mistaken to think the Treatment's change was neutral and therefore harmless to implement. In reality (assuming it deterred ~2,000 subjects), it could be hurting conversion by as much as -18%.
 
@@ -57,7 +57,7 @@ Group | Subjects | Conversions | % Conversion rate | % Lift
 Control | 9463 | 235 | 2.48% | -
 Treatment* | *9463* | 193 | 2.04% | -17.87%
 
-SRM tests help you detect and avoid selection bias.
+SRM tests are an easy way to detect and avoid selection bias.
 
 
 ## How can we detect Sample Ratio Mismatch?
