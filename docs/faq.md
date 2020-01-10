@@ -41,23 +41,25 @@ This distribution of visitors is very unexpected. A sample ratio mismatch has oc
 
 ## Why should we care about Sample Ratio Mismatch?
 
-Consider the results from a real, seemingly neutral, 50-50 split test.
+SRM tests can reveal serious data quality problems that change the outcomes of your experiments. Worse yet, most split testing platforms don't alert users to SRM issues or suggest their experiments are broken.
+
+Consider the results of an actual 50-50 split test:
 
 Group | Subjects | Conversions | % Conversion rate | % Lift
 --- | --- | --- | --- | ---
 Control | 9463 | 235 | 2.48% | -
 Treatment | 7681 | 193 | 2.51% | +1.18%
 
-Spot the difference in traffic? With an SRM p-value of 2.2e-16, this experiment failed the SRM test spectacularly. And a post mortem revealed there were fewer IE & Mobile users recorded in the treatment group. The cause: The treatment page loaded ~5 seonds slower and affected tracking.
+Spot the difference in subjects? With an SRM p-value of 0.00000000000000022, this experiment clearly failed the test. And a post mortem revealed there were fewer IE & mobile users recorded in the treatment group. The cause?: The treatment took ~5 seconds longer to load and affected the tracking.
 
-If you ignored the SRM test, you may be mistaken to think the Treatment's change was neutral and therefore harmless to implement. In reality (assuming it deterred ~2,000 subjects), it could be hurting conversion by as much as -18%.
+Imagine that ~2,000 subjects didn't wait for the page to load. In that case, conversion rate could be impacted -18%.
 
 Group | Subjects | Conversions | % Conversion rate | % Lift
 --- | --- | --- | --- | ---
 Control | 9463 | 235 | 2.48% | -
 Treatment* | *9463* | 193 | 2.04% | -17.87%
 
-SRM tests are an easy way to detect and avoid selection bias.
+Without SRM tests, you could be missing some very big problems, like this and [many more]({{ site.baseurl }}{% link docs/causes.md %}).
 
 
 ## How can we detect Sample Ratio Mismatch?
