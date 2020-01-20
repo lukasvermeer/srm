@@ -13,12 +13,23 @@ const params = {
 // Generic (non-platform specific) functions
 const platform = window.location.host;
 
-function checkSRM(a, b, e, identa, identb, checksperformed) {
-  const n = a + b;
-  const p = b / n;
-  const r = jStat.ztest(p, e, Math.sqrt(p * (1 - p) / n));
+function checkSRM(observed, expected) {
+  // TODO Fix how we check SRM in case of multiple variants #16
+  let srmFound = false;
+  for (let i = 1; i < observed.length; i += 1) {
+    const a = observed[0];
+    const b = observed[i];
+    const e = expected[i] / (expected[0] + expected[i]);
+    const n = a + b;
+    const p = b / n;
+    const r = jStat.ztest(p, e, Math.sqrt(p * (1 - p) / n));
 
-  if (r < params.pValueThreshold) {
+    if (r < params.pValueThreshold) {
+      srmFound = true;
+    }
+  }
+
+  if (srmFound) {
     platforms[platform].flagSRM();
   } else {
     platforms[platform].unflagSRM();
@@ -37,7 +48,7 @@ const platforms = {
         const b = parseInt(document.getElementById('btraffic').value, 10);
         const e = parseFloat(document.getElementById('expectedprop').value, 10);
 
-        checkSRM(a, b, e);
+        checkSRM([a, b], [1 - e, e]);
       }, false));
     },
     flagSRM() {
@@ -110,20 +121,7 @@ const platforms = {
                 weights.push(weight);
               }
 
-              // Check all combinations for SRMs
-              let j = 0;
-              let k = 1;
-              let checksperformed = 0;
-              while (j < sessioncounts.length) {
-                while (k < sessioncounts.length) {
-                  const l = weights[j] / (weights[j] + weights[k]);
-                  checkSRM(sessioncounts[j], sessioncounts[k], l, j, k, checksperformed);
-                  checksperformed += 1;
-                  k += 1;
-                }
-                j += 1;
-                k = j + 1;
-              }
+              checkSRM(sessioncounts, weights);
               srmChecked = true;
             }
           }
