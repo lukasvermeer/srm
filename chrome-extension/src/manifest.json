@@ -8,7 +8,7 @@
   ],
   "content_scripts": [
    {
-     "matches": ["https://lukasvermeer.github.io/srm/*",
+     "matches": ["https://lukasvermeer.nl/srm/*",
                  "https://optimize.google.com/*"],
      "js": ["lib/jstat.min.js", "content.js"]
    }

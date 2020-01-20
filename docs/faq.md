@@ -145,4 +145,4 @@ Yes. Most (if not all) of the [causes]({{ site.baseurl }}{% link docs/causes.md 
 Still have questions?
 {: .fs-6 .fw-300 }
 
-[Ask us on GitHub](https://github.com/lukasvermeer/srm/issues){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }[Send Lukas an email](https://lukasvermeer.github.io/#contact){: .btn .fs-5 .mb-4 .mb-md-0 }
+[Ask us on GitHub](https://github.com/lukasvermeer/srm/issues){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }[Send Lukas an email](https://lukasvermeer.nl/#contact){: .btn .fs-5 .mb-4 .mb-md-0 }
