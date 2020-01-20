@@ -16,7 +16,7 @@ const platform = window.location.host;
 function checkSRM(a, b, e, identa, identb, checksperformed) {
   const n = a + b;
   const p = b / n;
-  const r = jStat.ztest(p, e, Math.sqrt(p*(1-p)/n));
+  const r = jStat.ztest(p, e, Math.sqrt(p * (1 - p) / n));
 
   if (r < params.pValueThreshold) {
     platforms[platform].flagSRM();
@@ -61,7 +61,7 @@ const platforms = {
 
           const ifrm = document.createElement('iframe');
           ifrm.id = 'iframeforweight';
-          ifrm.src = location.href.slice(0,-7);
+          ifrm.src = location.href.slice(0, -7);
           ifrm.style.display = 'none';
           document.body.appendChild(ifrm);
         }
@@ -70,7 +70,7 @@ const platforms = {
 
       // Listen for changing URL to reload iframe for proportions
       chrome.runtime.onMessage.addListener(
-        function (request, sender, sendResponse) {
+        (request, sender, sendResponse) => {
           if (request.message === 'URL has changed') {
             newIframe();
             srmChecked = false;
@@ -79,7 +79,7 @@ const platforms = {
       );
 
       let srmChecked = false; // TODO: Listen for changes to do check when content loads.
-      setInterval(function () {
+      setInterval(() => {
         if (!srmChecked) {
           // Get sample counts
           const d = document.querySelectorAll('opt-multi-objective .opt-variant-sessions-subtitle');
