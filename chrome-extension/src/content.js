@@ -13,20 +13,23 @@ const params = {
 // Generic (non-platform specific) functions
 const platform = window.location.host;
 
+// Checking for SRM using chi-square
 function checkSRM(observed, expected) {
-  // TODO Fix how we check SRM in case of multiple variants #16
   let srmFound = false;
-  for (let i = 1; i < observed.length; i += 1) {
-    const a = observed[0];
-    const b = observed[i];
-    const e = expected[i] / (expected[0] + expected[i]);
-    const n = a + b;
-    const p = b / n;
-    const r = jStat.ztest(p, e, Math.sqrt(p * (1 - p) / n));
+  var df = observed.length - 1;
+  var sampleSize = 0;
+  var chisquare = 0;
+  for (let i = 0; i < observed.length; i++) {
+    sampleSize += observed[i];
+  }
+  for (let i = 0; i < observed.length; i++) {
+    expected[i] = Math.round(sampleSize * expected[i] / 100);
+    chisquare += Math.pow(observed[i] - expected[i], 2) / expected[i];
+  }
+  var r = chisqrprob(df, chisquare);
 
-    if (r < params.pValueThreshold) {
-      srmFound = true;
-    }
+  if (r < params.pValueThreshold) {
+    srmFound = true;
   }
 
   if (srmFound) {
@@ -101,8 +104,15 @@ const platforms = {
             // Get unrounded custom proportions (if any)
             // TODO: Must be a better way to do this.
             (iframeforweight.contentWindow.document.getElementsByClassName('opt-variation-weight')[0]).click();
-            const weightnodesCustom = iframeforweight.contentWindow.document.querySelectorAll('.opt-edit-weights-list input');
 
+            // Handle DOM differences in even/custom split config of experiment
+            const typeOfWeight = iframeforweight.contentWindow.document.querySelectorAll('ng-form[name="editWeightsInputForm"] .md-input-has-value');
+            if (typeOfWeight.length) {
+              var weightnodesCustom = iframeforweight.contentWindow.document.querySelectorAll('.opt-edit-weights-list input');
+            } else {
+              var weightnodesCustom = iframeforweight.contentWindow.document.querySelectorAll('.opt-edit-weights-value-column > span.ng-binding');
+            }
+            
             if (weightnodes.length > 1) {
               const sessioncounts = [];
               const weights = [];
@@ -114,8 +124,10 @@ const platforms = {
                 let weight = parseInt(weightnode[0].innerHTML, 10);
                 // Use custom unrounded weights when available.
                 // TODO: Must be a better way to do this too.
-                if (weightnodesCustom.length > 1) {
+                if (weightnodesCustom.length > 1 && typeOfWeight.length) {
                   weight = parseFloat(weightnodesCustom[i].value, 10);
+                } else if (weightnodesCustom.length > 1) {
+                  weight = parseFloat((weightnodesCustom[i].innerText).slice(0, -2), 10);
                 }
                 sessioncounts.push(sessions);
                 weights.push(weight);
