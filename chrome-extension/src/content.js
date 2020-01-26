@@ -13,20 +13,24 @@ const params = {
 // Generic (non-platform specific) functions
 const platform = window.location.host;
 
+// Checking for SRM using chi-square
 function checkSRM(observed, expected) {
-  // TODO Fix how we check SRM in case of multiple variants #16
   let srmFound = false;
-  for (let i = 1; i < observed.length; i += 1) {
-    const a = observed[0];
-    const b = observed[i];
-    const e = expected[i] / (expected[0] + expected[i]);
-    const n = a + b;
-    const p = b / n;
-    const r = jStat.ztest(p, e, Math.sqrt(p * (1 - p) / n));
+  const df = observed.length - 1;
+  let sampleSize = 0;
+  let chisquare = 0;
+  for (let i = 0; i < observed.length; i += 1) {
+    sampleSize += observed[i];
+  }
+  const e = expected;
+  for (let i = 0; i < observed.length; i += 1) {
+    e[i] = Math.round(sampleSize * expected[i] / 100);
+    chisquare += ((observed[i] - expected[i]) ** 2) / expected[i];
+  }
+  const r = chisqrprob(df, chisquare);
 
-    if (r < params.pValueThreshold) {
-      srmFound = true;
-    }
+  if (r < params.pValueThreshold) {
+    srmFound = true;
   }
 
   if (srmFound) {
@@ -46,9 +50,9 @@ const platforms = {
       document.querySelectorAll('input').forEach(i => i.addEventListener('input', () => {
         const a = parseInt(document.getElementById('atraffic').value, 10);
         const b = parseInt(document.getElementById('btraffic').value, 10);
-        const e = parseFloat(document.getElementById('expectedprop').value, 10);
+        const e = parseFloat(document.getElementById('expectedprop').value, 10) * 100;
 
-        checkSRM([a, b], [1 - e, e]);
+        checkSRM([a, b], [100 - e, e]);
       }, false));
     },
     flagSRM() {
@@ -64,7 +68,7 @@ const platforms = {
     init() {
       // Load the Details Tab in the background to get expected proportion of variants.
       function newIframe() {
-        if (location.href.slice(-6) == 'report') {
+        if (location.href.slice(-6) === 'report') {
           const oldIframe = document.getElementById('iframeforweight');
           if (oldIframe != null) {
             oldIframe.parentNode.removeChild(oldIframe);
@@ -101,7 +105,15 @@ const platforms = {
             // Get unrounded custom proportions (if any)
             // TODO: Must be a better way to do this.
             (iframeforweight.contentWindow.document.getElementsByClassName('opt-variation-weight')[0]).click();
-            const weightnodesCustom = iframeforweight.contentWindow.document.querySelectorAll('.opt-edit-weights-list input');
+
+            // Handle DOM differences in even/custom split config of experiment
+            const typeOfWeight = iframeforweight.contentWindow.document.querySelectorAll('ng-form[name="editWeightsInputForm"] .md-input-has-value');
+            let weightnodesCustom;
+            if (typeOfWeight.length) {
+              weightnodesCustom = iframeforweight.contentWindow.document.querySelectorAll('.opt-edit-weights-list input');
+            } else {
+              weightnodesCustom = iframeforweight.contentWindow.document.querySelectorAll('.opt-edit-weights-value-column > span.ng-binding');
+            }
 
             if (weightnodes.length > 1) {
               const sessioncounts = [];
@@ -114,8 +126,10 @@ const platforms = {
                 let weight = parseInt(weightnode[0].innerHTML, 10);
                 // Use custom unrounded weights when available.
                 // TODO: Must be a better way to do this too.
-                if (weightnodesCustom.length > 1) {
+                if (weightnodesCustom.length > 1 && typeOfWeight.length) {
                   weight = parseFloat(weightnodesCustom[i].value, 10);
+                } else if (weightnodesCustom.length > 1) {
+                  weight = parseFloat((weightnodesCustom[i].innerText).slice(0, -2), 10);
                 }
                 sessioncounts.push(sessions);
                 weights.push(weight);
