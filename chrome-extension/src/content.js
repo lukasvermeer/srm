@@ -16,17 +16,18 @@ const platform = window.location.host;
 // Checking for SRM using chi-square
 function checkSRM(observed, expected) {
   let srmFound = false;
-  var df = observed.length - 1;
-  var sampleSize = 0;
-  var chisquare = 0;
-  for (let i = 0; i < observed.length; i++) {
+  const df = observed.length - 1;
+  let sampleSize = 0;
+  let chisquare = 0;
+  for (let i = 0; i < observed.length; i += 1) {
     sampleSize += observed[i];
   }
-  for (let i = 0; i < observed.length; i++) {
-    expected[i] = Math.round(sampleSize * expected[i] / 100);
-    chisquare += Math.pow(observed[i] - expected[i], 2) / expected[i];
+  const e = expected;
+  for (let i = 0; i < observed.length; i += 1) {
+    e[i] = Math.round(sampleSize * expected[i] / 100);
+    chisquare += ((observed[i] - expected[i]) ** 2) / expected[i];
   }
-  var r = chisqrprob(df, chisquare);
+  const r = chisqrprob(df, chisquare);
 
   if (r < params.pValueThreshold) {
     srmFound = true;
@@ -67,7 +68,7 @@ const platforms = {
     init() {
       // Load the Details Tab in the background to get expected proportion of variants.
       function newIframe() {
-        if (location.href.slice(-6) == 'report') {
+        if (location.href.slice(-6) === 'report') {
           const oldIframe = document.getElementById('iframeforweight');
           if (oldIframe != null) {
             oldIframe.parentNode.removeChild(oldIframe);
@@ -107,12 +108,13 @@ const platforms = {
 
             // Handle DOM differences in even/custom split config of experiment
             const typeOfWeight = iframeforweight.contentWindow.document.querySelectorAll('ng-form[name="editWeightsInputForm"] .md-input-has-value');
+            let weightnodesCustom;
             if (typeOfWeight.length) {
-              var weightnodesCustom = iframeforweight.contentWindow.document.querySelectorAll('.opt-edit-weights-list input');
+              weightnodesCustom = iframeforweight.contentWindow.document.querySelectorAll('.opt-edit-weights-list input');
             } else {
-              var weightnodesCustom = iframeforweight.contentWindow.document.querySelectorAll('.opt-edit-weights-value-column > span.ng-binding');
+              weightnodesCustom = iframeforweight.contentWindow.document.querySelectorAll('.opt-edit-weights-value-column > span.ng-binding');
             }
-            
+
             if (weightnodes.length > 1) {
               const sessioncounts = [];
               const weights = [];
