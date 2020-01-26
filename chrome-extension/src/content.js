@@ -49,9 +49,9 @@ const platforms = {
       document.querySelectorAll('input').forEach(i => i.addEventListener('input', () => {
         const a = parseInt(document.getElementById('atraffic').value, 10);
         const b = parseInt(document.getElementById('btraffic').value, 10);
-        const e = parseFloat(document.getElementById('expectedprop').value, 10);
+        const e = parseFloat(document.getElementById('expectedprop').value, 10) * 100;
 
-        checkSRM([a, b], [1 - e, e]);
+        checkSRM([a, b], [100 - e, e]);
       }, false));
     },
     flagSRM() {
