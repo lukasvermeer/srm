@@ -2,6 +2,7 @@
 ![Chrome Web Store](https://img.shields.io/chrome-web-store/stars/ikielffdbameifemkibfheolelbohipn?label=Store%20Rating)
 ![Chrome Web Store](https://img.shields.io/chrome-web-store/users/ikielffdbameifemkibfheolelbohipn?label=Extension%20Users)
 ![GitHub last commit](https://img.shields.io/github/last-commit/lukasvermeer/srm?label=Last%20Repo%20Commit)
+![Build status](https://img.shields.io/travis/com/lukasvermeer/srm?label=Build%20Status)
 
 # Sample Ratio Mismatch (SRM) Checker
 
