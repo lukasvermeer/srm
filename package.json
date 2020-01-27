@@ -1,0 +1,22 @@
+{
+  "name": "srm",
+  "version": "0.0.1",
+  "description": "This Chrome Extension automatically performs SRM checks and flags potential data quality issues on supported experimentation platforms.",
+  "main": "chrome-extension/src/srm.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukasvermeer/srm.git"
+  },
+  "author": "Lukas Vermeer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lukasvermeer/srm/issues"
+  },
+  "homepage": "https://lukasvermeer.nl/srm",
+  "dependencies": {
+    "jest": "^25.1.0"
+  }
+}

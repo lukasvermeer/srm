@@ -15,25 +15,7 @@ const platform = window.location.host;
 
 // Checking for SRM using chi-square
 function checkSRM(observed, expected) {
-  let srmFound = false;
-  const df = observed.length - 1;
-  let sampleSize = 0;
-  let chisquare = 0;
-  for (let i = 0; i < observed.length; i += 1) {
-    sampleSize += observed[i];
-  }
-  const e = expected;
-  for (let i = 0; i < observed.length; i += 1) {
-    e[i] = Math.round(sampleSize * expected[i] / 100);
-    chisquare += ((observed[i] - expected[i]) ** 2) / expected[i];
-  }
-  const r = chisqrprob(df, chisquare);
-
-  if (r < params.pValueThreshold) {
-    srmFound = true;
-  }
-
-  if (srmFound) {
+  if (computeSRM(observed, expected) < params.pValueThreshold) {
     platforms[platform].flagSRM();
   } else {
     platforms[platform].unflagSRM();

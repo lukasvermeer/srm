@@ -10,7 +10,7 @@
    {
      "matches": ["https://lukasvermeer.nl/srm/*",
                  "https://optimize.google.com/*"],
-     "js": ["lib/statistics-distributions.js", "content.js"]
+     "js": ["lib/statistics-distributions.js", "srm.js", "content.js"]
    }
  ],
   "background": {
