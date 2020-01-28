@@ -1,0 +1,12 @@
+{
+  // don't forget to npm i eslint eslint-config-airbnb-base eslint-plugin-import
+  "extends": [
+    "airbnb",
+  ],
+  "env": {
+    "node": true,
+    "es6": true,
+    "browser": true
+  },
+  "rules": { }
+}
