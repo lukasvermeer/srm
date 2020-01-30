@@ -1,7 +1,7 @@
 {
   "name": "Sample Ratio Mismatch (SRM) Checker",
   "short_name": "SRM Check",
-  "version": "0.0.0.4",
+  "version": "0.0.0.5",
   "description": "Automatically performs Sample Ratio Mismatch (SRM) test and flags potential issues on supported experimentation platforms.",
   "permissions": [
     "tabs"
@@ -9,7 +9,8 @@
   "content_scripts": [
    {
      "matches": ["https://lukasvermeer.nl/srm/*",
-                 "https://optimize.google.com/*"],
+                 "https://optimize.google.com/*",
+                 "https://app.vwo.com/*"],
      "js": ["lib/statistics-distributions.js", "srm.js", "content.js"]
    }
  ],
