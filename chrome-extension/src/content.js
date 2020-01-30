@@ -131,6 +131,80 @@ const platforms = {
       // TODO remove SRM warning if needed.
     },
   },
+  
+  // VWO
+  'app.vwo.com': {
+    init() {
+      // Load the Settings > Others view in the background to get expected proportion of variants.
+      function newIframe() {
+        if (location.href.slice(-6) === 'report') {
+          const oldIframe = document.getElementById('iframeforweight');
+          if (oldIframe != null) {
+            oldIframe.parentNode.removeChild(oldIframe);
+          }
+          const ifrm = document.createElement('iframe');
+          ifrm.id = 'iframeforweight';
+          ifrm.src = location.href.slice(0, -7) + '/edit/others';
+          ifrm.style.display = 'none';
+          document.body.appendChild(ifrm);
+        }
+      }
+      newIframe();
+      // Listen for changing URL to reload iframe for proportions
+      chrome.runtime.onMessage.addListener(
+        (request, sender, sendResponse) => {
+          if (request.message === 'URL has changed') {
+            newIframe();
+            srmChecked = false;
+          }
+        },
+      );
+      let srmChecked = false; // TODO: Listen for changes to do check when content loads.
+      setInterval(() => {
+        if (!srmChecked) {
+          // Get sample counts
+          const d = document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding');
+          const iframeforweight = document.getElementById('iframeforweight');
+          const weightnodes = iframeforweight.contentWindow.document.querySelector('div[label="Traffic Split"]');
+          if (d && weightnodes) {
+            const sessioncounts = [];
+            const weights = [];
+            
+            // SESSIONS: Fill array
+            for (let i = 0; i < d.length; i += 1) {
+                const sessions = parseInt(d[i].innerText.substring(d[i].innerText.indexOf("/") + 2), 10);
+                sessioncounts.push(sessions);
+            }
+            
+            // WEIGHTS: Check if equal or custom weight splits are used and fill array
+            const weightEqual = iframeforweight.contentWindow.document.querySelectorAll('div[label="Traffic Split"] ul input')[0].checked;
+            if(weightEqual) {
+                for (let i = 0; i < d.length; i += 1) {
+                    const weightnode = parseInt(100 / d.length, 10);
+                    weights.push(weightnode);
+                }
+            } else {
+                for (let i = 0; i < d.length; i += 1) {
+                    const weightnode = parseFloat(weightnodes.querySelectorAll('div > ul > li > ul > li > button > span.ng-binding')[i].innerText, 10);
+                    weights.push(weightnode);
+                }
+            }
+            
+            // Do SRM Check
+            checkSRM(sessioncounts, weights);
+            srmChecked = true;
+            
+          }
+        }
+      }, 1000);
+    },
+    flagSRM() {
+      document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding').forEach(i => i.style.cssText = 'background-color: red; color: white; padding: 1px 3px; border-radius: 3px;');
+    },
+    unflagSRM() {
+      // TODO remove SRM warning if needed.
+    },
+  },
 };
 
 platforms[platform].init();
