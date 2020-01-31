@@ -11,7 +11,7 @@
      "matches": ["https://lukasvermeer.nl/srm/*",
                  "https://optimize.google.com/*",
                  "https://app.vwo.com/*,
-                 "https://sitegainer.com*,
+                 "https://sitegainer.com/*,
                  "https://conversion.symplify.com/*"],
      "js": ["lib/statistics-distributions.js", "srm.js", "content.js"]
    }
