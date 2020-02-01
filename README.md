@@ -14,7 +14,7 @@ This repository contains a [Chrome Extension](https://chrome.google.com/webstore
 
 # About the project
 
-Sample Ratio Mismatch Checker was created by [Lukas Vermeer](http://lukasvermeer.nl) and [Heinrich Mahr](https://heinrich333.github.io).
+Sample Ratio Mismatch Checker was created by [Lukas Vermeer](http://lukasvermeer.nl), [Heinrich Mahr](https://heinrich333.github.io) and [Georgi Georgiev](http://blog.analytics-toolkit.com).
 
 ## License
 
