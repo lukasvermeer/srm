@@ -20,7 +20,7 @@ This Chrome Extension automatically flags potential data quality issues on suppo
 
 ## What is Sample Ratio Mismatch? Why should we care?!
 
-A Sample Ratio Mismatch (SRM) test can be used to detect [a wide variety of data quality issues](https://dl.acm.org/citation.cfm?id=3330722) that may affect online experiments (aka A/B tests). Only expected proportions and observed sample counts are required as input for this procedure, so this test can be used even in cases where experimenters only have access to summary statistics; such as when using third-party tools.
+A Sample Ratio Mismatch (SRM) test can be used to detect a wide variety of data quality issues [(paper)](https://dl.acm.org/citation.cfm?id=3330722) that may affect online experiments (aka A/B tests). Only expected proportions and observed sample counts are required as input for this procedure, so this test can be used even in cases where experimenters only have access to summary statistics; such as when using third-party tools.
 
 For more information about Sample Ratio Mismatch please read the [Frequently Asked Questions]({{ site.baseurl }}{% link docs/faq.md %}).
 
@@ -38,7 +38,7 @@ Sample Ratio Mismatch Checker is distributed by an [MIT license](https://github.
 
 You want to contribute to this project? That's amazing! We'd love that! <3
 
-Feel free to fork the [repository on on GitHub](http://github.com/lukasvermeer/srm), make the changes you want to see, and issues a [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests). If you are not sure what to work on, we maintain [a list of outstanding issues on the GitHub project](https://github.com/lukasvermeer/srm/issues). (If you don't want to code, adding to that list of issues is also a great way to contribute.)
+Feel free to fork the repository on [GitHub](http://github.com/lukasvermeer/srm), make the changes you want to see, and issues a [pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests). If you are not sure what to work on, we maintain a list of outstanding issues on the GitHub [project](https://github.com/lukasvermeer/srm/issues). (If you don't want to code, adding to that list of issues is also a great way to contribute.)
 
 Thank you for making this project more awesome.
 
