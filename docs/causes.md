@@ -27,6 +27,13 @@ Assignment SRMs are the result of problems which occur during the assignment pha
 ### Variant Assignment
 
 #### Incorrect bucketing
+
+In "Diagnosing Sample Ratio Mismatch in Online Controlled Experiments: A Taxonomy and Rules of Thumb for Practitioners" ([link][srmpaper]), the authors describe how a bug in the experiment assignment service caused an SRM:
+
+> The experiment  assignment  service used a hash function to randomize users into one thousand buckets, each bucket representing 0.1 percent of users. For each experiment, the experiment owners define how much user traffic they want to expose each variant in the experiment to, which translates into a specific number of buckets to assign to control and treatment. In this case, there was a bug  in the experiment assignment service where the control variant was assigned one less bucket than the required number of buckets. A 50/50 test would incorrectly be setup as a 49.9/50 split, which is not necessarily an obvious issue.
+
+In this example, the SRM is mostly harmless. The unexpectedly uneven split would result in a slight loss of statistical power, and some confusion and bug hunting, but not much else. This type of SRM would also quickly become apparent when running A/A experiments.
+
 #### Faulty randomization function
 #### Corrupted user IDs
 #### Carry over effects
@@ -74,7 +81,7 @@ In "A Dirty Dozen: Twelve Common Metric Interpretation Pitfalls in Online Contro
 >
 > Investigation showed that the cause of the SRM and the puzzling drop in engagement was bot filtering logic. Number of distinct actions the user takes was one of the features used by the bot filtering algorithm, resulting in users with outlier values labeled as bots and excluded from experiment analysis. Increasing the number of slides improved engagement for some users so much that these real users started getting labeled as bots by the algorithm. After tuning the bot filtering algorithm, SRM disappeared and experiment results showed a big increase in user engagement.
 
-In this example, the SRM is a symptom of a (post-treatment) [attrition bias](https://en.wikipedia.org/wiki/Selection_bias#Attrition), which severely undermines the reliability of the results. The authors recommend to ensure that attrition (e.g. bot filtering) affects all variants equally.
+In this example, the SRM is a symptom of a (post-treatment) [attrition bias](attritionbias), which severely undermines the reliability of the results. The authors recommend to ensure that attrition (e.g. bot filtering) affects all variants equally:
 
 > As the example above shows, however, one needs to ensure that all variants in the experiment are impacted by the outlier filtering logic in the same way.
 
@@ -109,3 +116,4 @@ Experiment Interference SRMs are a special category. These SRMs are the result o
 
 [srmpaper]: https://dl.acm.org/citation.cfm?id=3330722 "Diagnosing Sample Ratio Mismatch in Online Controlled Experiments: A Taxonomy and Rules of Thumb for Practitioners"
 [dirtydozen]: https://dl.acm.org/doi/10.1145/3097983.3098024 "A Dirty Dozen: Twelve Common Metric Interpretation Pitfalls in Online Controlled Experiments"
+[attritionbias]: https://en.wikipedia.org/wiki/Selection_bias#Attrition "Wikipedia: Selection Bias: Attition"
