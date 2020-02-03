@@ -58,10 +58,34 @@ Execution SRMs are the result of problems which occur during the execution phase
 ### Telemetry Generation
 
 #### Redirecting only some variants
+
+In "Diagnosing Sample Ratio Mismatch in Online Controlled Experiments: A Taxonomy and Rules of Thumb for Practitioners" ([link][srmpaper]), the authors warn that:
+
+> Experiments not redirecting all variants of a web page may have an SRM as some redirects may fail.
+
+This happens when users are not included in the experiment unless the redirect is successful, for example because telemetry is only generated after the page loads.
+
 #### Telemetry added or removed
+
+In "Diagnosing Sample Ratio Mismatch in Online Controlled Experiments: A Taxonomy and Rules of Thumb for Practitioners" ([link][srmpaper]), the authors warn that:
+
+> If new telemetry is added to the product, the likelihood of receiving at least one event back from one-time users increases, which typically results in observing more users in that variant.
+
+In most systems, a limited amount of data loss is considered acceptable. If there is only one event for a particular user, loss of this one event would results in the user not being included in the experiment. If treatment causes more telemtry to be generated, then this attrition is far less likely to occur.
+
 #### Variant changing performance
+
+In "Diagnosing Sample Ratio Mismatch in Online Controlled Experiments: A Taxonomy and Rules of Thumb for Practitioners" ([link][srmpaper]), the authors warn that:
+
+> If the treatment degrades performance of a product, an SRM can happen as users have more time to exit the product before the  logs are generated. In contrast, improved product performance can give telemetry generation component more time to generate and send logs, frequently resulting in observing more users in the faster variant.
+
 #### Variant changing engagement
 #### Variant crashing the product
+
+In "The Benefits of Controlled Experimentation at Scale" ([link][benefitspaper]), the authors describe how an increase in crashes caused a "user mismatch" (i.e. an SRM):
+
+> By examining the experiment in detail, the team learned that instrumentation data was lost when the application crashed during the experiment on the older OS version. This caused unusual movements in metrics and the user mismatch. By investigating this experimental alert, the team discovered that a software bug in the new feature caused a crash in the code path related to the new feature.
+
 #### Client caching behaviour
 #### Telemetry transmission
 
@@ -117,3 +141,4 @@ Experiment Interference SRMs are a special category. These SRMs are the result o
 [srmpaper]: https://dl.acm.org/citation.cfm?id=3330722 "Diagnosing Sample Ratio Mismatch in Online Controlled Experiments: A Taxonomy and Rules of Thumb for Practitioners"
 [dirtydozen]: https://dl.acm.org/doi/10.1145/3097983.3098024 "A Dirty Dozen: Twelve Common Metric Interpretation Pitfalls in Online Controlled Experiments"
 [attritionbias]: https://en.wikipedia.org/wiki/Selection_bias#Attrition "Wikipedia: Selection Bias: Attition"
+[benefitspaper]: https://ieeexplore.ieee.org/abstract/document/8051322 "The Benefits of Controlled Experimentation at Scale"
