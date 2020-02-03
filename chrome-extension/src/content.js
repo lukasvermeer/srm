@@ -131,7 +131,7 @@ const platforms = {
       // TODO remove SRM warning if needed.
     },
   },
-  
+
   // VWO
   'app.vwo.com': {
     init() {
@@ -144,7 +144,7 @@ const platforms = {
           }
           const ifrm = document.createElement('iframe');
           ifrm.id = 'iframeforweight';
-          ifrm.src = location.href.slice(0, -7) + '/edit/others';
+          ifrm.src = `${location.href.slice(0, -7)}/edit/others`;
           ifrm.style.display = 'none';
           document.body.appendChild(ifrm);
         }
@@ -169,31 +169,30 @@ const platforms = {
           if (d && weightnodes) {
             const sessioncounts = [];
             const weights = [];
-            
+
             // SESSIONS: Fill array
             for (let i = 0; i < d.length; i += 1) {
-                const sessions = parseInt(d[i].innerText.substring(d[i].innerText.indexOf("/") + 2), 10);
-                sessioncounts.push(sessions);
+              const sessions = parseInt(d[i].innerText.substring(d[i].innerText.indexOf('/') + 2), 10);
+              sessioncounts.push(sessions);
             }
-            
+
             // WEIGHTS: Check if equal or custom weight splits are used and fill array
             const weightEqual = iframeforweight.contentWindow.document.querySelectorAll('div[label="Traffic Split"] ul input')[0].checked;
-            if(weightEqual) {
-                for (let i = 0; i < d.length; i += 1) {
-                    const weightnode = parseInt(100 / d.length, 10);
-                    weights.push(weightnode);
-                }
+            if (weightEqual) {
+              for (let i = 0; i < d.length; i += 1) {
+                const weightnode = parseInt(100 / d.length, 10);
+                weights.push(weightnode);
+              }
             } else {
-                for (let i = 0; i < d.length; i += 1) {
-                    const weightnode = parseFloat(weightnodes.querySelectorAll('div > ul > li > ul > li > button > span.ng-binding')[i].innerText, 10);
-                    weights.push(weightnode);
-                }
+              for (let i = 0; i < d.length; i += 1) {
+                const weightnode = parseFloat(weightnodes.querySelectorAll('div > ul > li > ul > li > button > span.ng-binding')[i].innerText, 10);
+                weights.push(weightnode);
+              }
             }
-            
+
             // Do SRM Check
             checkSRM(sessioncounts, weights);
             srmChecked = true;
-            
           }
         }
       }, 1000);
