@@ -10,6 +10,8 @@ nav_order: 3
 Making diagnosing, fixing, and preventing Sample Ratio Mismatch easier by providing a taxonomy of known potential causes.
 {: .fs-6 .fw-300 }
 
+While a simple statistical check is used to detect Sample Ratio Mismatch, correctly identifying the root cause and preventing it from happening in the future is often extremely challenging and time consuming. This section is based on the KDD paper "Diagnosing Sample Ratio Mismatch in Online Controlled Experiments: A Taxonomy and Rules of Thumb for Practitioners" ([link][srmpaper]). The paper provides several examples of causes of Sample Ratio Mismatch, as well as a taxonmy of types based on the stage of the experiment where they appear.
+
 ## Table of contents
 {: .no_toc .text-delta }
 
@@ -17,8 +19,6 @@ Making diagnosing, fixing, and preventing Sample Ratio Mismatch easier by provid
 {:toc}
 
 ---
-
-While a simple statistical check is used to detect Sample Ratio Mismatch, correctly identifying the root cause and preventing it from happening in the future is often extremely challenging and time consuming. This section is based on the KDD paper "Diagnosing Sample Ratio Mismatch in Online Controlled Experiments: A Taxonomy and Rules of Thumb for Practitioners" ([link][srmpaper]). The paper provides several examples of causes of Sample Ratio Mismatch, as well as a taxonmy of types based on the stage of the experiment where they appear.
 
 ## Experiment Assignment
 
@@ -137,6 +137,16 @@ Experiment Interference SRMs are a special category. These SRMs are the result o
 ### Telemetry Interference
 
 #### Injection attacks and hacks
+
+
+---
+
+Missing a root cause?
+{: .fs-6 .fw-300 }
+
+That's totally possible! This taxonomy is likely incomplete. We would love to hear your suggestions and add your examples to this list.
+
+[Tell us on GitHub](https://github.com/lukasvermeer/srm/issues){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }[Send Lukas an email](https://lukasvermeer.nl/#contact){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 [srmpaper]: https://dl.acm.org/citation.cfm?id=3330722 "Diagnosing Sample Ratio Mismatch in Online Controlled Experiments: A Taxonomy and Rules of Thumb for Practitioners"
 [dirtydozen]: https://dl.acm.org/doi/10.1145/3097983.3098024 "A Dirty Dozen: Twelve Common Metric Interpretation Pitfalls in Online Controlled Experiments"
