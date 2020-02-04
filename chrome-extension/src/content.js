@@ -180,7 +180,7 @@ const platforms = {
             const weightEqual = iframeforweight.contentWindow.document.querySelectorAll('div[label="Traffic Split"] ul input')[0].checked;
             if (weightEqual) {
               for (let i = 0; i < d.length; i += 1) {
-                const weightnode = parseInt(100 / d.length, 10);
+                const weightnode = parseFloat(100 / d.length, 10);
                 weights.push(weightnode);
               }
             } else {
