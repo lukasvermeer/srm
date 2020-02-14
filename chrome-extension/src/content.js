@@ -126,6 +126,24 @@ const platforms = {
     },
     flagSRM() {
       document.querySelectorAll('.opt-variant-sessions-subtitle').forEach(i => i.style.cssText = 'background-color: red; color: white; padding: 1px 3px; border-radius: 3px;');
+      // get user report GA link
+      const repUrl = document.querySelector('div[ng-if=reportUrl] a').href;
+      let uIDParam = '';
+      if (repUrl.match(/(authuser=)/) != null) { uIDParam = '?authuser=' + repUrl.replace(/^.*?authuser=([0-9]+).*$/, '$1') + '&'; }
+      const expId = repUrl.replace(/^.*?experimentId%253D([^%]+).*$/, '$1');
+      // TODO - check if below line actually works as expected
+      const gaIDs = iframeforweight.contentWindow.document.querySelector('a[opt-track=viewHomeInGa]').href.replace(/^.*?\/report-home\/([a-z0-9]+).*$/, '$1');
+      let startDate = new Date(document.querySelector('div.opt-schedule-display-start-time>span').innerText);
+      let startMonth = startDate.getMonth()+1;
+      if (startMonth < 10) startMonth = '0' + startMonth.toString();
+      startDate = startDate.getFullYear().toString() + startMonth + startDate.getDate().toString();
+      let endDate = new Date(document.querySelector('div.opt-schedule-display-end-time>span').innerText);
+      let endMonth = endDate.getMonth()+1;
+      if (endMonth < 10) endMonth = '0' + endMonth.toString();
+      endDate = endDate.getFullYear().toString() + endMonth + endDate.getDate().toString(); //not a problem if the date is in the future
+      // REPLACE gaLink below with a suitable custom report link, but make sure to preserve all param replacements in the URL
+      const gaLink = 'https://analytics.google.com/analytics/web/' + uIDParam + '#/report/visitors-mobile-overview/' + gaIDs + '/_u.date00=' + startDate + '&_u.date01=' + endDate + '&explorer-table.secSegmentId=analytics.experimentCombination&explorer-table.plotKeys=%5B%5D&explorer-table.advFilter=%5B%5B0,%22analytics.experimentCombination%22,%22PT%22,%22' + expId + '%22,0%5D%5D&explorer-table-dataTable.sortColumnName=analytics.experimentCombination&explorer-table-dataTable.sortDescending=false/';
+      // TODO need to extract the number of users for each variant (order does not matter?) and then perform an SRM on these
     },
     unflagSRM() {
       // TODO remove SRM warning if needed.
