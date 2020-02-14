@@ -15,8 +15,9 @@ const platform = window.location.host;
 
 // Checking for SRM using chi-square
 function checkSRM(observed, expected) {
-  if (computeSRM(observed, expected) < params.pValueThreshold) {
-    platforms[platform].flagSRM();
+  const pval = computeSRM(observed, expected);
+  if (pval < params.pValueThreshold) {
+    platforms[platform].flagSRM(pval);
   } else {
     platforms[platform].unflagSRM();
   }
@@ -124,8 +125,10 @@ const platforms = {
         }
       }, 1000);
     },
-    flagSRM() {
+    flagSRM(pval) {
       document.querySelectorAll('.opt-variant-sessions-subtitle').forEach(i => i.style.cssText = 'background-color: red; color: white; padding: 1px 3px; border-radius: 3px;');
+	  document.querySelectorAll('.opt-variant-sessions-subtitle').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
+	  document.querySelectorAll('.opt-variant-sessions-subtitle opt-variant-name').forEach(i => i.name = `SRM detected! p-value = ${pval}`);
     },
     unflagSRM() {
       // TODO remove SRM warning if needed.
@@ -197,8 +200,113 @@ const platforms = {
         }
       }, 1000);
     },
-    flagSRM() {
+    flagSRM(pval) {
       document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding').forEach(i => i.style.cssText = 'background-color: red; color: white; padding: 1px 3px; border-radius: 3px;');
+	  document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding').forEach(i => i.title = `SRM detected! p-value = ${pval}`); // TODO - Check if working as expected
+    },
+    unflagSRM() {
+      // TODO remove SRM warning if needed.
+    },
+  },
+
+  // Convert.com
+  'app.convert.com': {
+    init() {
+      // Listen for changing URL to reload iframe for proportions
+      chrome.runtime.onMessage.addListener(
+        (request, sender, sendResponse) => {
+          if (request.message === 'URL has changed') {
+            newIframe();
+            srmChecked = false;
+          }
+        },
+      );
+
+      let srmChecked = false; // TODO: Listen for changes to do check when content loads.
+      setInterval(() => {
+        if (!srmChecked) {
+          // Get sample counts
+          const d = document.querySelector('div.summary-table-main.report_condensed').querySelectorAll('tr.tbody.vrow div.goal-data[data-rgroup=all]');
+          if (d) {
+            const sessioncounts = [];
+            const weights = [];
+            let groups = 0;
+
+            // SESSIONS: Fill array
+            for (let i = 0; i < d.length; i += 1) {
+			  if (d[i].style.display != 'none') {
+                groups++;
+                const sessions = parseInt(d[i].innerText.replace(/^[^/]+\/\s*([,0-9]+)/, '$1').replace(',', ''));
+                sessioncounts.push(sessions);
+			  }
+            }
+
+            for (let i = 0; i < d.length; i += 1) {
+              if (d[i].style.display != 'none') {
+                weights.push(1 / groups * 100);
+			  }
+            }
+
+            // Do SRM Check
+            checkSRM(sessioncounts, weights);
+            srmChecked = true;
+          }
+        }
+      }, 1000);
+    },
+    flagSRM(pval) {
+      document.querySelector('div.summary-table-main.report_condensed').querySelectorAll('tr.tbody.vrow div.goal-data[data-rgroup=all]').forEach(i => i.style.cssText = `${i.style.cssText};background-color: red; color: white; padding: 1px 3px; border-radius: 3px;`);
+	  document.querySelector('div.summary-table-main.report_condensed').querySelectorAll('tr.tbody.vrow div.goal-data[data-rgroup=all]').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
+    },
+    unflagSRM() {
+      // TODO remove SRM warning if needed.
+    },
+  },
+
+  // Sitegainer.com
+  'sitegainer.com': {
+    init() {
+      // Listen for changing URL to reload iframe for proportions
+      chrome.runtime.onMessage.addListener(
+        (request, sender, sendResponse) => {
+          if (request.message === 'URL has changed') {
+            newIframe();
+            srmChecked = false;
+          }
+        },
+      );
+
+      let srmChecked = false; // TODO: Listen for changes to do check when content loads.
+      setInterval(() => {
+        if (!srmChecked) {
+          // Get sample counts
+          const d = document.querySelector('div.goalBlock').querySelectorAll('tr.resultRow');
+          if (d) {
+            const sessioncounts = [];
+            const weights = [];
+
+            // SESSIONS: Fill array
+            for (let i = 0; i < d.length; i += 1) {
+			  const sessions = parseInt(d[i].querySelectorAll('td')[1].innerText.replace(/^\s*([,0-9]+)\s*\/.*?$/, '$1').replace(',', ''));
+			  sessioncounts.push(sessions);
+			  const weight = parseInt(d[i].getAttribute('allocation'));
+			  if (weight != undefined && !isNaN(weight)) {
+                weights.push(weight);
+			  }
+            }
+
+            // Do SRM Check
+            if (Array.isArray(weights) && weights.length) {
+			  checkSRM(sessioncounts, weights);
+			  srmChecked = true;
+            }
+          }
+        }
+      }, 1000);
+    },
+    flagSRM(pval) {
+      document.querySelector('div.goalBlock').querySelectorAll('tr.resultRow').forEach(i => i.querySelectorAll('td')[1].style.cssText = `${i.style.cssText};background-color: red; color: white; padding: 1px 3px; border-radius: 3px;`);
+	  document.querySelector('div.goalBlock').querySelectorAll('tr.resultRow').forEach(i => i.querySelectorAll('td')[1].title = `SRM detected! p-value = ${pval}`);
     },
     unflagSRM() {
       // TODO remove SRM warning if needed.
