@@ -201,7 +201,7 @@ const platforms = {
       }, 1000);
     },
     flagSRM(pval) {
-      document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding').forEach(i => i.style.cssText = 'background-color: red; color: white; padding: 1px 3px; border-radius: 3px;');
+      document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding').forEach(i => i.style.cssText = `background-color: red; color: white; padding: 1px 3px; border-radius: 3px;`);
 	  document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding').forEach(i => i.title = `SRM detected! p-value = ${pval}`); // TODO - Check if working as expected
     },
     unflagSRM() {
@@ -225,31 +225,50 @@ const platforms = {
       let srmChecked = false; // TODO: Listen for changes to do check when content loads.
       setInterval(() => {
         if (!srmChecked) {
-          // Get sample counts
-          const d = document.querySelector('div.summary-table-main.report_condensed').querySelectorAll('tr.tbody.vrow div.goal-data[data-rgroup=all]');
-          if (d) {
-            const sessioncounts = [];
-            const weights = [];
-            let groups = 0;
-
-            // SESSIONS: Fill array
-            for (let i = 0; i < d.length; i += 1) {
-			  if (d[i].style.display != 'none') {
-                groups++;
-                const sessions = parseInt(d[i].innerText.replace(/^[^/]+\/\s*([,0-9]+)/, '$1').replace(',', ''));
-                sessioncounts.push(sessions);
+		  if (document.querySelector('div.summary-table-main.report_condensed') != null) {
+            // Get sample counts
+            const d = document.querySelector('div.summary-table-main.report_condensed').querySelectorAll('tr.tbody.vrow div.goal-data[data-rgroup=all]');
+			const stopped = document.querySelector('div.summary-table-main.report_condensed').querySelectorAll('tr.tbody.vrow p.goal-data');
+            if (d) {
+              const sessioncounts = [];
+              const weights = [];
+              let groups = 0;
+			  let stoppedCount = 0;
+			  let testStopped = false;
+			  
+			  for (let i = 0; i < stopped.length; i += 1) {
+				if (stopped[i].innerText.match(/(STOPPED|WINNER)/) != null) {
+				  stoppedCount++;
+				}
 			  }
-            }
-
-            for (let i = 0; i < d.length; i += 1) {
-              if (d[i].style.display != 'none') {
-                weights.push(1 / groups * 100);
+			  
+			  if (stoppedCount == stopped.length) {
+				testStopped = true;
 			  }
-            }
 
-            // Do SRM Check
-            checkSRM(sessioncounts, weights);
-            srmChecked = true;
+              // SESSIONS: Fill array
+              for (let i = 0; i < d.length; i += 1) {
+			    if (d[i].style.display != 'none') {
+				  if (testStopped || d[i].parentElement.parentElement.querySelector('p.goal-data[data-goalid="' + d[i].getAttribute('data-goalid') + '"]').innerText.match(/(STOPPED)/) == null) {
+                    groups++;
+                    const sessions = parseInt(d[i].innerText.replace(/^[^/]+\/\s*([,0-9]+)/, '$1').replace(',', ''));
+                    sessioncounts.push(sessions);
+				  }
+			    }
+              }
+
+              for (let i = 0; i < d.length; i += 1) {
+                if (d[i].style.display != 'none') {
+				  if (testStopped || d[i].parentElement.parentElement.querySelector('p.goal-data[data-goalid="' + d[i].getAttribute('data-goalid') + '"]').innerText.match(/(STOPPED)/) == null) {
+                    weights.push(1 / groups * 100);
+				  }
+			    }
+              }
+
+              // Do SRM Check
+              checkSRM(sessioncounts, weights);
+              srmChecked = true;
+			}
           }
         }
       }, 1000);
@@ -279,27 +298,29 @@ const platforms = {
       let srmChecked = false; // TODO: Listen for changes to do check when content loads.
       setInterval(() => {
         if (!srmChecked) {
-          // Get sample counts
-          const d = document.querySelector('div.goalBlock').querySelectorAll('tr.resultRow');
-          if (d) {
-            const sessioncounts = [];
-            const weights = [];
+		  if (document.querySelector('div.goalBlock') != null) {
+            // Get sample counts
+            const d = document.querySelector('div.goalBlock').querySelectorAll('tr.resultRow');
+            if (d) {
+              const sessioncounts = [];
+              const weights = [];
 
-            // SESSIONS: Fill array
-            for (let i = 0; i < d.length; i += 1) {
-			  const sessions = parseInt(d[i].querySelectorAll('td')[1].innerText.replace(/^\s*([,0-9]+)\s*\/.*?$/, '$1').replace(',', ''));
-			  sessioncounts.push(sessions);
-			  const weight = parseInt(d[i].getAttribute('allocation'));
-			  if (weight != undefined && !isNaN(weight)) {
-                weights.push(weight);
-			  }
-            }
+              // SESSIONS: Fill array
+              for (let i = 0; i < d.length; i += 1) {
+			    const sessions = parseInt(d[i].querySelectorAll('td')[1].innerText.replace(/^\s*([,0-9]+)\s*\/.*?$/, '$1').replace(',', ''));
+			    sessioncounts.push(sessions);
+			    const weight = parseInt(d[i].getAttribute('allocation'));
+			    if (weight != undefined && !isNaN(weight)) {
+                  weights.push(weight);
+			    }
+              }
 
-            // Do SRM Check
-            if (Array.isArray(weights) && weights.length) {
-			  checkSRM(sessioncounts, weights);
-			  srmChecked = true;
-            }
+              // Do SRM Check
+              if (Array.isArray(weights) && weights.length) {
+			    checkSRM(sessioncounts, weights);
+			    srmChecked = true;
+              }
+			}
           }
         }
       }, 1000);
