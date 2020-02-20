@@ -298,7 +298,7 @@ const platforms = {
       let srmChecked = false; // TODO: Listen for changes to do check when content loads.
       setInterval(() => {
         if (!srmChecked) {
-		  if (document.querySelector('div.goalBlock') != null) {
+          if (document.querySelector('div.goalBlock') != null) {
             // Get sample counts
             const d = document.querySelector('div.goalBlock').querySelectorAll('tr.resultRow');
             if (d) {
@@ -307,27 +307,88 @@ const platforms = {
 
               // SESSIONS: Fill array
               for (let i = 0; i < d.length; i += 1) {
-			    const sessions = parseInt(d[i].querySelectorAll('td')[1].innerText.replace(/^\s*([,0-9]+)\s*\/.*?$/, '$1').replace(',', ''));
-			    sessioncounts.push(sessions);
-			    const weight = parseInt(d[i].getAttribute('allocation'));
-			    if (weight != undefined && !isNaN(weight)) {
+                const sessions = parseInt(d[i].querySelectorAll('td')[1].innerText.replace(/^\s*([,0-9]+)\s*\/.*?$/, '$1').replace(',', ''));
+                sessioncounts.push(sessions);
+                const weight = parseInt(d[i].getAttribute('allocation'));
+                if (weight != undefined && !isNaN(weight)) {
                   weights.push(weight);
-			    }
+                }
               }
 
               // Do SRM Check
               if (Array.isArray(weights) && weights.length) {
-			    checkSRM(sessioncounts, weights);
-			    srmChecked = true;
+                checkSRM(sessioncounts, weights);
+                srmChecked = true;
               }
-			}
+            }
           }
         }
       }, 1000);
     },
     flagSRM(pval) {
       document.querySelector('div.goalBlock').querySelectorAll('tr.resultRow').forEach(i => i.querySelectorAll('td')[1].style.cssText = `${i.style.cssText};background-color: red; color: white; padding: 1px 3px; border-radius: 3px;`);
-	  document.querySelector('div.goalBlock').querySelectorAll('tr.resultRow').forEach(i => i.querySelectorAll('td')[1].title = `SRM detected! p-value = ${pval}`);
+      document.querySelector('div.goalBlock').querySelectorAll('tr.resultRow').forEach(i => i.querySelectorAll('td')[1].title = `SRM detected! p-value = ${pval}`);
+    },
+    unflagSRM() {
+      // TODO remove SRM warning if needed.
+    },
+  },
+  
+  // Omniconvert.com
+  'web.omniconvert.com': {
+    init() {
+      // Listen for changing URL to reload iframe for proportions
+      chrome.runtime.onMessage.addListener(
+        (request, sender, sendResponse) => {
+          if (request.message === 'URL has changed') {
+            newIframe();
+            srmChecked = false;
+          }
+        },
+      );
+
+      let srmChecked = false; // TODO: Listen for changes to do check when content loads.
+      setInterval(() => {
+        if (!srmChecked) {
+          if (document.querySelector('table.experiment_results') != null) {
+            // Get sample counts
+            const d = document.querySelector('table.experiment_results').querySelectorAll(':scope > tbody > tr');
+            if (d) {
+              const sessioncounts = [];
+              const weights = [];
+
+              // SESSIONS: Fill array
+              for (let i = 0; i < d.length; i += 1) {
+				if (d[i].querySelectorAll('td').length > 0) {
+                  const sessions = parseInt(d[i].querySelectorAll('td')[1].innerText.replace(/^\s*([,0-9]+)\s*$/, '$1').replace(',', ''));
+                  sessioncounts.push(sessions);
+                  const weight = parseInt(d[i].querySelectorAll('td')[0].innerText.replace(/^.*?(?=([1-9][0-9])% (?=traffic allocated|トラフィック割当て)).*?$/is, '$1'));
+                  if (weight != undefined && !isNaN(weight)) {
+                    weights.push(weight);
+                  }
+				}
+              }
+
+              // Do SRM Check
+              if (Array.isArray(weights) && weights.length) {
+				  console.log(sessioncounts);console.log(weights);
+                checkSRM(sessioncounts, weights);
+                srmChecked = true;
+              }
+            }
+          }
+        }
+      }, 1000);
+    },
+    flagSRM(pval) {
+	  for (let e in document.querySelector('table.experiment_results').querySelectorAll(':scope > tbody > tr')) {
+	    let j = document.querySelector('table.experiment_results').querySelectorAll(':scope > tbody > tr')[e];
+	    if (typeof(j) == 'object' && j.querySelectorAll('td').length > 0) {
+		  let i = j.querySelectorAll('td')[1];
+		  i.style.cssText = `${i.style.cssText};background-color: red; color: white; padding: 1px 3px; border-radius: 3px;`;
+		  i.title = `SRM detected! p-value = ${pval} . SRM check assumess traffic allocation was not changed for the entire duration of the test.`;
+		}
+	  }
     },
     unflagSRM() {
       // TODO remove SRM warning if needed.
