@@ -13,7 +13,8 @@
                  "https://app.vwo.com/*",
                  "https://sitegainer.com/*",
                  "https://conversion.symplify.com/*",
-                 "https://app.convert.com/*"],
+                 "https://app.convert.com/*",
+                 "https://web.omniconvert.com/*"],
      "js": ["lib/statistics-distributions.js", "srm.js", "content.js"]
    }
  ],
