@@ -20,7 +20,7 @@ This Chrome Extension automatically flags potential data quality issues on suppo
 
 ## What is Sample Ratio Mismatch? Why should we care?!
 
-A Sample Ratio Mismatch (SRM) test can be used to detect a wide variety of data quality issues [(paper)](https://dl.acm.org/citation.cfm?id=3330722) that may affect online experiments (aka A/B tests). Only expected proportions and observed sample counts are required as input for this procedure, so this test can be used even in cases where experimenters only have access to summary statistics; such as when using third-party tools.
+A Sample Ratio Mismatch (SRM) test can be used to detect a wide variety of data quality issues [(paper)](https://dl.acm.org/citation.cfm?id=3330722) [(presentation)](https://conversionhotel.com/session/keynote-2019-run-better-experiments-srm-checks/) that may affect online experiments (aka A/B tests). Only expected proportions and observed sample counts are required as input for this procedure, so this test can be used even in cases where experimenters only have access to summary statistics; such as when using third-party tools.
 
 For more information about Sample Ratio Mismatch please read the [Frequently Asked Questions]({{ site.baseurl }}{% link docs/faq.md %}).
 
