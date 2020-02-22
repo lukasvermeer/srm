@@ -201,7 +201,7 @@ const platforms = {
       }, 1000);
     },
     flagSRM(pval) {
-      document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding').forEach(i => i.style.cssText = `background-color: red; color: white; padding: 1px 3px; border-radius: 3px;`);
+      document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding').forEach(i => i.style.cssText = 'background-color: red; color: white; padding: 1px 3px; border-radius: 3px;');
 	  document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding').forEach(i => i.title = `SRM detected! p-value = ${pval}`); // TODO - Check if working as expected
     },
     unflagSRM() {
@@ -228,28 +228,28 @@ const platforms = {
 		  if (document.querySelector('div.summary-table-main.report_condensed') != null) {
             // Get sample counts
             const d = document.querySelector('div.summary-table-main.report_condensed').querySelectorAll('tr.tbody.vrow div.goal-data[data-rgroup=all]');
-			const stopped = document.querySelector('div.summary-table-main.report_condensed').querySelectorAll('tr.tbody.vrow p.goal-data');
+            const stopped = document.querySelector('div.summary-table-main.report_condensed').querySelectorAll('tr.tbody.vrow p.goal-data');
             if (d) {
               const sessioncounts = [];
               const weights = [];
               let groups = 0;
 			  let stoppedCount = 0;
 			  let testStopped = false;
-			  
+
 			  for (let i = 0; i < stopped.length; i += 1) {
-				if (stopped[i].innerText.match(/(STOPPED|WINNER)/) != null) {
+                if (stopped[i].innerText.match(/(STOPPED|WINNER)/) != null) {
 				  stoppedCount++;
-				}
+                }
 			  }
-			  
+
 			  if (stoppedCount == stopped.length) {
-				testStopped = true;
+                testStopped = true;
 			  }
 
               // SESSIONS: Fill array
               for (let i = 0; i < d.length; i += 1) {
 			    if (d[i].style.display != 'none') {
-				  if (testStopped || d[i].parentElement.parentElement.querySelector('p.goal-data[data-goalid="' + d[i].getAttribute('data-goalid') + '"]').innerText.match(/(STOPPED)/) == null) {
+				  if (testStopped || d[i].parentElement.parentElement.querySelector(`p.goal-data[data-goalid="${d[i].getAttribute('data-goalid')}"]`).innerText.match(/(STOPPED)/) == null) {
                     groups++;
                     const sessions = parseInt(d[i].innerText.replace(/^[^/]+\/\s*([,0-9]+)/, '$1').replace(',', ''));
                     sessioncounts.push(sessions);
@@ -259,7 +259,7 @@ const platforms = {
 
               for (let i = 0; i < d.length; i += 1) {
                 if (d[i].style.display != 'none') {
-				  if (testStopped || d[i].parentElement.parentElement.querySelector('p.goal-data[data-goalid="' + d[i].getAttribute('data-goalid') + '"]').innerText.match(/(STOPPED)/) == null) {
+				  if (testStopped || d[i].parentElement.parentElement.querySelector(`p.goal-data[data-goalid="${d[i].getAttribute('data-goalid')}"]`).innerText.match(/(STOPPED)/) == null) {
                     weights.push(1 / groups * 100);
 				  }
 			    }
@@ -268,7 +268,7 @@ const platforms = {
               // Do SRM Check
               checkSRM(sessioncounts, weights);
               srmChecked = true;
-			}
+            }
           }
         }
       }, 1000);
@@ -333,7 +333,7 @@ const platforms = {
       // TODO remove SRM warning if needed.
     },
   },
-  
+
   // Omniconvert.com
   'web.omniconvert.com': {
     init() {
@@ -380,10 +380,10 @@ const platforms = {
       }, 1000);
     },
     flagSRM(pval) {
-      for (let e in document.querySelector('table.experiment_results').querySelectorAll(':scope > tbody > tr')) {
-        let j = document.querySelector('table.experiment_results').querySelectorAll(':scope > tbody > tr')[e];
-        if (typeof(j) == 'object' && j.querySelectorAll('td').length > 0) {
-	    let i = j.querySelectorAll('td')[1];
+      for (const e in document.querySelector('table.experiment_results').querySelectorAll(':scope > tbody > tr')) {
+        const j = document.querySelector('table.experiment_results').querySelectorAll(':scope > tbody > tr')[e];
+        if (typeof (j) === 'object' && j.querySelectorAll('td').length > 0) {
+	    const i = j.querySelectorAll('td')[1];
           i.style.cssText = `${i.style.cssText};background-color: red; color: white; padding: 1px 3px; border-radius: 3px;`;
           i.title = `SRM detected! p-value = ${pval} . SRM check assumess traffic allocation was not changed for the entire duration of the test.`;
         }
@@ -393,7 +393,7 @@ const platforms = {
       // TODO remove SRM warning if needed.
     },
   },
-  
+
   // Zoho.eu
   'pagesense.zoho.eu': {
     init() {
@@ -413,7 +413,7 @@ const platforms = {
         }
       }
       newIframe();
-	  
+
       // Listen for changing URL to reload iframe for proportions
       chrome.runtime.onMessage.addListener(
         (request, sender, sendResponse) => {
@@ -443,7 +443,7 @@ const platforms = {
                   sessioncounts.push(sessions);
                 }
               }
-			  
+
               // WEIGHTS: Fill array
               for (let i = 0; i < weightnodes.length; i += 1) {
                 if (weightnodes[i].querySelectorAll('td').length > 0) {
@@ -465,10 +465,10 @@ const platforms = {
       }, 1000);
     },
     flagSRM(pval) {
-      for (let e in document.querySelector('table.Report-detailedTable').querySelectorAll('tr')) {
-        let j = document.querySelector('table.Report-detailedTable').querySelectorAll('tr')[e];
-        if (typeof(j) == 'object' && j.querySelectorAll('td').length > 0) {
-          let i = j.querySelectorAll('td')[2];
+      for (const e in document.querySelector('table.Report-detailedTable').querySelectorAll('tr')) {
+        const j = document.querySelector('table.Report-detailedTable').querySelectorAll('tr')[e];
+        if (typeof (j) === 'object' && j.querySelectorAll('td').length > 0) {
+          const i = j.querySelectorAll('td')[2];
           i.style.cssText = `${i.style.cssText};background-color: red; color: white; padding: 1px 3px; border-radius: 3px;`;
           i.title = `SRM detected! p-value = ${pval}`;
     	}
@@ -478,7 +478,7 @@ const platforms = {
       // TODO remove SRM warning if needed.
     },
   },
-  
+
   // Zoho.com
   'pagesense.zoho.com': {
     init() {
@@ -498,7 +498,7 @@ const platforms = {
         }
       }
       newIframe();
-	  
+
       // Listen for changing URL to reload iframe for proportions
       chrome.runtime.onMessage.addListener(
         (request, sender, sendResponse) => {
@@ -528,10 +528,10 @@ const platforms = {
                   sessioncounts.push(sessions);
                 }
               }
-			  
+
               // WEIGHTS: Fill array
               for (let i = 0; i < weightnodes.length; i += 1) {
-               if (weightnodes[i].querySelectorAll('td').length > 0) {
+                if (weightnodes[i].querySelectorAll('td').length > 0) {
                   const weight = parseInt(weightnodes[i].querySelectorAll('td')[1].innerText.replace(/^.*?(?=([1-9][0-9])%).*?$/is, '$1'));
                   if (weight != undefined && !isNaN(weight)) {
                     weights.push(weight);
@@ -550,10 +550,10 @@ const platforms = {
       }, 1000);
     },
     flagSRM(pval) {
-      for (let e in document.querySelector('table.Report-detailedTable').querySelectorAll('tr')) {
-        let j = document.querySelector('table.Report-detailedTable').querySelectorAll('tr')[e];
-        if (typeof(j) == 'object' && j.querySelectorAll('td').length > 0) {
-          let i = j.querySelectorAll('td')[2];
+      for (const e in document.querySelector('table.Report-detailedTable').querySelectorAll('tr')) {
+        const j = document.querySelector('table.Report-detailedTable').querySelectorAll('tr')[e];
+        if (typeof (j) === 'object' && j.querySelectorAll('td').length > 0) {
+          const i = j.querySelectorAll('td')[2];
           i.style.cssText = `${i.style.cssText};background-color: red; color: white; padding: 1px 3px; border-radius: 3px;`;
           i.title = `SRM detected! p-value = ${pval}`;
         }
