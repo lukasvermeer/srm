@@ -10,6 +10,14 @@ The Sample Ratio Mismatch (SRM) test can be used to detect a wide variety of dat
 
 This repository contains a [Chrome Extension](https://chrome.google.com/webstore/detail/sample-ratio-mismatch-che/ikielffdbameifemkibfheolelbohipn) that can automatically detect SRM on supported platforms, as well as a [website](https://lukasvermeer.nl/srm/) with more information about the extension.
 
+Supported platforms:
+- Convert.com
+- Google Optimize
+- Omniconvert
+- SiteGainer/Symplify
+- Visual Website Optimizer (VWO)
+- Zoho PageSense
+
 ---
 
 # About the project

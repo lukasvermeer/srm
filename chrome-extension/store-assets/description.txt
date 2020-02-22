@@ -1,11 +1,11 @@
 The Sample Ratio Mismatch (SRM) test can be used to detect a wide variety of data quality issues that may affect online experiments (aka A/B tests). Only expected proportions and observed sample counts are required as input for this procedure, so this test can be used even in cases where experimenters only have access to summary statistics; such as when using third-party tools. This Chrome Extension automatically performs SRM checks and flags potential data quality issues on supported experimentation platforms.
 
 Supported platforms:
-- Google Optimize
-- Visual Website Optimizer (VWO)
-- SiteGainer/Symplify
 - Convert.com
+- Google Optimize
 - Omniconvert
+- SiteGainer/Symplify
+- Visual Website Optimizer (VWO)
 - Zoho PageSense
 
 More information about SRM and this extension is available at https://lukasvermeer.nl/srm/.

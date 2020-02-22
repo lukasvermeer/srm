@@ -30,6 +30,15 @@ For more information about Sample Ratio Mismatch please read the [Frequently Ask
 
 Sample Ratio Mismatch Checker was created by [Lukas Vermeer](http://lukasvermeer.nl), [Heinrich Mahr](https://heinrich333.github.io) and [Georgi Georgiev](http://blog.analytics-toolkit.com).
 
+### Supported platforms
+
+- Convert.com
+- Google Optimize
+- Omniconvert
+- SiteGainer/Symplify
+- Visual Website Optimizer (VWO)
+- Zoho PageSense
+
 ### License
 
 Sample Ratio Mismatch Checker is distributed by an [MIT license](https://github.com/lukasvermeer/srm/tree/master/LICENSE).
