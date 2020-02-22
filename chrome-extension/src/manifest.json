@@ -14,8 +14,9 @@
                  "https://sitegainer.com/*",
                  "https://conversion.symplify.com/*",
                  "https://app.convert.com/*",
-                 "https://pagesense.zoho.eu/*",
-                 "https://web.omniconvert.com/*"],
+                 "https://web.omniconvert.com/*",
+				         "https://pagesense.zoho.eu/*",
+				         "https://pagesense.zoho.com/*"],
      "js": ["lib/statistics-distributions.js", "srm.js", "content.js"]
    }
  ],
