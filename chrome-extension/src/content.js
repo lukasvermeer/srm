@@ -359,19 +359,18 @@ const platforms = {
 
               // SESSIONS: Fill array
               for (let i = 0; i < d.length; i += 1) {
-				if (d[i].querySelectorAll('td').length > 0) {
+                if (d[i].querySelectorAll('td').length > 0) {
                   const sessions = parseInt(d[i].querySelectorAll('td')[1].innerText.replace(/^\s*([,0-9]+)\s*$/, '$1').replace(',', ''));
                   sessioncounts.push(sessions);
                   const weight = parseInt(d[i].querySelectorAll('td')[0].innerText.replace(/^.*?(?=([1-9][0-9])% (?=traffic allocated|トラフィック割当て)).*?$/is, '$1'));
                   if (weight != undefined && !isNaN(weight)) {
                     weights.push(weight);
                   }
-				}
+                }
               }
 
               // Do SRM Check
               if (Array.isArray(weights) && weights.length) {
-				  console.log(sessioncounts);console.log(weights);
                 checkSRM(sessioncounts, weights);
                 srmChecked = true;
               }
@@ -381,14 +380,184 @@ const platforms = {
       }, 1000);
     },
     flagSRM(pval) {
-	  for (let e in document.querySelector('table.experiment_results').querySelectorAll(':scope > tbody > tr')) {
-	    let j = document.querySelector('table.experiment_results').querySelectorAll(':scope > tbody > tr')[e];
-	    if (typeof(j) == 'object' && j.querySelectorAll('td').length > 0) {
-		  let i = j.querySelectorAll('td')[1];
-		  i.style.cssText = `${i.style.cssText};background-color: red; color: white; padding: 1px 3px; border-radius: 3px;`;
-		  i.title = `SRM detected! p-value = ${pval} . SRM check assumess traffic allocation was not changed for the entire duration of the test.`;
-		}
-	  }
+      for (let e in document.querySelector('table.experiment_results').querySelectorAll(':scope > tbody > tr')) {
+        let j = document.querySelector('table.experiment_results').querySelectorAll(':scope > tbody > tr')[e];
+        if (typeof(j) == 'object' && j.querySelectorAll('td').length > 0) {
+	    let i = j.querySelectorAll('td')[1];
+          i.style.cssText = `${i.style.cssText};background-color: red; color: white; padding: 1px 3px; border-radius: 3px;`;
+          i.title = `SRM detected! p-value = ${pval} . SRM check assumess traffic allocation was not changed for the entire duration of the test.`;
+        }
+      }
+    },
+    unflagSRM() {
+      // TODO remove SRM warning if needed.
+    },
+  },
+  
+  // Zoho.eu
+  'pagesense.zoho.eu': {
+    init() {
+      // Load the Details Tab in the background to get expected proportion of variants.
+      function newIframe() {
+        if (location.href.slice(-8) === '/reports') {
+          const oldIframe = document.getElementById('iframeforweight');
+          if (oldIframe != null) {
+            oldIframe.parentNode.removeChild(oldIframe);
+          }
+
+          const ifrm = document.createElement('iframe');
+          ifrm.id = 'iframeforweight';
+          ifrm.src = location.href.replace('/reports', '/summary');
+          ifrm.style.display = 'none';
+          document.body.appendChild(ifrm);
+        }
+      }
+      newIframe();
+	  
+      // Listen for changing URL to reload iframe for proportions
+      chrome.runtime.onMessage.addListener(
+        (request, sender, sendResponse) => {
+          if (request.message === 'URL has changed') {
+            newIframe();
+            srmChecked = false;
+          }
+        },
+      );
+
+      let srmChecked = false; // TODO: Listen for changes to do check when content loads.
+      setInterval(() => {
+        if (!srmChecked) {
+          if (document.querySelector('table.Report-detailedTable') != null) {
+            // Get sample counts
+            const d = document.querySelector('table.Report-detailedTable').querySelectorAll('tr');
+            const iframeforweight = document.getElementById('iframeforweight');
+            const weightnodes = iframeforweight.contentWindow.document.querySelector('table.Summary-trafficTable').querySelectorAll('tr');
+            if (d) {
+              const sessioncounts = [];
+              const weights = [];
+
+              // SESSIONS: Fill array
+              for (let i = 0; i < d.length; i += 1) {
+                if (d[i].querySelectorAll('td').length > 0) {
+                  const sessions = parseInt(d[i].querySelectorAll('td')[2].innerText.replace(/^\s*([,0-9]+)\s*$/, '$1').replace(',', ''));
+                  sessioncounts.push(sessions);
+                }
+              }
+			  
+              // WEIGHTS: Fill array
+              for (let i = 0; i < weightnodes.length; i += 1) {
+                if (weightnodes[i].querySelectorAll('td').length > 0) {
+                  const weight = parseInt(weightnodes[i].querySelectorAll('td')[1].innerText.replace(/^.*?(?=([1-9][0-9])%).*?$/is, '$1'));
+                  if (weight != undefined && !isNaN(weight)) {
+                    weights.push(weight);
+                  }
+                }
+              }
+
+              // Do SRM Check
+              if (Array.isArray(weights) && weights.length) {
+                checkSRM(sessioncounts, weights);
+                srmChecked = true;
+              }
+            }
+          }
+        }
+      }, 1000);
+    },
+    flagSRM(pval) {
+      for (let e in document.querySelector('table.Report-detailedTable').querySelectorAll('tr')) {
+        let j = document.querySelector('table.Report-detailedTable').querySelectorAll('tr')[e];
+        if (typeof(j) == 'object' && j.querySelectorAll('td').length > 0) {
+          let i = j.querySelectorAll('td')[2];
+          i.style.cssText = `${i.style.cssText};background-color: red; color: white; padding: 1px 3px; border-radius: 3px;`;
+          i.title = `SRM detected! p-value = ${pval}`;
+    	}
+      }
+    },
+    unflagSRM() {
+      // TODO remove SRM warning if needed.
+    },
+  },
+  
+  // Zoho.com
+  'pagesense.zoho.com': {
+    init() {
+      // Load the Details Tab in the background to get expected proportion of variants.
+      function newIframe() {
+        if (location.href.slice(-8) === '/reports') {
+          const oldIframe = document.getElementById('iframeforweight');
+          if (oldIframe != null) {
+            oldIframe.parentNode.removeChild(oldIframe);
+          }
+
+          const ifrm = document.createElement('iframe');
+          ifrm.id = 'iframeforweight';
+          ifrm.src = location.href.replace('/reports', '/summary');
+          ifrm.style.display = 'none';
+          document.body.appendChild(ifrm);
+        }
+      }
+      newIframe();
+	  
+      // Listen for changing URL to reload iframe for proportions
+      chrome.runtime.onMessage.addListener(
+        (request, sender, sendResponse) => {
+          if (request.message === 'URL has changed') {
+            newIframe();
+            srmChecked = false;
+          }
+        },
+      );
+
+      let srmChecked = false; // TODO: Listen for changes to do check when content loads.
+      setInterval(() => {
+        if (!srmChecked) {
+          if (document.querySelector('table.Report-detailedTable') != null) {
+            // Get sample counts
+            const d = document.querySelector('table.Report-detailedTable').querySelectorAll('tr');
+            const iframeforweight = document.getElementById('iframeforweight');
+            const weightnodes = iframeforweight.contentWindow.document.querySelector('table.Summary-trafficTable').querySelectorAll('tr');
+            if (d) {
+              const sessioncounts = [];
+              const weights = [];
+
+              // SESSIONS: Fill array
+              for (let i = 0; i < d.length; i += 1) {
+                if (d[i].querySelectorAll('td').length > 0) {
+                  const sessions = parseInt(d[i].querySelectorAll('td')[2].innerText.replace(/^\s*([,0-9]+)\s*$/, '$1').replace(',', ''));
+                  sessioncounts.push(sessions);
+                }
+              }
+			  
+              // WEIGHTS: Fill array
+              for (let i = 0; i < weightnodes.length; i += 1) {
+               if (weightnodes[i].querySelectorAll('td').length > 0) {
+                  const weight = parseInt(weightnodes[i].querySelectorAll('td')[1].innerText.replace(/^.*?(?=([1-9][0-9])%).*?$/is, '$1'));
+                  if (weight != undefined && !isNaN(weight)) {
+                    weights.push(weight);
+                  }
+                }
+              }
+
+              // Do SRM Check
+              if (Array.isArray(weights) && weights.length) {
+                checkSRM(sessioncounts, weights);
+                srmChecked = true;
+              }
+            }
+          }
+        }
+      }, 1000);
+    },
+    flagSRM(pval) {
+      for (let e in document.querySelector('table.Report-detailedTable').querySelectorAll('tr')) {
+        let j = document.querySelector('table.Report-detailedTable').querySelectorAll('tr')[e];
+        if (typeof(j) == 'object' && j.querySelectorAll('td').length > 0) {
+          let i = j.querySelectorAll('td')[2];
+          i.style.cssText = `${i.style.cssText};background-color: red; color: white; padding: 1px 3px; border-radius: 3px;`;
+          i.title = `SRM detected! p-value = ${pval}`;
+        }
+      }
     },
     unflagSRM() {
       // TODO remove SRM warning if needed.
