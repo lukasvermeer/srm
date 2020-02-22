@@ -1,7 +1,7 @@
 {
   "name": "Sample Ratio Mismatch (SRM) Checker",
   "short_name": "SRM Check",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Automatically performs Sample Ratio Mismatch (SRM) test and flags potential issues on supported experimentation platforms.",
   "permissions": [
     "tabs"
@@ -15,8 +15,8 @@
                  "https://conversion.symplify.com/*",
                  "https://app.convert.com/*",
                  "https://web.omniconvert.com/*",
-				         "https://pagesense.zoho.eu/*",
-				         "https://pagesense.zoho.com/*"],
+                 "https://pagesense.zoho.eu/*",
+                 "https://pagesense.zoho.com/*"],
      "js": ["lib/statistics-distributions.js", "srm.js", "content.js"]
    }
  ],

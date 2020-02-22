@@ -6,6 +6,7 @@ Supported platforms:
 - SiteGainer/Symplify
 - Convert.com
 - Omniconvert
+- Zoho PageSense
 
 More information about SRM and this extension is available at https://lukasvermeer.nl/srm/.
 
