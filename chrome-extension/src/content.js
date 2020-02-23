@@ -5,23 +5,8 @@
 //
 // More information at https://lukasvermeer.nl/srm/
 
-// Define (default) parameters.
-const params = {
-  pValueThreshold: 0.0001,
-};
-
 // Generic (non-platform specific) functions
 const platform = window.location.host;
-
-// Checking for SRM using chi-square
-function checkSRM(observed, expected) {
-  const pval = computeSRM(observed, expected);
-  if (pval < params.pValueThreshold) {
-    platforms[platform].flagSRM(pval);
-  } else {
-    platforms[platform].unflagSRM();
-  }
-}
 
 // Define object to contain platform specific methods.
 const platforms = {

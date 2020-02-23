@@ -4,6 +4,11 @@
 // data quality issues on supported experimentation platforms.
 //
 
+// Define (default) parameters.
+const params = {
+  pValueThreshold: 0.01,
+};
+
 // Checking for SRM using chi-square
 function computeSRM(observed, expected) {
   const df = observed.length - 1;
@@ -18,4 +23,14 @@ function computeSRM(observed, expected) {
     chisquare += ((observed[i] - expected[i]) ** 2) / expected[i];
   }
   return chisqrprob(df, chisquare);
+}
+
+// Checking for SRM using chi-square
+function checkSRM(observed, expected) {
+  const pval = computeSRM(observed, expected);
+  if (pval < params.pValueThreshold) {
+    platforms[platform].flagSRM(pval);
+  } else {
+    platforms[platform].unflagSRM();
+  }
 }

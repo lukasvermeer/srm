@@ -51,14 +51,14 @@
               </form>
               <br />
 
-              <div class="alert alert-warning" v-if="srm_p < 0.0001">
+              <div class="alert alert-warning" v-if="flag_srm">
                 <em>Warning.</em> Possible sample ratio mismatch detected with <var>{{ display_srm_p }}</var>.
                 The observed sample size in treatment does not match the expected proportion of the total sample size.
                 This is an indicator for randomisation failure or missing data issues.
                 <strong>Comparative statistics may be invalid as a result.</strong>
               </div>
 
-              <div class="alert alert-success text-center" v-if="srm_p >= 0.0001">
+              <div class="alert alert-success text-center" v-if="!flag_srm">
                 No indication of sample ratio mismatch with <var>{{ display_srm_p }}</var>.
               </div>
 
@@ -91,9 +91,12 @@
             let p = computeSRM(o,[100-e, e])
             return p;
           },
+          flag_srm: function() {
+            return this.srm_p < params.pValueThreshold;
+          },
           display_srm_p: function() {
-            if (this.srm_p < 0.0001) {
-              return "p < 0.0001";
+            if (this.srm_p < params.pValueThreshold) {
+              return "p < " + params.pValueThreshold;
             } else {
               return "p = " + this.srm_p.toFixed(4);
             }
