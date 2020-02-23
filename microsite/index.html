@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 
     <script type="text/javascript" src="vue/vue.min.js"></script>
-    <script type="text/javascript" src="jstat/jstat.min.js"></script>
+    <script type="text/javascript" src="../chrome-extension/src/lib/statistics-distributions.js"></script>
+    <script type="text/javascript" src="../chrome-extension/src/srm.js"></script>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -85,10 +86,10 @@
         },
         computed: {
           srm_p: function(v) {
-            var n = parseInt(this.input.b.traffic) + parseInt(this.input.v.traffic);
-            var p = parseInt(this.input.v.traffic) / n;
-            var e = parseFloat(this.input.expectedprop);
-            return jStat.ztest(p, e, Math.sqrt(p*(1-p)/n));
+            let o = [parseInt(this.input.b.traffic), parseInt(this.input.v.traffic)];
+            let e = 100 * parseFloat(this.input.expectedprop);
+            let p = computeSRM(o,[100-e, e])
+            return p;
           },
           display_srm_p: function() {
             if (this.srm_p < 0.0001) {
