@@ -11,6 +11,8 @@ const params = {
 
 // Checking for SRM using chi-square
 function computeSRM(observed, expected) {
+  if (observed.some(x => isNaN(x))) { return NaN; }
+  if (expected.some(x => isNaN(x))) { return NaN; }
   const df = observed.length - 1;
   let sampleSize = 0;
   let chisquare = 0;
