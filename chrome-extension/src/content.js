@@ -67,6 +67,7 @@ const platforms = {
           // Get sample counts
           const d = document.querySelectorAll('opt-multi-objective .opt-variant-sessions-subtitle');
           const iframeforweight = document.getElementById('iframeforweight');
+          if (iframeforweight === null) return;
           const weightnodes = iframeforweight.contentWindow.document.getElementsByClassName('opt-variation-weight');
 
           if (d.length > 1 && weightnodes.length > 1) {
@@ -153,6 +154,7 @@ const platforms = {
           // Get sample counts
           const d = document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding');
           const iframeforweight = document.getElementById('iframeforweight');
+          if (iframeforweight === null) return;
           const weightnodes = iframeforweight.contentWindow.document.querySelector('div[label="Traffic Split"]');
           if (d && weightnodes) {
             const sessioncounts = [];
@@ -416,6 +418,7 @@ const platforms = {
             // Get sample counts
             const d = document.querySelector('table.Report-detailedTable').querySelectorAll('tr');
             const iframeforweight = document.getElementById('iframeforweight');
+            if (iframeforweight === null) return;
             const weightnodes = iframeforweight.contentWindow.document.querySelector('table.Summary-trafficTable').querySelectorAll('tr');
             if (d) {
               const sessioncounts = [];
@@ -501,6 +504,7 @@ const platforms = {
             // Get sample counts
             const d = document.querySelector('table.Report-detailedTable').querySelectorAll('tr');
             const iframeforweight = document.getElementById('iframeforweight');
+            if (iframeforweight === null) return;
             const weightnodes = iframeforweight.contentWindow.document.querySelector('table.Summary-trafficTable').querySelectorAll('tr');
             if (d) {
               const sessioncounts = [];
