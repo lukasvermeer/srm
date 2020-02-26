@@ -6,7 +6,7 @@
 
 // Define (default) parameters.
 const params = {
-  pValueThreshold: 0.0001,
+  pValueThreshold: 0.01,
 };
 
 // Checking for SRM using chi-square
