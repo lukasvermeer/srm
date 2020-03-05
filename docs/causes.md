@@ -132,9 +132,26 @@ Experiment Interference SRMs are a special category. These SRMs are the result o
 
 #### Inconsistent ramping of variants
 #### Pausing variants during execution
+
+Some experimentation platforms allow experimenters to "pauze" variants during experiment execution. Depending on how such a feature is implemented, it may result in fewer users than expected being considered in the paused variant, triggering an SRM.
+
+Since the attrition is selective (i.e. attrition only occurs while the variant is pauzed, and does not randomly affect all users) it will likely cause bias in the results.
+
 #### Self-assinging into a variant
 
+Some experimentation platforms include mechanisms to enable users to self-assign to a particular variant. Such a feature allows experimenters to test specific variants of an experiment in the production system. Unfortunately, this may also allow users being experimented on to self-assign to a particular variant. 
+
+For example, a particular variant of an experiment may provide users with desirable benefits (such as a discounted product). A tech-savvy user may realise this benefit can be obtained by self-assigning to the variant and share a link that allows other users to do so on a (public) forum. This may result in large groups of users self-assigning themselves into particularly attractive variations, triggering an SRM.
+
+Since the self-assignment is selective (i.e. only users of the forum will self-assign, and this does not randomly affect all users) it will likely cause bias in the results.
+
 ### Telemetry Interference
+
+In some cases, ad blockers installed by users may interfere with the ability of the experimentation platform to collect telemetry about these users. If the platform relies on client-side tracking to trigger users into experiments, such interference may result in users not being tracked at all. If a particular variant affects the incidence of this kind of attrition, an SRM may be the result.
+
+Since the attrition is selective (i.e. data loss only occurs for users who have ad blockers installed, and does not randomly affect all users) it will likely cause bias in the results.
+
+(A similar problem might affect not the entire experiment but specific metrics collected using client-side telemetry, causing a metric-level Sample Ratio Mismatch.)
 
 #### Injection attacks and hacks
 
