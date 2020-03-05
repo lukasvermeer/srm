@@ -36,20 +36,29 @@
               <p>The Sample Ratio Mismatch (SRM) test can be used to detect <a href="https://dl.acm.org/citation.cfm?id=3292500.3330722">a wide variety of data quality issues</a> that may affect online experiments (aka A/B tests). Only expected proportions and observed sample counts are required as input for this procedure, so this test can be used even in cases where experimenters only have access to summary statistics; such as when using third-party tools.</p>
 
               <form>
-                <div class="form-group">
-                  <label for="atraffic">Control sample size</label>
-                  <input v-model="input.b.traffic" type="number" pattern="\d*" min="0" class="form-control" id="atraffic" placeholder="Control sample size"/> 
+                <div v-for="(item, index) in input.arms">
+                  <div class="form-group col-xs-5">
+                    <label for="obs-{{ index }}">Observed sample #{{ index+1 }}</label>
+                    <input v-model="item[0]" type="number" pattern="\d*" min="0" class="form-control" id="obs-{{ index }}" placeholder="Observed sample size"/> 
+                  </div>
+                  <div class="form-group col-xs-5">
+                    <label for="exp-{{ index }}">Expected ratio #{{ index+1 }}</label>
+                    <input v-model="item[1]" type="number" step="any" min="0" max="1" pattern="\d*" class="form-control" id="exp-{{ index }}" placeholder="Expected ratio"/> 
+                  </div>
+                  <div class="form-group col-xs-2 text-center">
+                    <label for="del-{{ index }}">Del #{{ index+1 }}</label>
+                    <button v-on:click="dropArm(index)" class="btn btn-default" type="button" role="button" aria-pressed="true">X</button>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label for="btraffic">Treatment sample size</label>
-                  <input v-model="input.v.traffic" type="number" pattern="\d*" min="0"  class="form-control" id="btraffic" placeholder="Treatment sample size"/> 
-                </div>
-                <div class="form-group">
-                  <label for="expectedprop">Expected proportion in treatment</label>
-                  <input v-model="input.expectedprop" type="number" step="any" min="0" max="1" pattern="\d*" class="form-control" id="expectedprop" placeholder="Expected proportion in treatment"/> 
+                <div class="form-group text-center">
+                  <button v-on:click.stop="addArm" class="btn btn-default" type="button" role="button" aria-pressed="true">Add treatment</button>
                 </div>
               </form>
               <br />
+
+              <div class="alert alert-info text-center" v-if="sum_props != 1">
+                Expected ratios will be multiplied by {{ 1/sum_props }} so they sum to 1.
+              </div>
 
               <div class="alert alert-warning" v-if="flag_srm">
                 <em>Warning.</em> Possible sample ratio mismatch detected with <var>{{ display_srm_p }}</var>.
@@ -79,16 +88,27 @@
         el: '#app-tester',
         data: {
           input: {
-            b: { traffic: "" },
-            v: { traffic: "" },
-            expectedprop: 0.5,
+            arms: [["",.5], ["",.5]],
+          },
+        },
+        methods: {
+          dropArm: function (i) {
+            this.input.arms.splice(i,1);
+          },
+          addArm: function () {
+            let p = Math.max(0, 1 - this.sum_props);
+            this.input.arms.push(["",p]);
           },
         },
         computed: {
+          sum_props: function() {
+            return this.input.arms.reduce((s,v) => s + parseFloat(v[1]), 0);
+          },
           srm_p: function(v) {
-            let o = [parseInt(this.input.b.traffic), parseInt(this.input.v.traffic)];
-            let e = 100 * parseFloat(this.input.expectedprop);
-            let p = computeSRM(o,[100-e, e])
+            let scale_props = 1 / this.sum_props;
+            let o = this.input.arms.map((v) => parseInt(v[0]));
+            let e = this.input.arms.map((v) => parseFloat(v[1]) * 100 * scale_props);
+            let p = computeSRM(o,e);
             return p;
           },
           flag_srm: function() {
