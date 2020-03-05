@@ -51,6 +51,10 @@ Execution SRMs are the result of problems which occur during the execution phase
 
 #### Variants started at different times
 
+Online experiments rely on a form or [convenience_sampling](https://en.wikipedia.org/wiki/Convenience_sampling): only users who visit the website while a variant is active will be included in the sample. Some platforms allow (or force, due to technical limitations) experimenters to start variants at different times. In such a scenario, variants started later will include fewer users than variants started earlier, potentially triggering an SRM.
+
+Since the attrition is selective (i.e. attrition only occurs for users who visit the website before all variants are started, and does not randomly affect all users) it will likely cause bias in the results.
+
 ### Variant Execution
 
 #### Delayed filter execution
