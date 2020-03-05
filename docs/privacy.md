@@ -12,6 +12,8 @@ We collect anonymized statistics. This policy explains what data is collected an
 
 ---
 
+By using the SRM Checker Chrome Extension you agree to the following privacy policy and the data collection described within it. If you do not agree and want to withdraw your consent please uninstall the extension.
+
 **THE FOLLOWING IS A STATEMENT OF INTENT. THE LATEST CHROME STORE RELEASE OF THE EXTENSION DOES NOT COLLECT ANY DATA AT ALL. (THIS LINE WILL BE REMOVED ONCE DATA COLLECTION IS IMPLEMENTED.)**
 
 ## Why do we collect anonymized statistics?
