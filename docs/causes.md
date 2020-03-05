@@ -147,6 +147,8 @@ Since the self-assignment is selective (i.e. only users of the forum will self-a
 
 ### Telemetry Interference
 
+#### Ad blockers
+
 In some cases, ad blockers installed by users may interfere with the ability of the experimentation platform to collect telemetry about these users. If the platform relies on client-side tracking to trigger users into experiments, such interference may result in users not being tracked at all. If a particular variant affects the incidence of this kind of attrition, an SRM may be the result.
 
 Since the attrition is selective (i.e. data loss only occurs for users who have ad blockers installed, and does not randomly affect all users) it will likely cause bias in the results.
