@@ -57,6 +57,7 @@ const platforms = {
           if (request.message === 'URL has changed') {
             newIframe();
             srmChecked = false;
+            chrome.runtime.sendMessage({badgeText: 'ON', badgeBackgroundColor: 'gray'});
           }
         },
       );
@@ -145,6 +146,7 @@ const platforms = {
           if (request.message === 'URL has changed') {
             newIframe();
             srmChecked = false;
+            chrome.runtime.sendMessage({badgeText: 'ON', badgeBackgroundColor: 'gray'});
           }
         },
       );
@@ -205,6 +207,7 @@ const platforms = {
           if (request.message === 'URL has changed') {
             newIframe();
             srmChecked = false;
+            chrome.runtime.sendMessage({badgeText: 'ON', badgeBackgroundColor: 'gray'});
           }
         },
       );
@@ -278,6 +281,7 @@ const platforms = {
           if (request.message === 'URL has changed') {
             newIframe();
             srmChecked = false;
+            chrome.runtime.sendMessage({badgeText: 'ON', badgeBackgroundColor: 'gray'});
           }
         },
       );
@@ -330,6 +334,7 @@ const platforms = {
           if (request.message === 'URL has changed') {
             newIframe();
             srmChecked = false;
+            chrome.runtime.sendMessage({badgeText: 'ON', badgeBackgroundColor: 'gray'});
           }
         },
       );
@@ -407,6 +412,7 @@ const platforms = {
           if (request.message === 'URL has changed') {
             newIframe();
             srmChecked = false;
+            chrome.runtime.sendMessage({badgeText: 'ON', badgeBackgroundColor: 'gray'});
           }
         },
       );
@@ -474,6 +480,7 @@ const platforms = {
       function newIframe() {
         if (location.href.slice(-8) === '/reports') {
           const oldIframe = document.getElementById('iframeforweight');
+            chrome.runtime.sendMessage({badgeText: 'ON', badgeBackgroundColor: 'gray'});
           if (oldIframe != null) {
             oldIframe.parentNode.removeChild(oldIframe);
           }
@@ -493,6 +500,7 @@ const platforms = {
           if (request.message === 'URL has changed') {
             newIframe();
             srmChecked = false;
+            chrome.runtime.sendMessage({badgeText: 'ON', badgeBackgroundColor: 'gray'});
           }
         },
       );
@@ -555,3 +563,5 @@ const platforms = {
 };
 
 platforms[platform].init();
+
+chrome.runtime.sendMessage({badgeText: 'ON', badgeBackgroundColor: 'gray'});

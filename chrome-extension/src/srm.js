@@ -32,7 +32,9 @@ function checkSRM(observed, expected) {
   const pval = computeSRM(observed, expected);
   if (pval < params.pValueThreshold) {
     platforms[platform].flagSRM(pval);
+    chrome.runtime.sendMessage({badgeText: 'SRM', badgeBackgroundColor: 'red'});
   } else {
     platforms[platform].unflagSRM();
+    chrome.runtime.sendMessage({badgeText: 'OK', badgeBackgroundColor: 'green'});
   }
 }
