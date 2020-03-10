@@ -66,7 +66,12 @@ const platforms = {
       setInterval(() => {
         if (!srmChecked) {
           // Get sample counts
-          const d = document.querySelectorAll('opt-multi-objective .opt-variant-sessions-subtitle');
+          let d = document.querySelectorAll('opt-multi-objective .opt-variant-sessions-subtitle');
+          let old_report = true;
+          if (d.length == 0) { // If regular report empty, try new report
+            d = document.querySelectorAll('.opt-objective-details.opt-objective-table tr td:nth-of-type(2) opt-metric-value > div > div');
+            let old_report = false;
+          }
           const iframeforweight = document.getElementById('iframeforweight');
           if (iframeforweight === null) return;
           const weightnodes = iframeforweight.contentWindow.document.getElementsByClassName('opt-variation-weight');
@@ -112,10 +117,15 @@ const platforms = {
         }
       }, 1000);
     },
-    flagSRM(pval) {
-      document.querySelectorAll('.opt-variant-sessions-subtitle').forEach(i => i.style.cssText = 'background-color: red; color: white; padding: 1px 3px; border-radius: 3px;');
-      document.querySelectorAll('.opt-variant-sessions-subtitle').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
-      document.querySelectorAll('.opt-variant-sessions-subtitle opt-variant-name').forEach(i => i.name = `SRM detected! p-value = ${pval}`);
+    flagSRM(pval, old_report) {
+      if (old_report) {
+        document.querySelectorAll('.opt-variant-sessions-subtitle').forEach(i => i.style.cssText = 'background-color: red; color: white; padding: 1px 3px; border-radius: 3px;');
+        document.querySelectorAll('.opt-variant-sessions-subtitle').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
+        document.querySelectorAll('.opt-variant-sessions-subtitle opt-variant-name').forEach(i => i.name = `SRM detected! p-value = ${pval}`);
+      } else {
+        document.querySelectorAll('.opt-objective-details.opt-objective-table tr td:nth-of-type(2) opt-metric-value > div > div').forEach(i => i.style.cssText = 'background-color: red; color: white; padding: 1px 3px; border-radius: 3px;');
+        document.querySelectorAll('.opt-objective-details.opt-objective-table tr td:nth-of-type(2) opt-metric-value > div > div').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
+      }
     },
     unflagSRM() {
       // TODO remove SRM warning if needed.
