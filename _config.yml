@@ -6,7 +6,7 @@ url: "https://lukasvermeer.nl"
 remote_theme: pmarsceill/just-the-docs
 
 permalink: pretty
-exclude: ["README.md"]
+exclude: ["README.md", "node_modules"]
 
 # Enable or disable the site search
 search_enabled: true
