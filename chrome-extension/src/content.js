@@ -67,10 +67,10 @@ const platforms = {
         if (!srmChecked) {
           // Get sample counts
           let d = document.querySelectorAll('opt-multi-objective .opt-variant-sessions-subtitle');
-          let old_report = true;
+          window.old_report = true;
           if (d.length == 0) { // If regular report empty, try new report
             d = document.querySelectorAll('.opt-objective-details.opt-objective-table tr td:nth-of-type(2) opt-metric-value > div > div');
-            let old_report = false;
+            window.old_report = false;
           }
           const iframeforweight = document.getElementById('iframeforweight');
           if (iframeforweight === null) return;
@@ -117,8 +117,8 @@ const platforms = {
         }
       }, 1000);
     },
-    flagSRM(pval, old_report) {
-      if (old_report) {
+    flagSRM(pval) {
+      if (window.old_report) {
         document.querySelectorAll('.opt-variant-sessions-subtitle').forEach(i => i.style.cssText = 'background-color: red; color: white; padding: 1px 3px; border-radius: 3px;');
         document.querySelectorAll('.opt-variant-sessions-subtitle').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
         document.querySelectorAll('.opt-variant-sessions-subtitle opt-variant-name').forEach(i => i.name = `SRM detected! p-value = ${pval}`);
