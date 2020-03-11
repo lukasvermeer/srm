@@ -1,1 +1,12 @@
 node_modules
+
+# Stuff to ignore related to local testing with Jekyll
+_site
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+vendor
+
+# Stuff to ignore related to emacs
+*[#]*[#]
+*~
