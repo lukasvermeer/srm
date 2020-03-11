@@ -154,6 +154,10 @@ const platforms = {
       chrome.runtime.onMessage.addListener(
         (request, sender, sendResponse) => {
           if (request.message === 'URL has changed') {
+            const srmstyling = document.getElementById('srmcss');
+            if (srmstyling != null) {
+              srmstyling.parentNode.removeChild(srmstyling);
+            }
             newIframe();
             srmChecked = false;
             chrome.runtime.sendMessage({srmStatus: 'ON'});
@@ -200,8 +204,14 @@ const platforms = {
       }, 1000);
     },
     flagSRM(pval) {
-      document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding').forEach(i => i.style.cssText = 'background-color: red; color: white; padding: 1px 3px; border-radius: 3px;');
-      document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding').forEach(i => i.title = `SRM detected! p-value = ${pval}`); // TODO - Check if working as expected
+      const temp_styles = 'table.table--data tbody.ng-scope tr.ng-scope strong.ng-binding {background-color: red; color: white; padding: 1px 3px; border-radius: 3px;} td[child-order-id="conversionsVisitors"] div:nth-of-type(2) span {background-color: red; color: white; padding: 1px 3px; border-radius: 3px;}';
+      var srm_css = document.createElement('style');
+      srm_css.type = 'text/css';
+      srm_css.id = 'srmcss';
+      srm_css.appendChild(document.createTextNode(temp_styles));
+      document.getElementsByTagName('body')[0].appendChild(srm_css);
+      document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
+      document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('td[child-order-id="conversionsVisitors"] div:nth-of-type(2) span').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
     },
     unflagSRM() {
       // TODO remove SRM warning if needed.
