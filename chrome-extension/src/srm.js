@@ -32,9 +32,13 @@ function checkSRM(observed, expected) {
   const pval = computeSRM(observed, expected);
   if (pval < params.pValueThreshold) {
     platforms[platform].flagSRM(pval);
-    chrome.runtime.sendMessage({srmStatus: 'SRM'});
+    if (chrome.runtime) {
+      chrome.runtime.sendMessage({srmStatus: 'SRM'});
+    }
   } else {
     platforms[platform].unflagSRM();
-    chrome.runtime.sendMessage({srmStatus: 'OK'});
+    if (chrome.runtime) {
+      chrome.runtime.sendMessage({srmStatus: 'OK'});
+    }
   }
 }
