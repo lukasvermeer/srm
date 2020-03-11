@@ -125,6 +125,13 @@ Experiment Analysis SRMs are the result of problems which occur while analyzing 
 ### Telemetry Filtering
 
 #### Incorrect starting point of analysis
+
+A good hypothetical example demonstrating this type of SRM is with the Windows 10 Search Box. A typical user flow is to search in the Windows 10 Search Box and then be navigated to Bing on your browser. The Windows 10 Search Box is a driver of query share for Bing, so experiments could be run on this surface with a desire to primarily understand the impact to Bing.
+
+Bing is known to run thousands of experiments a year, so they must have a standard analysis for their experiments utilizing the Bing pageview logs. However, **you can't use the same analysis for experiments on the Windows 10 Search Box**!
+
+Consider this hypothetical example - say a UI change on the Windows 10 Search Box results in twice the rate in which users click through to Bing. If you run the standard Bing analysis on a 50/50 experiment, then you will have a sample ratio of 2:1, which is an SRM.
+
 #### Missing counterfactual logging
 #### Wrong triggering or filter condition
 
