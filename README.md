@@ -19,8 +19,6 @@ Supported platforms:
 - Zoho PageSense
 
 Known issues:
-- Optimize: "Updated Reporting" breaks the extension ([#12](https://github.com/lukasvermeer/srm/issues/12))
-- VWO: Red highlighting disappears when selecting different goal ([#23](https://github.com/lukasvermeer/srm/issues/23))
 - Convert: Auto-stopping variants triggers false SRM alert ([#29](https://github.com/lukasvermeer/srm/issues/29))
 
 ---
