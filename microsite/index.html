@@ -115,8 +115,10 @@
             return this.srm_p < params.pValueThreshold;
           },
           display_srm_p: function() {
-            if (this.srm_p < params.pValueThreshold) {
-              return "p < " + params.pValueThreshold;
+            const precision = 4;
+            const smallest_display = 1/(10**precision);
+            if (this.srm_p < smallest_display) {
+              return "p < " + smallest_display;
             } else {
               return "p = " + this.srm_p.toFixed(4);
             }
