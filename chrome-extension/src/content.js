@@ -55,6 +55,10 @@ const platforms = {
       chrome.runtime.onMessage.addListener(
         (request, sender, sendResponse) => {
           if (request.message === 'URL has changed') {
+            const srmstyling = document.getElementById('srmcss');
+            if (srmstyling != null) {
+              srmstyling.parentNode.removeChild(srmstyling);
+            }
             newIframe();
             srmChecked = false;
             chrome.runtime.sendMessage({srmStatus: 'ON'});
@@ -67,10 +71,8 @@ const platforms = {
         if (!srmChecked) {
           // Get sample counts
           let d = document.querySelectorAll('opt-multi-objective .opt-variant-sessions-subtitle');
-          window.old_report = true;
           if (d.length == 0) { // If regular report empty, try new report
-            d = document.querySelectorAll('.opt-objective-details.opt-objective-table tr td:nth-of-type(2) opt-metric-value > div > div');
-            window.old_report = false;
+            d = document.querySelectorAll('.opt-objective-details.opt-objective-table tr td:nth-of-type(2) opt-metric-value > div > div:not(.opt-baseline):not(.opt-distribution-metric-value)');
           }
           const iframeforweight = document.getElementById('iframeforweight');
           if (iframeforweight === null) return;
@@ -118,14 +120,15 @@ const platforms = {
       }, 1000);
     },
     flagSRM(pval) {
-      if (window.old_report) {
-        document.querySelectorAll('.opt-variant-sessions-subtitle').forEach(i => i.style.cssText = 'background-color: red; color: white; padding: 1px 3px; border-radius: 3px;');
-        document.querySelectorAll('.opt-variant-sessions-subtitle').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
-        document.querySelectorAll('.opt-variant-sessions-subtitle opt-variant-name').forEach(i => i.name = `SRM detected! p-value = ${pval}`);
-      } else {
-        document.querySelectorAll('.opt-objective-details.opt-objective-table tr td:nth-of-type(2) opt-metric-value > div > div').forEach(i => i.style.cssText = 'background-color: red; color: white; padding: 1px 3px; border-radius: 3px;');
-        document.querySelectorAll('.opt-objective-details.opt-objective-table tr td:nth-of-type(2) opt-metric-value > div > div').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
-      }
+      const temp_styles = '.opt-variant-sessions-subtitle, .opt-objective-details.opt-objective-table tr td:nth-of-type(2) opt-metric-value > div > div:not(.opt-baseline):not(.opt-distribution-metric-value) {background-color: red; color: white; padding: 1px 3px; border-radius: 3px;}';
+      var srm_css = document.createElement('style');
+      srm_css.type = 'text/css';
+      srm_css.id = 'srmcss';
+      srm_css.appendChild(document.createTextNode(temp_styles));
+      document.getElementsByTagName('body')[0].appendChild(srm_css);
+      document.querySelectorAll('.opt-variant-sessions-subtitle').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
+      document.querySelectorAll('.opt-variant-sessions-subtitle opt-variant-name').forEach(i => i.name = `SRM detected! p-value = ${pval}`);
+      document.querySelectorAll('.opt-objective-details.opt-objective-table tr td:nth-of-type(2) opt-metric-value > div > div').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
     },
     unflagSRM() {
       // TODO remove SRM warning if needed.
