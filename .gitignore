@@ -6,7 +6,3 @@ _site
 .jekyll-cache
 .jekyll-metadata
 vendor
-
-# Stuff to ignore related to emacs
-*[#]*[#]
-*~
