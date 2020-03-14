@@ -11,20 +11,21 @@ const params = {
 
 // Checking for SRM using chi-square
 function computeSRM(observed, expected) {
-  if (observed.some(x => isNaN(x))) { return NaN; }
-  if (expected.some(x => isNaN(x))) { return NaN; }
+  // Check if input contains only numbers, and two arrays of equal length
+  if (observed.some((x) => !Number.isFinite(x))) { return NaN; }
+  if (expected.some((x) => !Number.isFinite(x))) { return NaN; }
+  if (expected.length !== observed.length) { return NaN; }
+
+  // Degrees of freedom is variations - 1
   const df = observed.length - 1;
-  let sampleSize = 0;
-  let chisquare = 0;
-  for (let i = 0; i < observed.length; i += 1) {
-    sampleSize += observed[i];
-  }
-  const e = expected;
-  for (let i = 0; i < observed.length; i += 1) {
-    e[i] = Math.round(sampleSize * expected[i] / 100);
-    chisquare += ((observed[i] - expected[i]) ** 2) / expected[i];
-  }
-  return chisqrprob(df, chisquare);
+  // Total sample size is sum of all variations
+  const sampleSize = observed.reduce((a, v) => a + v);
+  // Scale expected count per variation to match observed sample
+  const expectedScaled = expected.map((e) => Math.round((sampleSize * e) / 100));
+  // Chi-square is sum of squares of observed - expected over expected for each variation
+  const chisq = expectedScaled.reduce((a, e, i) => a + (((observed[i] - e) ** 2) / e), 0);
+
+  return chisqrprob(df, chisq);
 }
 
 // Checking for SRM using chi-square
