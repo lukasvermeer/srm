@@ -170,10 +170,9 @@ Since the attrition is selective (i.e. data loss only occurs for users who have 
 (A similar problem might affect not the entire experiment but specific metrics collected using client-side telemetry, causing a metric-level Sample Ratio Mismatch.)
 
 #### Injection attacks and hacks
-In an ideal world, client-side telemetry (e.g. events captured in a browser) would be uploaded to the server instantly as the event happened. However, in practice such real-time telemetry transmission often isn't feasible as it would require numerous calls to the server, potentially slowing down the product and harming user experience. Often, telemetry is "packaged" in a batch on the client and sent to the service as defined in the product policy (e.g. when the number of logs exceeds some size threshold, every 30 seconds, or some other configuration). Code, however, isn't necessary the only source of new events in the batch.
+In an ideal world, client-side telemetry (e.g. events captured in a browser) would be uploaded to the server instantly as the event happened. However, in practice such real-time telemetry transmission often isn't feasible as it would require numerous calls to the server, potentially slowing down the product and harming user experience. Often, logs are  "packaged" in a batch on the client and sent to the service as defined in the product policy (e.g. when the number of logs exceeds some size threshold, every 30 seconds, or some other configuration). Code, however, isn't necessary the only source of new events in the batch.
 
  The batch on the client can sometimes be accessed by power users (e.g. by inspecting the local storage in the browser and finding the array holding the logs) and altered in a way that would cause an SRM at the time of the analysis. For example, if the power user creates hundreds of new user IDs and injects them in the batch without alternating the assigned variant, the experimentation platform likely won't know that those users aren't real and will declare an SRM. The best way to avoid such SRMs is to protect client-side telemetry from being altered in an easy way, and to have alerts in place that fire in case telemetry from a single client contains an abnormal number of user identifiers.
-
 
 ---
 
