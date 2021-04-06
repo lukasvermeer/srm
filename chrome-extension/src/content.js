@@ -70,51 +70,25 @@ const platforms = {
       setInterval(() => {
         if (!srmChecked) {
           // Get sample counts
-          let d = document.querySelectorAll('opt-multi-objective .opt-variant-sessions-subtitle');
-          if (d.length == 0) { // If regular report empty, try new report
-            d = document.querySelectorAll('.opt-objective-details.opt-objective-table tr td:nth-of-type(2) opt-metric-value > div > div:not(.opt-baseline):not(.opt-distribution-metric-value)');
-          }
+          let d = document.querySelectorAll('.opt-objective-details.opt-objective-table tr td:nth-of-type(2) opt-metric-value > div > div:not(.opt-baseline):not(.opt-distribution-metric-value)');
           const iframeforweight = document.getElementById('iframeforweight');
           if (iframeforweight === null) return;
-          const weightnodes = iframeforweight.contentWindow.document.getElementsByClassName('opt-variation-weight');
+          const weightnodes = iframeforweight.contentWindow.document.getElementsByClassName('opt-variation-weight-readonly');
 
           if (d.length > 1 && weightnodes.length > 1) {
-            // Get unrounded custom proportions (if any)
-            // TODO: Must be a better way to do this.
-            (iframeforweight.contentWindow.document.getElementsByClassName('opt-variation-weight')[0]).click();
+            const sessioncounts = [];
+            const weights = [];
 
-            // Handle DOM differences in even/custom split config of experiment
-            const typeOfWeight = iframeforweight.contentWindow.document.querySelectorAll('ng-form[name="editWeightsInputForm"] .md-input-has-value');
-            let weightnodesCustom;
-            if (typeOfWeight.length) {
-              weightnodesCustom = iframeforweight.contentWindow.document.querySelectorAll('.opt-edit-weights-list input');
-            } else {
-              weightnodesCustom = iframeforweight.contentWindow.document.querySelectorAll('.opt-edit-weights-value-column > span.ng-binding');
+            // Fill the arrays
+            for (let i = 0; i < d.length; i += 1) {
+              const sessions = parseInt(d[i].innerText.replace(/,/g, '').split(' ')[0], 10);
+              const weight = parseInt(weightnodes[i].innerText.replace(/% weight/g, ''), 10);
+              sessioncounts.push(sessions);
+              weights.push(weight);
             }
 
-            if (weightnodes.length > 1) {
-              const sessioncounts = [];
-              const weights = [];
-
-              // Fill the arrays
-              for (let i = 0; i < d.length; i += 1) {
-                const sessions = parseInt(d[i].innerText.replace(/,/g, '').split(' ')[0], 10);
-                const weightnode = weightnodes[i].getElementsByClassName('ng-binding');
-                let weight = parseInt(weightnode[0].innerHTML, 10);
-                // Use custom unrounded weights when available.
-                // TODO: Must be a better way to do this too.
-                if (weightnodesCustom.length > 1 && typeOfWeight.length) {
-                  weight = parseFloat(weightnodesCustom[i].value, 10);
-                } else if (weightnodesCustom.length > 1) {
-                  weight = parseFloat((weightnodesCustom[i].innerText).slice(0, -2), 10);
-                }
-                sessioncounts.push(sessions);
-                weights.push(weight);
-              }
-
-              checkSRM(sessioncounts, weights);
-              srmChecked = true;
-            }
+            checkSRM(sessioncounts, weights);
+            srmChecked = true;
           }
         }
       }, 1000);
