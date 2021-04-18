@@ -66,19 +66,19 @@ Without SRM tests, you could be missing some very big problems, like this and [m
 
 To reliably and objectively detect Sample Ratio Mismatch, we need a statistical method to expres how "surprising" the observed split is, given the expected split. To do this, we can use a [goodness of fit](https://en.wikipedia.org/wiki/Goodness_of_fit) test to compute a p-value. When this value is very small, we reject the idea that the data are indeed a good fit, and conclude that a Sample Ratio Mismatch has occurred. (The approach used here is very similar to the standard hypothesis testing approach used to compare different variations in a standard A/B test.)
 
-For example (using Python's [scipy.stats.binom_test](https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.stats.binom_test.html)), the first scenario describe earlier is indeed not surprising, as suggested by the computed p-value close to 1:
+For example (using Python's [scipy.stats.chisquare](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.chisquare.html)), the first scenario describe earlier is indeed not surprising, as suggested by the computed p-value close to 1:
 
 ```
 >>> from scipy import stats
->>> stats.binom_test(498, 1000, 0.5)
-0.9244256441413834
+>>> stats.chisquare([502,498],[500,500])[1]
+0.8993431885613663
 ```
 
 Conversely, the second scenario is very surprising. Here we get a p-value of approximately 0.00000000027.
 
 ```
->>> stats.binom_test(600, 1000, 0.5)
-2.7284641560678061e-10
+>>> stats.chisquare([600,400],[500,500])[1]
+2.5396285894708634e-10
 ```
 
 ## What p-value threshold does the SRM Checker use?
