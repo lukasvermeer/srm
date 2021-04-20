@@ -120,6 +120,12 @@ In this example, the SRM is a symptom of a (post-treatment) [attrition bias](att
 
 If the bot filtering logic only relies on pre-treatment variables to filter users from an experiment, we can safely assume that variant assignment cannot affect attrition rates.
 
+#### Using the HyperLogLog++ cardinality estimation algorithm
+
+In "The Effect of Using Cardinality Estimates Like HyperLogLog in Statistical Analyses" ([link][hyperloglog]), the author describes the effects of using the HyperLogLog++ (HLL++) cardinality estimation algorithm in applications where its output serves as input for statistical calculations. They show that frequent SRMs are the result, and conclude that:
+
+> HyperLogLog data with precision typical of current default implementations is unsuitable for use in A/B testing and similar scenarios where an estimator is supposed to converge to the true value in the asymptotic case.
+
 #### Incorrect joins
 #### Delayed log arrival
 
@@ -195,3 +201,4 @@ That's totally possible! This taxonomy is likely incomplete. We would love to he
 [dirtydozen]: https://dl.acm.org/doi/10.1145/3097983.3098024 "A Dirty Dozen: Twelve Common Metric Interpretation Pitfalls in Online Controlled Experiments"
 [attritionbias]: https://en.wikipedia.org/wiki/Selection_bias#Attrition "Wikipedia: Selection Bias: Attition"
 [benefitspaper]: https://ieeexplore.ieee.org/abstract/document/8051322 "The Benefits of Controlled Experimentation at Scale"
+[hyperloglog]: https://blog.analytics-toolkit.com/2020/the-effect-of-using-cardinality-estimates-like-hyperloglog-in-statistical-analyses/
