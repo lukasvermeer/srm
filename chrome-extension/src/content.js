@@ -31,6 +31,82 @@ const platforms = {
     },
   },
 
+  // Optimizely
+  'app.optimizely.com': {
+    init() {
+      // Load the Details Tab in the background to get expected proportion of variants.
+      function newIframe() {
+        if (location.href.includes('result')) {
+          const oldIframe = document.getElementById('iframeforweight');
+          if (oldIframe != null) {
+            oldIframe.parentNode.removeChild(oldIframe);
+          }
+
+          const ifrm = document.createElement('iframe');
+          ifrm.id = 'iframeforweight';
+          ifrm.src = location.href.match('(.*)results')[1] + location.href.match('experiments/[0-9]+')[0] + '/variations';
+          ifrm.style.display = 'none';
+          document.body.appendChild(ifrm);
+        }
+      }
+      newIframe();
+
+      // Listen for changing URL to reload iframe for proportions
+      chrome.runtime.onMessage.addListener(
+        (request, sender, sendResponse) => {
+          if (request.message === 'URL has changed') {
+            const srmstyling = document.getElementById('srmcss');
+            if (srmstyling != null) {
+              srmstyling.parentNode.removeChild(srmstyling);
+            }
+            newIframe();
+            srmChecked = false;
+            chrome.runtime.sendMessage({srmStatus: 'ON'});
+          }
+        },
+      );
+
+      let srmChecked = false; // TODO: Listen for changes to do check when content loads.
+      setInterval(() => {
+        if (!srmChecked) {
+          // Get sample counts
+          let d = document.querySelectorAll('.performance-summary__column:first-child [data-test-section=performance-summary-cell-primary-value]');
+          const iframeforweight = document.getElementById('iframeforweight');
+          if (iframeforweight === null) return;
+          const weightnodes = iframeforweight.contentWindow.document.querySelectorAll('.oui-text-input[type=number]');
+
+          if (d.length > 1 && weightnodes.length > 1) {
+            const sessioncounts = [];
+            const weights = [];
+
+            // Fill the arrays
+            for (let i = 0; i < d.length; i += 1) {
+              const sessions = parseInt(d[i].innerText.replace(/,/g, '').split(' ')[0], 10);
+              const weight = parseFloat(weightnodes[i].value);
+              sessioncounts.push(sessions);
+              weights.push(weight);
+            }
+
+            checkSRM(sessioncounts, weights);
+            srmChecked = true;
+          }
+        }
+      }, 1000);
+    },
+    flagSRM(pval) {
+      const temp_styles = '.performance-summary__column:first-child [data-test-section=performance-summary-cell-primary-value] {background-color: red; color: white; padding: 1px 3px; border-radius: 3px;}';
+      var srm_css = document.createElement('style');
+      srm_css.type = 'text/css';
+      srm_css.id = 'srmcss';
+      srm_css.appendChild(document.createTextNode(temp_styles));
+      document.getElementsByTagName('body')[0].appendChild(srm_css);
+      document.querySelectorAll('.performance-summary__column:first-child [data-test-section=performance-summary-cell-primary-value]').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
+    },
+    unflagSRM() {
+      // TODO remove SRM warning if needed.
+    },
+  },
+
   // Google Optimize
   'optimize.google.com': {
     init() {
