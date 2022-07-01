@@ -28,10 +28,6 @@ footer_content: "This project is hosted on <a href=\"https://github.com/lukasver
 # Color scheme currently only supports "dark" or nil (default)
 color_scheme: nil
 
-# Google Analytics Tracking (optional)
-# e.g, UA-1234567-89
-ga_tracking: UA-105998856-2
-
 plugins:
   - jekyll-seo-tag
 
