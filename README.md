@@ -48,9 +48,10 @@ These instructions are only for UNIX-based setups.
 
 ### Initial, One-time Steps
 
-1. Make sure [Ruby is installed](https://www.ruby-lang.org/en/documentation/installation/). Use your package manager or ``sudo apt-get install ruby-dev`` or ``sudo apt-get install ruby-full``.
-2. Install [Bundler](https://bundler.io/) - ``gem install bundler``.
-3. Install [Jekyll](https://jekyllrb.com/docs/installation/ubuntu/) via ``sudo apt-get install ruby-full build-essential zlib1g-dev`` and ``gem install jekyll bundler``.
+1. Make sure [chruby](https://github.com/postmodern/chruby) and [Ruby](https://www.ruby-lang.org/en/documentation/installation/) are installed. Use your package manager or ``sudo apt-get install ruby-dev`` or ``sudo apt-get install ruby-full``. On a Mac, [these instructions are quite good](https://www.moncefbelyamani.com/how-to-install-xcode-homebrew-git-rvm-ruby-on-mac/).
+2. Make sure you are using Ruby version 2.7. Use ``ruby -v`` to check which version is currently active.
+3. Install [Bundler](https://bundler.io/) - ``gem install bundler``.
+4. Install [Jekyll](https://jekyllrb.com/docs/installation/ubuntu/) via ``sudo apt-get install ruby-full build-essential zlib1g-dev`` and ``gem install jekyll bundler``.
 
 ### Running Locally
 
