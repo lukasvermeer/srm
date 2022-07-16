@@ -124,7 +124,7 @@ Long story short: finding the root cause of a Sample Ratio Mismatch may require 
 
 The SRM Checker Chrome Extension runs in the background of pages which show experiment results on suported platforms. It extracts summary statistics from the page and checks for Sample Ratio Mismatch. If an SRM is found, the page is modified on-the-fly to alert the user that the SRM Checker has found a potential data quality issue.
 
-![]({{ site.baseurl }}{% link assets/images/screenshot_optimize_1.png %})
+![A screenshot of the Google Optimize interface showing the SRM Checker Extension flagging a potential SRM issue.]({{ site.baseurl }}{% link assets/images/screenshot_optimize_1.webp %})
 
 ## Can we check for SRM if we don't expect to split traffic equally?
 
