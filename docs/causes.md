@@ -160,11 +160,11 @@ Experiment Interference SRMs are a special category. These SRMs are the result o
 #### Inconsistent ramping of variants
 #### Pausing variants during execution
 
-Some experimentation platforms allow experimenters to "pauze" variants during experiment execution. Depending on how such a feature is implemented, it may result in fewer users than expected being considered in the paused variant, triggering an SRM.
+Some experimentation platforms allow experimenters to "pause" variants during experiment execution. Depending on how such a feature is implemented, it may result in fewer users than expected being considered in the paused variant, triggering an SRM.
 
-Since the attrition is selective (i.e. attrition only occurs while the variant is pauzed, and does not randomly affect all users) it will likely cause bias in the results.
+Since the attrition is selective (i.e. attrition only occurs while the variant is paused, and does not randomly affect all users) it will likely cause bias in the results.
 
-#### Self-assinging into a variant
+#### Self-assigning into a variant
 
 Some experimentation platforms include mechanisms to enable users to self-assign to a particular variant. Such a feature allows experimenters to test specific variants of an experiment in the production system. Unfortunately, this may also allow users being experimented on to self-assign to a particular variant. 
 
