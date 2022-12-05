@@ -30,7 +30,7 @@ For more information about Sample Ratio Mismatch please read the [Frequently Ask
 
 Sample Ratio Mismatch Checker was created by [Lukas Vermeer](http://lukasvermeer.nl), [Heinrich Mahr](https://heinrich333.github.io) and [Georgi Georgiev](http://blog.analytics-toolkit.com).
 
-### Supported platforms
+### Platforms supported by this Chrome Extension
 
 - Convert.com
 - Google Optimize
@@ -38,6 +38,8 @@ Sample Ratio Mismatch Checker was created by [Lukas Vermeer](http://lukasvermeer
 - SiteGainer/Symplify
 - Visual Website Optimizer (VWO)
 - Zoho PageSense
+
+Several experimentation platforms natively perform Sample Ratio Mismatch checks for their users. These platforms will not be supported by our Chrome Extension, because that would be redundant. An incomplete overview of these platforms can be found [here]({{ site.baseurl }}{% link docs/reference/platforms/index.md %}).
 
 ### Known issues:
 
