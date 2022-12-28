@@ -35,6 +35,7 @@ Sample Ratio Mismatch Checker was created by [Lukas Vermeer](http://lukasvermeer
 - Convert.com
 - Google Optimize
 - Omniconvert
+- Optimizely
 - SiteGainer/Symplify
 - Visual Website Optimizer (VWO)
 - Zoho PageSense
