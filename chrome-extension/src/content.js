@@ -73,7 +73,7 @@ const platforms = {
           let d = document.querySelectorAll('.performance-summary__column:first-child [data-test-section=performance-summary-cell-primary-value]');
           const iframeforweight = document.getElementById('iframeforweight');
           if (iframeforweight === null) return;
-          const weightnodes = iframeforweight.contentWindow.document.querySelectorAll('.oui-text-input[type=number]');
+          const weightnodes = iframeforweight.contentWindow.document.querySelectorAll('.oui-text-input[name="variation_percentage"]');
 
           if (d.length > 1 && weightnodes.length > 1) {
             const sessioncounts = [];
