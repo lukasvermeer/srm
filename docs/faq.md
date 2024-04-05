@@ -101,7 +101,7 @@ Both LinkedIn and Microsoft have been actively addressing root causes of Sample 
 
 It is obviously impossible to say what these numbers can tell us about the incidence of Sample Ratio Mismatch in general. However, it seems that SRM is quite prevalent, even in companies which are widely considered industry leaders in online experimentation.
 
-## What can we do about Sample Ratio Mismatch?
+## How can we fix Sample Ratio Mismatch?
 
 The answer to this question will depend on what is the root cause of the Sample Ratio Mismatch.
 
@@ -119,6 +119,23 @@ There are many potential root causes which may result in a Sample Ratio Mismatch
 > 10. **Examine across pipelines**: If your experimentation system has two data pipelines, then compare the results of both pipelines. See "Democratizing online controlled experiments at Booking.com" ([link](https://arxiv.org/abs/1710.08217)) for more details. Also, examine debugging logs containing records that could not be merged in the pipelines. Differences in these point to log processing related SRMs.
 
 Long story short: finding the root cause of a Sample Ratio Mismatch may require significant debugging and deep knowledge of which experiment platform abstraction [is leaky](https://booking.ai/leaky-abstractions-in-online-experimentation-platforms-ae4cf05013f9).
+
+## If an experiment has SRM, can we still analyse the results?
+
+Not without making additional assumptions and changing the way we calculate the results.
+
+One idea is to apply the method described by Gerben and Green in their book [Field Experiments](https://wwnorton.com/books/9780393979954) as "extreme value bounds" (page 226). This approach relies on the idea that if we _assume_ we know exactly how many samples are missing from our data, then we can calculate the "best case" and "worst case" scenarios that represent the most extreme results that are possible given the data we do have. These extreme values can then be said to bound the potential outcomes (hence the name "extreme value bounds").
+
+To calculate the extreme value bounds for a result, simply:
+1. **Calculate how many samples we assume are missing.** In a simple 50/50 split A/B test, the most likely estimate for this number is the difference in sample size between the variations. If A has 10.000 users and B has 9.000 users, then we are most likely missing 10.000-9.000=1.000 users.
+2. **Assume the worst outcome for the missing samples.** In the case of a conversion metric, we would assume **none** of the missing users converted. In our calculations of the treatment effect, we add the missing samples to our denominator, but the numerator stays the same. This is the lower extreme value bound. Following the example above, if previously B had 9.000 users and 900 conversions (so a 10% conversion rate), our lower bound would be the same 900 conversions over 9.000+1.000 users (a 9% conversion rate).
+3. **Assume the best outcome for the missing samples.** In the case of a conversion metric, we would assume **all** of the missing users converted. In our calculations of the treatment effect, we add the missing samples to our numerator as well as our denominator. This is the upper extreme value bound. Again following the example above, our upper bound would assume 900+1.000 conversions over 9.000+1.000 users (a 19% conversion rate).
+
+Matt Gershoff suggested in a conversation in the [Test & Learn Community](https://testandlearn.community/) that this method could be extended to calculate the confidence intervals for the upper and lower bound, not just the average treatment effect. This would make the bounds more conservative as they would include additional uncertainty around the effect.
+
+Lukas Vermeer added that additionally one could overestimate the size of the missing sample (i.e. in the example above assume _more_ than 1.000 users were missing) for an even more conservative estimate which also accounts for potential chance imbalance in assignment. It is not unlikely that in reality 10.300 users were assigned to B in the example above, and 1.300—rather than 1.000—went missing.
+
+In practice—even without these more conservative extensions—these bounds are often so wide that they include the null and add little value. In some cases, the true treatment effect might be so large that the extreme value bounds do not include the null and can thus be used to inform a decision.
 
 ## How does the SRM Checker Chrome Extension work?
 
