@@ -218,8 +218,7 @@ const platforms = {
         },
       );
       let srmChecked = false; // TODO: Listen for changes to do check when content loads.
-      setInterval(() => {
-        if (!srmChecked) {
+      function loadSRM() {
           if (document.getElementById('srm_script')) {
             return;
           }
@@ -269,8 +268,9 @@ const platforms = {
             `;
           script.id = 'srm_script';
           document.body.appendChild(script);
-        }
-      }, 1000);
+      }
+      // allowing page to load
+      setTimeout(loadSRM, 2000);
     },
     flagSRM(pval) {
       const temp_styles = 'table.table--data tbody.ng-scope tr.ng-scope strong.ng-binding {background-color: red; color: white; padding: 1px 3px; border-radius: 3px;} td[child-order-id="conversionsVisitors"] div:nth-of-type(2) span {background-color: red; color: white; padding: 1px 3px; border-radius: 3px;}';
