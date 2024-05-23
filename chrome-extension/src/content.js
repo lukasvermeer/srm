@@ -246,19 +246,18 @@ const platforms = {
             srmChecked = true;
           })
 
+          // create a script and inject to app and emit events to get the campaign data
           const script = document.createElement('script');
           script.innerHTML = `
               function sendCompaign(){
                 const campaign = window.angular?.element(document.querySelector('div[ng-controller="CampaignReportNewController"]')).scope()?.campaign;
                 if(campaign){
-                  console.log('campaign', campaign.variations);
                   var event = new CustomEvent('srm_loaded', {
                     detail: JSON.stringify({goals:campaign.variationGoalData,variations:campaign.variations, selectedGoal: window.angular.element(document.querySelector('div[ng-controller="CampaignReportNewController"]')).scope().selectedGoal }),
                     bubbles: true, // Allow the event to bubble up through the DOM
                     cancelable: true // Allow the event to be canceled
                   });
                   window.dispatchEvent(event);
-                  console.log('sendCompaign success');
                 }
                 else{
                   setTimeout(sendCompaign,1000);
@@ -279,10 +278,7 @@ const platforms = {
       srm_css.id = 'srmcss';
       srm_css.appendChild(document.createTextNode(temp_styles));
       document.getElementsByTagName('body')[0].appendChild(srm_css);
-      // document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
-      // document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('td[child-order-id="conversionsVisitors"] div:nth-of-type(2) span').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
       document.querySelectorAll('td[child-order-id="conversionsVisitors"]').forEach(i => {
-        // debugger;
         i.setAttribute('title', `SRM detected! p-value = ${pval}`);
         console.log('setAttribute', i.getAttribute('title'));
       });
@@ -296,10 +292,7 @@ const platforms = {
       srm_css.id = 'srmcss';
       srm_css.appendChild(document.createTextNode(temp_styles));
       document.getElementsByTagName('body')[0].appendChild(srm_css);
-      // document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
-      // document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('td[child-order-id="conversionsVisitors"] div:nth-of-type(2) span').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
       document.querySelectorAll('td[child-order-id="conversionsVisitors"]').forEach(i => {
-        // debugger;
         i.setAttribute('title', `SRM detected! p-value = ${pval}`);
         console.log('setAttribute', i.getAttribute('title'));
       });
