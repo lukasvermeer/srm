@@ -6,7 +6,7 @@
 // More information at https://lukasvermeer.nl/srm/
 
 // Generic (non-platform specific) functions
-const platform = window.location.host;
+const platform = window.location.host.replace(/www./, "");
 
 // Define object to contain platform specific methods.
 const platforms = {
@@ -61,7 +61,7 @@ const platforms = {
             }
             newIframe();
             srmChecked = false;
-            chrome.runtime.sendMessage({srmStatus: 'ON'});
+            chrome.runtime.sendMessage({ srmStatus: 'ON' });
           }
         },
       );
@@ -137,7 +137,7 @@ const platforms = {
             }
             newIframe();
             srmChecked = false;
-            chrome.runtime.sendMessage({srmStatus: 'ON'});
+            chrome.runtime.sendMessage({ srmStatus: 'ON' });
           }
         },
       );
@@ -213,46 +213,62 @@ const platforms = {
             }
             newIframe();
             srmChecked = false;
-            chrome.runtime.sendMessage({srmStatus: 'ON'});
+            chrome.runtime.sendMessage({ srmStatus: 'ON' });
           }
         },
       );
       let srmChecked = false; // TODO: Listen for changes to do check when content loads.
       setInterval(() => {
         if (!srmChecked) {
-          // Get sample counts
-          const d = document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding');
-          const iframeforweight = document.getElementById('iframeforweight');
-          if (iframeforweight === null) return;
-          const weightnodes = iframeforweight.contentWindow.document.querySelector('div[label="Traffic Split"]');
-          if (d && weightnodes) {
-            const sessioncounts = [];
+          if (document.getElementById('srm_script')) {
+            return;
+          }
+
+          window.addEventListener('srm_loaded', (e) => {
+            const { variations, goals, selectedGoal } = JSON.parse(e.detail);
+            let enabledVariations = variations.filter((item) => item.isDisabled == false).map(item => item.id);
+
             const weights = [];
 
-            // SESSIONS: Fill array
-            for (let i = 0; i < d.length; i += 1) {
-              const sessions = parseInt(d[i].innerText.substring(d[i].innerText.indexOf('/') + 2), 10);
-              sessioncounts.push(sessions);
-            }
+            enabledVariations.forEach((variation) => {
+              weights.push(variations.filter((item) => item.id == variation)[0].percentSplit);
+            })
 
-            // WEIGHTS: Check if equal or custom weight splits are used and fill array
-            const weightEqual = iframeforweight.contentWindow.document.querySelectorAll('div[label="Traffic Split"] ul input')[0].checked;
-            if (weightEqual) {
-              for (let i = 0; i < d.length; i += 1) {
-                const weightnode = parseFloat(100 / d.length, 10);
-                weights.push(weightnode);
-              }
-            } else {
-              for (let i = 0; i < d.length; i += 1) {
-                const weightnode = parseFloat(weightnodes.querySelectorAll('div > ul > li > ul > li > button > span.ng-binding')[i].innerText, 10);
-                weights.push(weightnode);
-              }
-            }
+
+            const sessionCount = [];
+
+            enabledVariations.forEach((variation) => {
+              console.log(enabledVariations);
+              sessionCount.push(goals.filter((item) => item.variation == variation && item.goal == selectedGoal)[0]?.aggregated?.visitorCount || 0);
+            });
 
             // Do SRM Check
-            checkSRM(sessioncounts, weights);
+            checkSRM(sessionCount, weights);
             srmChecked = true;
-          }
+          })
+
+          const script = document.createElement('script');
+          script.innerHTML = `
+              function sendCompaign(){
+                const campaign = window.angular?.element(document.querySelector('div[ng-controller="CampaignReportNewController"]')).scope()?.campaign;
+                if(campaign){
+                  console.log('campaign', campaign.variations);
+                  var event = new CustomEvent('srm_loaded', {
+                    detail: JSON.stringify({goals:campaign.variationGoalData,variations:campaign.variations, selectedGoal: window.angular.element(document.querySelector('div[ng-controller="CampaignReportNewController"]')).scope().selectedGoal }),
+                    bubbles: true, // Allow the event to bubble up through the DOM
+                    cancelable: true // Allow the event to be canceled
+                  });
+                  window.dispatchEvent(event);
+                  console.log('sendCompaign success');
+                }
+                else{
+                  setTimeout(sendCompaign,1000);
+                }
+              }
+              sendCompaign();
+            `;
+          script.id = 'srm_script';
+          document.body.appendChild(script);
         }
       }, 1000);
     },
@@ -263,11 +279,30 @@ const platforms = {
       srm_css.id = 'srmcss';
       srm_css.appendChild(document.createTextNode(temp_styles));
       document.getElementsByTagName('body')[0].appendChild(srm_css);
-      document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
-      document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('td[child-order-id="conversionsVisitors"] div:nth-of-type(2) span').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
+      // document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
+      // document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('td[child-order-id="conversionsVisitors"] div:nth-of-type(2) span').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
+      document.querySelectorAll('td[child-order-id="conversionsVisitors"]').forEach(i => {
+        // debugger;
+        i.setAttribute('title', `SRM detected! p-value = ${pval}`);
+        console.log('setAttribute', i.getAttribute('title'));
+      });
     },
-    unflagSRM() {
+    unflagSRM(pval) {
       // TODO remove SRM warning if needed.
+
+      const temp_styles = 'table.table--data tbody.ng-scope tr.ng-scope strong.ng-binding {background-color: green; color: white; padding: 1px 3px; border-radius: 3px;} td[child-order-id="conversionsVisitors"] div:nth-of-type(2) span {background-color: green; color: white; padding: 1px 3px; border-radius: 3px;}';
+      var srm_css = document.createElement('style');
+      srm_css.type = 'text/css';
+      srm_css.id = 'srmcss';
+      srm_css.appendChild(document.createTextNode(temp_styles));
+      document.getElementsByTagName('body')[0].appendChild(srm_css);
+      // document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('tr.ng-scope strong.ng-binding').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
+      // document.querySelector('table.table--data tbody.ng-scope').querySelectorAll('td[child-order-id="conversionsVisitors"] div:nth-of-type(2) span').forEach(i => i.title = `SRM detected! p-value = ${pval}`);
+      document.querySelectorAll('td[child-order-id="conversionsVisitors"]').forEach(i => {
+        // debugger;
+        i.setAttribute('title', `SRM detected! p-value = ${pval}`);
+        console.log('setAttribute', i.getAttribute('title'));
+      });
     },
   },
 
@@ -280,7 +315,7 @@ const platforms = {
           if (request.message === 'URL has changed') {
             newIframe();
             srmChecked = false;
-            chrome.runtime.sendMessage({srmStatus: 'ON'});
+            chrome.runtime.sendMessage({ srmStatus: 'ON' });
           }
         },
       );
@@ -354,7 +389,7 @@ const platforms = {
           if (request.message === 'URL has changed') {
             newIframe();
             srmChecked = false;
-            chrome.runtime.sendMessage({srmStatus: 'ON'});
+            chrome.runtime.sendMessage({ srmStatus: 'ON' });
           }
         },
       );
@@ -407,7 +442,7 @@ const platforms = {
           if (request.message === 'URL has changed') {
             newIframe();
             srmChecked = false;
-            chrome.runtime.sendMessage({srmStatus: 'ON'});
+            chrome.runtime.sendMessage({ srmStatus: 'ON' });
           }
         },
       );
@@ -485,7 +520,7 @@ const platforms = {
           if (request.message === 'URL has changed') {
             newIframe();
             srmChecked = false;
-            chrome.runtime.sendMessage({srmStatus: 'ON'});
+            chrome.runtime.sendMessage({ srmStatus: 'ON' });
           }
         },
       );
@@ -572,7 +607,7 @@ const platforms = {
           if (request.message === 'URL has changed') {
             newIframe();
             srmChecked = false;
-            chrome.runtime.sendMessage({srmStatus: 'ON'});
+            chrome.runtime.sendMessage({ srmStatus: 'ON' });
           }
         },
       );
