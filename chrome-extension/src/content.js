@@ -237,7 +237,6 @@ const platforms = {
             const sessionCount = [];
 
             enabledVariations.forEach((variation) => {
-              console.log(enabledVariations);
               sessionCount.push(goals.filter((item) => item.variation == variation && item.goal == selectedGoal)[0]?.aggregated?.visitorCount || 0);
             });
 
@@ -280,7 +279,6 @@ const platforms = {
       document.getElementsByTagName('body')[0].appendChild(srm_css);
       document.querySelectorAll('td[child-order-id="conversionsVisitors"]').forEach(i => {
         i.setAttribute('title', `SRM detected! p-value = ${pval}`);
-        console.log('setAttribute', i.getAttribute('title'));
       });
     },
     unflagSRM(pval) {
@@ -294,7 +292,6 @@ const platforms = {
       document.getElementsByTagName('body')[0].appendChild(srm_css);
       document.querySelectorAll('td[child-order-id="conversionsVisitors"]').forEach(i => {
         i.setAttribute('title', `SRM detected! p-value = ${pval}`);
-        console.log('setAttribute', i.getAttribute('title'));
       });
     },
   },
