@@ -19,7 +19,7 @@ function computeSRM(observed, expected) {
   // Degrees of freedom is variations - 1
   const df = observed.length - 1;
   // Total sample size is sum of all variations
-  const sampleSize = observed.reduce((a, v) => a + v);
+  const sampleSize = observed.length>0 ? observed.reduce((a, v) => a + v) : 0;
   // Scale expected count per variation to match observed sample
   const expectedScaled = expected.map((e) => Math.round((sampleSize * e) / 100));
   // Chi-square is sum of squares of observed - expected over expected for each variation
@@ -37,7 +37,7 @@ function checkSRM(observed, expected) {
       chrome.runtime.sendMessage({srmStatus: 'SRM'});
     }
   } else {
-    platforms[platform].unflagSRM();
+    platforms[platform].unflagSRM(pval);
     if (chrome.runtime) {
       chrome.runtime.sendMessage({srmStatus: 'OK'});
     }
