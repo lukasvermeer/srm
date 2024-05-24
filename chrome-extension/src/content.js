@@ -188,38 +188,25 @@ const platforms = {
   // VWO
   'app.vwo.com': {
     init() {
-      // Load the Settings > Others view in the background to get expected proportion of variants.
-      function newIframe() {
-        if (location.href.slice(-6) === 'report') {
-          const oldIframe = document.getElementById('iframeforweight');
-          if (oldIframe != null) {
-            oldIframe.parentNode.removeChild(oldIframe);
-          }
-          const ifrm = document.createElement('iframe');
-          ifrm.id = 'iframeforweight';
-          ifrm.src = `${location.href.slice(0, -7)}/edit/others`;
-          ifrm.style.display = 'none';
-          document.body.appendChild(ifrm);
-        }
-      }
-      newIframe();
       // Listen for changing URL to reload iframe for proportions
       chrome.runtime.onMessage.addListener(
         (request, sender, sendResponse) => {
           if (request.message === 'URL has changed') {
-            const srmstyling = document.getElementById('srmcss');
-            if (srmstyling != null) {
-              srmstyling.parentNode.removeChild(srmstyling);
-            }
-            newIframe();
+            loadSRM(true);
             srmChecked = false;
             chrome.runtime.sendMessage({ srmStatus: 'ON' });
           }
         },
       );
       let srmChecked = false; // TODO: Listen for changes to do check when content loads.
-      function loadSRM() {
-        if (document.getElementById('srm_script')) {
+      function loadSRM(urlChanged) {
+        const cssid = 'srmcss';
+        if (document.getElementById(cssid)) {
+          document.body.removeChild(cssid);
+        }
+        if (location.href.slice(-6) !== 'report') return;
+        let srmScript = document.getElementById('srm_script');
+        if (srmScript && !urlChanged) {
           return;
         }
 
@@ -249,7 +236,13 @@ const platforms = {
 
         // create a script and inject to app and emit events to get the campaign data
         const script = document.createElement('script');
-        script.innerHTML = `
+        if (urlChanged && srmScript) {
+          script.innerHTML = `
+            setTimeout(sendCompaign,1000);
+          `
+        }
+        else {
+          script.innerHTML = `
               function sendCompaign(){
                 const campaign = window.angular?.element(document.querySelector('div[ng-controller="CampaignReportNewController"]')).scope()?.campaign;
                 if(campaign){
@@ -266,34 +259,40 @@ const platforms = {
               }
               sendCompaign();
             `;
-        script.id = 'srm_script';
+          script.id = 'srm_script';
+        }
         document.body.appendChild(script);
       }
       // allowing page to load
       setTimeout(loadSRM, 2000);
     },
     flagSRM(pval) {
-      const temp_styles = 'table.table--data tbody.ng-scope tr.ng-scope strong.ng-binding {background-color: red; color: white; padding: 1px 3px; border-radius: 3px;} td[child-order-id="conversionsVisitors"] div:nth-of-type(2) span {background-color: red; color: white; padding: 1px 3px; border-radius: 3px;}';
-      var srm_css = document.createElement('style');
-      srm_css.type = 'text/css';
-      srm_css.id = 'srmcss';
-      srm_css.appendChild(document.createTextNode(temp_styles));
-      document.getElementsByTagName('body')[0].appendChild(srm_css);
+      const id = 'srmcss';
+      if (!document.getElementById(id)) {
+        const temp_styles = 'table.table--data tbody.ng-scope tr.ng-scope strong.ng-binding {background-color: red; color: white; padding: 1px 3px; border-radius: 3px;} td[child-order-id="conversionsVisitors"] div:nth-of-type(2) span {background-color: red; color: white; padding: 1px 3px; border-radius: 3px;}';
+        var srm_css = document.createElement('style');
+        srm_css.type = 'text/css';
+        srm_css.id = id;
+        srm_css.appendChild(document.createTextNode(temp_styles));
+        document.getElementsByTagName('body')[0].appendChild(srm_css);
+      }
       document.querySelectorAll('td[child-order-id="conversionsVisitors"]').forEach(i => {
         i.setAttribute('title', `SRM detected! p-value = ${pval}`);
       });
     },
     unflagSRM(pval) {
       // TODO remove SRM warning if needed.
-
-      const temp_styles = 'table.table--data tbody.ng-scope tr.ng-scope strong.ng-binding {background-color: green; color: white; padding: 1px 3px; border-radius: 3px;} td[child-order-id="conversionsVisitors"] div:nth-of-type(2) span {background-color: green; color: white; padding: 1px 3px; border-radius: 3px;}';
-      var srm_css = document.createElement('style');
-      srm_css.type = 'text/css';
-      srm_css.id = 'srmcss';
-      srm_css.appendChild(document.createTextNode(temp_styles));
-      document.getElementsByTagName('body')[0].appendChild(srm_css);
+      const id = 'srmcss';
+      if (!document.getElementById(id)) {
+        const temp_styles = 'table.table--data tbody.ng-scope tr.ng-scope strong.ng-binding {background-color: green; color: white; padding: 1px 3px; border-radius: 3px;} td[child-order-id="conversionsVisitors"] div:nth-of-type(2) span {background-color: green; color: white; padding: 1px 3px; border-radius: 3px;}';
+        var srm_css = document.createElement('style');
+        srm_css.type = 'text/css';
+        srm_css.id = id;
+        srm_css.appendChild(document.createTextNode(temp_styles));
+        document.getElementsByTagName('body')[0].appendChild(srm_css);
+      }
       document.querySelectorAll('td[child-order-id="conversionsVisitors"]').forEach(i => {
-        i.setAttribute('title', `SRM detected! p-value = ${pval}`);
+        i.setAttribute('title', `p-value = ${pval}`);
       });
     },
   },
