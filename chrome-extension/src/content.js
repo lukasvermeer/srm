@@ -278,9 +278,22 @@ const platforms = {
         srm_css.appendChild(document.createTextNode(temp_styles));
         document.getElementsByTagName('body')[0].appendChild(srm_css);
       }
-      document.querySelectorAll('td[child-order-id="conversionsVisitors"]').forEach(i => {
-        i.setAttribute('title', `SRM detected! p-value = ${pval}`);
-      });
+
+      function addTitle() {
+        let shouldResetTitle = false;
+        document.querySelectorAll('td[child-order-id="conversionsVisitors"]').forEach(i => {
+          if (!i.getAttribute('title')) {
+            if (!shouldResetTitle) {
+              shouldResetTitle = true;
+            }
+            i.setAttribute('title', `SRM detected! p-value = ${pval}`);
+          }
+        });
+        if (shouldResetTitle) {
+          setTimeout(addTitle, 2000);
+        }
+      }
+      addTitle();
     },
     unflagSRM(pval) {
       // TODO remove SRM warning if needed.
@@ -293,9 +306,21 @@ const platforms = {
         srm_css.appendChild(document.createTextNode(temp_styles));
         document.getElementsByTagName('body')[0].appendChild(srm_css);
       }
-      document.querySelectorAll('td[child-order-id="conversionsVisitors"]').forEach(i => {
-        i.setAttribute('title', `p-value = ${pval}`);
-      });
+      function addTitle() {
+        let shouldResetTitle = false;
+        document.querySelectorAll('td[child-order-id="conversionsVisitors"]').forEach(i => {
+          if (!i.getAttribute('title')) {
+            if (!shouldResetTitle) {
+              shouldResetTitle = true;
+            }
+            i.setAttribute('title', `p-value = ${pval}`);
+          }
+        });
+        if (shouldResetTitle) {
+          setTimeout(addTitle, 2000);
+        }
+      }
+      addTitle();
     },
   },
 
