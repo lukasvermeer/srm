@@ -219,35 +219,37 @@ const platforms = {
       );
       let srmChecked = false; // TODO: Listen for changes to do check when content loads.
       function loadSRM() {
-          if (document.getElementById('srm_script')) {
-            return;
-          }
+        if (document.getElementById('srm_script')) {
+          return;
+        }
 
-          window.addEventListener('srm_loaded', (e) => {
-            const { variations, goals, selectedGoal } = JSON.parse(e.detail);
-            let enabledVariations = variations.filter((item) => item.isDisabled == false).map(item => item.id);
+        window.addEventListener('srm_loaded', (e) => {
+          const { variations, goals, selectedGoal } = JSON.parse(e.detail);
+          let enabledVariations = variations.filter((item) => item.isDisabled == false).map(item => item.id);
 
-            const weights = [];
+          const weights = [];
 
-            enabledVariations.forEach((variation) => {
-              weights.push(variations.filter((item) => item.id == variation)[0].percentSplit);
-            })
-
-
-            const sessionCount = [];
-
-            enabledVariations.forEach((variation) => {
-              sessionCount.push(goals.filter((item) => item.variation == variation && item.goal == selectedGoal)[0]?.aggregated?.visitorCount || 0);
-            });
-
-            // Do SRM Check
-            checkSRM(sessionCount, weights);
-            srmChecked = true;
+          enabledVariations.forEach((variation) => {
+            weights.push(variations.filter((item) => item.id == variation)[0].percentSplit);
           })
 
-          // create a script and inject to app and emit events to get the campaign data
-          const script = document.createElement('script');
-          script.innerHTML = `
+
+          const sessionCount = [];
+
+          enabledVariations.forEach((variation) => {
+            sessionCount.push(goals.filter((item) => item.variation == variation && item.goal == selectedGoal)[0]?.aggregated?.visitorCount || 0);
+          });
+
+          if (sessionCount.length > 0 || weights.length > 0) {
+            // Do SRM Check
+            checkSRM(sessionCount, weights);
+          }
+          srmChecked = true;
+        })
+
+        // create a script and inject to app and emit events to get the campaign data
+        const script = document.createElement('script');
+        script.innerHTML = `
               function sendCompaign(){
                 const campaign = window.angular?.element(document.querySelector('div[ng-controller="CampaignReportNewController"]')).scope()?.campaign;
                 if(campaign){
@@ -264,8 +266,8 @@ const platforms = {
               }
               sendCompaign();
             `;
-          script.id = 'srm_script';
-          document.body.appendChild(script);
+        script.id = 'srm_script';
+        document.body.appendChild(script);
       }
       // allowing page to load
       setTimeout(loadSRM, 2000);
