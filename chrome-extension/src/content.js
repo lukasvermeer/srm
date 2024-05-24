@@ -201,10 +201,12 @@ const platforms = {
       let srmChecked = false; // TODO: Listen for changes to do check when content loads.
       function loadSRM(urlChanged) {
         const cssid = 'srmcss';
-        if (document.getElementById(cssid)) {
-          document.body.removeChild(cssid);
+        const styleTag = document.getElementById(cssid);
+        if (styleTag) {
+          document.body.removeChild(styleTag);
         }
-        if (location.href.slice(-6) !== 'report') return;
+        const notAllowed = ['target', 'deploy']
+        if (location.href.slice(-6) !== 'report' || notAllowed.some(item => location.href.includes(item))) return;
         let srmScript = document.getElementById('srm_script');
         if (srmScript && !urlChanged) {
           return;
