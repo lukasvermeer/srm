@@ -2,7 +2,6 @@ The Sample Ratio Mismatch (SRM) test can be used to detect a wide variety of dat
 
 Supported platforms:
 - Convert.com
-- Google Optimize
 - Omniconvert
 - Optimizely
 - SiteGainer/Symplify

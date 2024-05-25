@@ -12,7 +12,6 @@ This repository contains a [Chrome Extension](https://chrome.google.com/webstore
 
 Platforms supported by this Chrome Extension:
 - Convert.com
-- Google Optimize
 - Omniconvert
 - Optimizely
 - SiteGainer/Symplify

@@ -9,7 +9,6 @@
   "content_scripts": [
    {
      "matches": ["https://lukasvermeer.nl/srm/*",
-                 "https://optimize.google.com/*",
                  "https://app.optimizely.com/*",
                  "https://app.vwo.com/*",
                  "https://sitegainer.com/*",

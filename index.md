@@ -33,7 +33,6 @@ Sample Ratio Mismatch Checker was created by [Lukas Vermeer](http://lukasvermeer
 ### Platforms supported by this Chrome Extension
 
 - Convert.com
-- Google Optimize
 - Omniconvert
 - Optimizely
 - SiteGainer/Symplify

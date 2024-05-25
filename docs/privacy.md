@@ -41,7 +41,7 @@ These results may also be reported over time and per experimentation platform fo
 In order to accomplish the two objectives outlined above, the SRM Checker Chrome Extension sends the following information to a central data repository.
 
 - A unique, anonymized (see below) identifier for each experiment (to enable data deduplication)
-- Experimentation platform name (e.g. "Google Optimize", "VWO", etc.)
+- Experimentation platform name (e.g. "Convert.com", "VWO", etc.)
 - Observed sample counts (to enable the development team to estimate average power)
 - Expected proportions (to allow development team to run repeat SRM checks)
 - SRM status reported (to track how often SRM was reported to users)
