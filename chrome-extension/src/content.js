@@ -13,12 +13,13 @@ const platforms = {
 
   // SRM Checker Chrome Extension microsite
   // TODO Remove this once we support more than one real platform.
-  'lukasvermeer.nl': {
+  'www.lukasvermeer.nl': {
     init() {
       document.querySelectorAll('input').forEach(i => i.addEventListener('input', () => {
-        const a = parseInt(document.getElementById('atraffic').value, 10);
-        const b = parseInt(document.getElementById('btraffic').value, 10);
-        const e = parseFloat(document.getElementById('expectedprop').value, 10) * 100;
+        const numbers = document.querySelectorAll("input");
+        const a = parseInt(numbers[0].value, 10);
+        const b = parseInt(numbers[2].value, 10);
+        const e = parseFloat(numbers[1].value, 10) * 100;
 
         checkSRM([a, b], [100 - e, e]);
       }, false));

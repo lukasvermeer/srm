@@ -1,32 +1,50 @@
 {
   "name": "Sample Ratio Mismatch (SRM) Checker",
   "short_name": "SRM Check",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "description": "Automatically performs Sample Ratio Mismatch (SRM) test and flags potential issues on supported experimentation platforms.",
   "permissions": [
-    "tabs"
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+        "https://*.lukasvermeer.nl/srm/*",
+        "https://app.optimizely.com/*",
+        "https://app.vwo.com/*",
+        "https://*.sitegainer.com/*",
+        "https://conversion.symplify.com/*",
+        "https://app.convert.com/*",
+        "https://web.omniconvert.com/*",
+        "https://pagesense.zoho.eu/*",
+        "https://pagesense.zoho.com/*"
   ],
   "content_scripts": [
-   {
-     "matches": ["https://lukasvermeer.nl/srm/*",
-                 "https://app.optimizely.com/*",
-                 "https://app.vwo.com/*",
-                 "https://sitegainer.com/*",
-                 "https://conversion.symplify.com/*",
-                 "https://app.convert.com/*",
-                 "https://web.omniconvert.com/*",
-                 "https://pagesense.zoho.eu/*",
-                 "https://pagesense.zoho.com/*"],
-     "js": ["lib/statistics-distributions.js", "srm.js", "content.js"]
-   }
- ],
+    {
+      "matches": [
+        "https://*.lukasvermeer.nl/srm/*",
+        "https://app.optimizely.com/*",
+        "https://app.vwo.com/*",
+        "https://*.sitegainer.com/*",
+        "https://conversion.symplify.com/*",
+        "https://app.convert.com/*",
+        "https://web.omniconvert.com/*",
+        "https://pagesense.zoho.eu/*",
+        "https://pagesense.zoho.com/*"
+      ],
+      "js": [
+        "lib/statistics-distributions.js",
+        "srm.js",
+        "content.js"
+      ]
+    }
+  ],
   "background": {
-    "scripts": [ "background.js" ]
-  },
-  "page_action": {
+    "service_worker": "service_worker.js"
   },
   "icons": {
     "128": "icon128.png"
   },
-  "manifest_version": 2
+  "manifest_version": 3,
+  "action": {},
+  "content_security_policy": {}
 }
