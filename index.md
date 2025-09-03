@@ -9,12 +9,26 @@ permalink: /
 # One neat trick to run better experiments
 {: .fs-9 }
 
-This Chrome Extension automatically flags potential data quality issues on supported experimentation platforms.
+This Chrome Extension automatically flagged potential data quality issues on supported experimentation platforms.
 {: .fs-6 .fw-300 }
 
-[Install the Chrome Extension](https://chrome.google.com/webstore/detail/sample-ratio-mismatch-srm/ikielffdbameifemkibfheolelbohipn){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [Manually check for SRM](https://lukasvermeer.nl/srm/microsite/){: .btn .fs-5 .mb-4 .mb-md-0 }
+{: .warning }
+The SRM Checker Chrome extension **is no longer maintained and has been retired.**
 
-![A screenshot of the Google Optimize interface showing the SRM Checker Extension flagging a potential SRM issue.]({{ site.baseurl }}{% link assets/images/screenshot_optimize_1.webp %})
+Over the years, the extension has helped hundreds of experimenters detect Sample Ratio Mismatches (SRMs) and improve the quality of their A/B testing data. However, a few things have changed:
+
+- Google introduced changes to how Chrome extensions work, breaking the current implementation
+- I no longer have the time to maintain or update the extension
+- Most major experimentation platforms now include built-in SRM checks, making the extension less necessary
+
+Because of this, I’ve decided to retire the extension.
+
+Thank you to everyone who used, supported, and contributed to the SRM Checker over the years!
+
+{: .highlight }
+The website and related documentation will remain available for reference, but the extension itself will no longer be updated, supported, or guaranteed to work.
+
+[Manually check for SRM](https://lukasvermeer.nl/srm/microsite/){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 }
 
 ---
 
@@ -30,6 +44,8 @@ For more information about Sample Ratio Mismatch please read the [Frequently Ask
 
 Sample Ratio Mismatch Checker was created by [Lukas Vermeer](http://lukasvermeer.nl), [Heinrich Mahr](https://heinrich333.github.io) and [Georgi Georgiev](http://blog.analytics-toolkit.com).
 
+![A screenshot of the Google Optimize interface showing the SRM Checker Extension flagging a potential SRM issue.]({{ site.baseurl }}{% link assets/images/screenshot_optimize_1.webp %})
+
 ### Platforms supported by this Chrome Extension
 
 - Convert.com
@@ -40,10 +56,6 @@ Sample Ratio Mismatch Checker was created by [Lukas Vermeer](http://lukasvermeer
 - Zoho PageSense
 
 Several experimentation platforms natively perform Sample Ratio Mismatch checks for their users. These platforms will not be supported by our Chrome Extension, because that would be redundant. An incomplete overview of these platforms can be found [here]({{ site.baseurl }}{% link docs/reference/platforms/index.md %}).
-
-### Known issues:
-
-- Convert: Auto-stopping variants triggers false SRM alert ([#29](https://github.com/lukasvermeer/srm/issues/29))
 
 ### License
 
@@ -57,7 +69,4 @@ Feel free to fork the repository on [GitHub](http://github.com/lukasvermeer/srm)
 
 Thank you for making this project more awesome.
 
-![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ikielffdbameifemkibfheolelbohipn?label=Store%20Release)
-![Chrome Web Store](https://img.shields.io/chrome-web-store/stars/ikielffdbameifemkibfheolelbohipn?label=Store%20Rating)
-![Chrome Web Store](https://img.shields.io/chrome-web-store/users/ikielffdbameifemkibfheolelbohipn?label=Extension%20Users)
 ![GitHub last commit](https://img.shields.io/github/last-commit/lukasvermeer/srm?label=Last%20Repo%20Commit)

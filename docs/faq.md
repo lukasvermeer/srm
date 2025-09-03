@@ -81,9 +81,9 @@ Conversely, the second scenario is very surprising. Here we get a p-value of app
 2.5396285894708634e-10
 ```
 
-## What p-value threshold does the SRM Checker use?
+## What p-value threshold did the SRM Checker use?
 
-The SRM Checker Chrome Extension currently uses a threshold value of 0.01. If the computed p-value is lower than that, an SRM is flagged.
+The SRM Checker Chrome Extension used a threshold value of 0.01. If the computed p-value was lower than that, an SRM was flagged.
 
 ## How common is Sample Ratio Mismatch?
 
@@ -137,9 +137,13 @@ Lukas Vermeer added that additionally one could overestimate the size of the mis
 
 In practice—even without these more conservative extensions—these bounds are often so wide that they include the null and add little value. In some cases, the true treatment effect might be so large that the extreme value bounds do not include the null and can thus be used to inform a decision.
 
-## How does the SRM Checker Chrome Extension work?
+## Is the SRM Checker Chrome Extension still supported?
 
-The SRM Checker Chrome Extension runs in the background of pages which show experiment results on suported platforms. It extracts summary statistics from the page and checks for Sample Ratio Mismatch. If an SRM is found, the page is modified on-the-fly to alert the user that the SRM Checker has found a potential data quality issue.
+No, the SRM Checker Chrome Extension has been retired and is no longer maintained.
+
+## How did the SRM Checker Chrome Extension used to work? (Now retired)
+
+The extension previously ran in the background on supported experimentation platforms, extracting summary statistics and checking for Sample Ratio Mismatch. If an SRM was found, the page was modified in real time to alert the user.
 
 ![A screenshot of the Google Optimize interface showing the SRM Checker Extension flagging a potential SRM issue.]({{ site.baseurl }}{% link assets/images/screenshot_optimize_1.webp %})
 
