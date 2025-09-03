@@ -1,3 +1,19 @@
+> [!CAUTION]
+> Retirement Notice
+> 
+> The SRM Checker Chrome extension is no longer being maintained and has been retired.
+>
+> Over the years, the extension has helped hundreds of experimenters detect Sample Ratio Mismatches (SRMs) and improve the quality of their A/B testing data. However, a few things have changed:
+> - Google introduced changes to how Chrome extensions work, breaking the current implementation
+> - I no longer have the time to maintain or update the extension
+> - Most major experimentation platforms now include built-in SRM checks, making the extension less necessary
+> 
+> Because of this, I’ve decided to retire the extension.
+> 
+> The website and related documentation will remain available for reference, but the extension itself will no longer be updated, supported, or guaranteed to work.
+>
+> Thank you to everyone who used, supported, and contributed to the SRM Checker over the years!
+
 ![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ikielffdbameifemkibfheolelbohipn?label=Store%20Release)
 ![Chrome Web Store](https://img.shields.io/chrome-web-store/stars/ikielffdbameifemkibfheolelbohipn?label=Store%20Rating)
 ![Chrome Web Store](https://img.shields.io/chrome-web-store/users/ikielffdbameifemkibfheolelbohipn?label=Extension%20Users)
