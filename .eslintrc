@@ -1,7 +1,7 @@
 {
   // don't forget to npm i eslint eslint-config-airbnb-base eslint-plugin-import
   "extends": [
-    "airbnb",
+    "airbnb-base",
   ],
   "env": {
     "node": true,
