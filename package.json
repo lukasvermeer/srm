@@ -17,6 +17,9 @@
     "url": "https://github.com/lukasvermeer/srm/issues"
   },
   "homepage": "https://lukasvermeer.nl/srm",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "eslint": "^10.1.0",
     "eslint-config-airbnb-base": "^15.0.0",
