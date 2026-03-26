@@ -4,7 +4,7 @@
   "description": "This Chrome Extension automatically performs SRM checks and flags potential data quality issues on supported experimentation platforms.",
   "main": "chrome-extension/src/srm.js",
   "scripts": {
-    "test": "jest",
+    "test": "vitest run --globals",
     "zip": "cd chrome-extension/src/ && zip -r -X ../extension.zip ."
   },
   "repository": {
@@ -20,7 +20,8 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "dependencies": {
-    "jest": "^30.3.0"
+  "devDependencies": {
+    "@vitest/browser": "^4.1.2",
+    "vitest": "^4.1.2"
   }
 }
