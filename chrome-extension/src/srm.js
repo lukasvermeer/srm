@@ -12,14 +12,16 @@ const params = {
 // Checking for SRM using chi-square
 function computeSRM(observed, expected) {
   // Check if input contains only numbers, and two arrays of equal length
-  if (observed.some((x) => !Number.isFinite(x))) { return NaN; }
-  if (expected.some((x) => !Number.isFinite(x))) { return NaN; }
+  if (observed.length < 2 || expected.length < 2) { return NaN; }
+  if (observed.some((x) => !Number.isFinite(x) || x < 0)) { return NaN; }
+  if (expected.some((x) => !Number.isFinite(x) || x < 0)) { return NaN; }
   if (expected.length !== observed.length) { return NaN; }
 
   // Degrees of freedom is variations - 1
   const df = observed.length - 1;
   // Total sample size is sum of all variations
   const sampleSize = observed.reduce((a, v) => a + v);
+  if (sampleSize === 0) { return NaN; }
   // Scale expected count per variation to match observed sample
   const expectedScaled = expected.map((e) => Math.round((sampleSize * e) / 100));
   // Chi-square is sum of squares of observed - expected over expected for each variation
