@@ -21,7 +21,7 @@
     "node": ">=18.0.0"
   },
   "devDependencies": {
-    "@vitest/browser": "^4.1.2",
+    "@vitest/browser": "^4.1.6",
     "vitest": "^4.1.2"
   }
 }
