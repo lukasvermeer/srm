@@ -37,7 +37,7 @@
                 <div v-for="(item, index) in input.arms">
                   <div class="form-group col-xs-5">
                     <label for="obs-{{ index }}">Observed sample #{{ index+1 }}</label>
-                    <input v-model="item[0]" type="number" pattern="\d*" min="0" class="form-control" id="obs-{{ index }}" placeholder="Observed sample size"/> 
+                    <input v-model="item[0]" type="text" inputmode="numeric" class="form-control" id="obs-{{ index }}" placeholder="Observed sample size"/> 
                   </div>
                   <div class="form-group col-xs-5">
                     <label for="exp-{{ index }}">Expected ratio #{{ index+1 }}</label>
@@ -56,6 +56,11 @@
 
               <div class="alert alert-info text-center" v-if="sum_props != 1">
                 Expected ratios will be multiplied by {{ 1/sum_props }} so they sum to 1.
+              </div>
+
+              <div class="alert alert-info" v-if="comma_inputs.length > 0">
+                Commas are not allowed in sample counts.
+                <span v-for="item in comma_inputs">Sample #{{ item.index }} interpreted as {{ item.parsed }}. </span>
               </div>
 
               <div class="alert alert-warning" v-if="flag_srm">
@@ -102,9 +107,20 @@
           sum_props: function() {
             return this.input.arms.reduce((s,v) => s + parseFloat(v[1]), 0);
           },
-          srm_p: function(v) {
+          observed: function() {
+            return this.input.arms.map((v) => ({
+              raw: String(v[0]),
+              parsed: parseInt(String(v[0]).replace(/,/g, ''))
+            }));
+          },
+          comma_inputs: function() {
+            return this.observed
+              .map((v, i) => ({ index: i+1, raw: v.raw, parsed: v.parsed }))
+              .filter(v => v.raw.includes(','));
+          },
+          srm_p: function() {
             let scale_props = 1 / this.sum_props;
-            let o = this.input.arms.map((v) => parseInt(v[0]));
+            let o = this.observed.map((v) => v.parsed);
             let e = this.input.arms.map((v) => parseFloat(v[1]) * 100 * scale_props);
             let p = computeSRM(o,e);
             return p;
